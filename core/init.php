@@ -9,10 +9,10 @@ session_start();
 
 $GLOBALS['config'] = array(
     'mysql' => array(
-        'host' => '127.0.0.1',
-        'user' => 'root',
-        'passsword' => '',
-        'db' => 'laBd'
+        'host' => '69.28.199.20',
+        'user' => 'lango721_inm5001',
+        'passsword' => '?h17b+gplF;H',
+        'db' => 'lango721_gestiondecommandes'
     ),
     'remember' => array(
         'cookie_name' => 'hash',
@@ -25,7 +25,7 @@ $GLOBALS['config'] = array(
 );
 spl_autoload_register(function($class)
 {
-    require_once 'Classes/' . $class . 'php';
+    require_once 'Classes/' . $class . '.php';
 });
 
-require_once 'function/sanitize.php';
+require_once 'Functions/sanitize.php';
