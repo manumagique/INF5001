@@ -10,10 +10,10 @@ class Database
 {
     private static $_instance = NULL;
 
-    private $host = "111.111.111.111";  //PDO HOST
-    private $db_name = "distribution";
-    private $usename = "root";
-    private $password = "";
+    private $host = "69.28.199.20";  //PDO HOST
+    private $db_name = "lango721_gestiondecommandes";
+    private $usename = "lango721_inm5001";
+    private $password = "?h17b+gplF;H";
     private $socket_type = "mysql";
 
     private $_db = null;
@@ -29,8 +29,9 @@ class Database
                 $this->_db = new PDO(
                     ''. $this->socket_type.':host='. $this->host. ';dbname='. $this->db_name .'', $this->usename, $this->password
                 );
-                echo 'Connected';
-            } catch (PDOException $e){
+            }
+            catch (PDOException $e)
+            {
                 die($e->getMessage());
         }
     }

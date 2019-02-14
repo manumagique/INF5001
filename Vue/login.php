@@ -5,7 +5,7 @@
  * Date: 2019-02-13
  * Time: 1:17 PM
  */
-require_once 'core/init.php';
+require_once '../core/init.php';
 if (Input::exists())
 {
     if (Token::check(Input::get('token')))
@@ -40,7 +40,11 @@ if (Input::exists())
     }
 }
 ?>
+<html>
+<head>
 
+</head>
+<body>
 <form action="" method="post">
     <div class="field">
         <label for=""username">Username</label>
@@ -55,3 +59,5 @@ if (Input::exists())
     <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
     <input type="submit" value="log in">
 </form>
+</body>
+</html>

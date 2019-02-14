@@ -6,23 +6,37 @@
  * Time: 2:01 PM
  */
 require_once 'core/init.php';
+?>
+<!DOCTYPE html>
+<html>
+<head>
 
-if (Session::exists('home'))
+</head>
+<body>
+Hello world
+<?php
+
+    if (Session::exists('home'))
 {
     echo '<p>' . Session::flash('home') . '</p>';
 }
 
-$user = new User();
-if ($user->isLoggedIn())
-{
-    ?>
-    <p>Hello <a href="#"><?php echo escape($user->data()->username);?></a>!</p>
-    <ul>
-        <li><a href="lougout.php"></a>log out</li>
-    </ul>
-<?php
-}
-else
-{
-    echo '<p>You need to <a href="login.php">log in</a> or <a href="register.php">register</a></p>';
-}
+    $user = new User();
+    if ($user->isLoggedIn())
+    {
+        echo
+        '<p>Hello <a href="#">' . escape($user->data()->username) . '</a>!</p>
+        <ul>
+            <li><a href="Vue/logout.php"></a>log out</li>
+        </ul>';
+
+    }
+    else
+    {
+        echo '<p>You need to <a href="Vue/login.php">log in</a> or <a href="Vue/register.php">register</a></p>';
+    }
+?>
+
+</body>
+</html>
+
