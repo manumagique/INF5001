@@ -62,6 +62,7 @@ class Database
            if ($this-> _querry->execute())
            {
                $this->_results = $this->_querry->fetchAll(PDO::FETCH_OBJ);
+//               $this->_results = $this->_querry->fetchAll(SQLSRV_FETCH_ASSOC);
                $this->_count = $this->_querry->rowCount();
            }
            else
@@ -71,6 +72,11 @@ class Database
         }
 
         return $this;
+    }
+
+    public function toJson ()
+    {
+        json_encode($this->_results);
     }
 
     public function action($action, $table, $where = array())
@@ -85,7 +91,7 @@ class Database
 
             if (in_array($operator, $operators))
             {
-                $sql = "{$action} FROM {$table} WHERE {field} {operator} ?";
+                $sql = "{$action} FROM {$table} WHERE {$field} {$operator} ?";
                 if (!$this->query($sql, array($value)))
                 {
                     return $this;
@@ -95,31 +101,69 @@ class Database
         return false;
     }
 
-    public function get()
+    public function get($table, $where )
     {
-        //todo
+        return $this->_action('SELECT *', $table, $where );
     }
 
-    public function delete()
+    public function delete($table, $where)
     {
-        //todo
+        return $this->action('DELETE' , $table, $where);
     }
 
-    public function insert()
+    public function insert($table, $fields)
     {
-        //todo
+            $keys = array_keys($fields);
+            $values = '';
+            $x = 1;
+
+            foreach ($fields as $field)
+            {
+                $values .= '?';
+                if ($x < $this->count()$fields)
+                {
+                    $values .= ', ';
+                }
+                $x++;
+            }
+
+            $sql = "INSERT INTO {$table}  (`" . implode('`,`', $keys) . "`) VALUES ({$values})";
+            if (!$this->query($sql, $fields)->error())
+            {
+                return true;
+            }
+
+            return false;
     }
 
-    public function update()
+    public function update($table, $id, $fields )
     {
-        //todo
-    }
+        $set = '';
+        $x = 1;
 
+        foreach ($fields as $name => $values)
+        {
+            $set .= "{$name} = ?";
+            if ($x < count($fields))
+            {
+                $set .=', ';
+            }
+            $x++ ;
+        }
+        
+        $sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
+        if (!$this->query($sql, $fields)->error())
+        {
+            return true;
+        }
+        return false;
+    }
 
     public function results()
     {
         return $this->_results;
     }
+
     public function firstRecord()
     {
         return $this->results()[0];

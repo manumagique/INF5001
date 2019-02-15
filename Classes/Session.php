@@ -15,6 +15,7 @@ class Session
 
     public static function put($name, $value)
     {
+        //Todo
         return $_SESSION[$name] = $value;
     }
 

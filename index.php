@@ -27,13 +27,13 @@ Hello world
         echo
         '<p>Hello <a href="#">' . escape($user->data()->username) . '</a>!</p>
         <ul>
-            <li><a href="Vue/logout.php"></a>log out</li>
+            <li><a href="logout.php"></a>log out</li>
         </ul>';
 
     }
     else
     {
-        echo '<p>You need to <a href="Vue/login.php">log in</a> or <a href="Vue/register.php">register</a></p>';
+        echo '<p>You need to <a href="login.php">log in</a> or <a href="register.php">register</a></p>';
     }
 ?>
 

@@ -6,7 +6,7 @@
  * Time: 2:58 AM
  */
 
-require_once 'Includes/core/init.php';
+require_once 'core/init.php';
 //var_dump(Token::check(Input::get('token')));
 
 if (Input::exists())
@@ -56,3 +56,31 @@ if (Input::exists())
             }
     }
 }
+?>
+
+<html>
+<head>
+
+</head>
+<body>
+<form action="" method="post">
+    <div class="field">
+        <label for=""username">Username</label>
+        <input type="text" name="username" id="username" autocomplete="off">
+    </div>
+
+    <div class="field">
+        <label for=""password">password</label>
+        <input type="text" name="password" id="password" autocomplete="off">
+    </div>
+
+    <div class="field">
+        <label for=""password2">password again</label>
+        <input type="text" name="password2" id="password2" autocomplete="off">
+    </div>
+
+    <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
+    <input type="submit" value="register">
+</form>
+</body>
+</html>

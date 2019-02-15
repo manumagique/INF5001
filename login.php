@@ -5,7 +5,7 @@
  * Date: 2019-02-13
  * Time: 1:17 PM
  */
-require_once '../core/init.php';
+require_once 'core/init.php';
 if (Input::exists())
 {
     if (Token::check(Input::get('token')))
