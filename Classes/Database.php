@@ -120,7 +120,7 @@ class Database
             foreach ($fields as $field)
             {
                 $values .= '?';
-                if ($x < $this->count()$fields)
+                if ($x < count($fields))
                 {
                     $values .= ', ';
                 }
