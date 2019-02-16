@@ -18,8 +18,8 @@ if (Input::exists())
                 'username' => array(
                     'required' => true,
                     'min' => 2,
-                    'min' => 20,
-                    'unique' => 'user'
+                    'max' => 20,
+                    'unique' => 'Users'
                 ),
                 'pwd' => array(
                     'required' => true,
@@ -32,7 +32,6 @@ if (Input::exists())
                 )
             ));
             if ($validation->passed()) {
-               Session::flash('success', 'you registered successfully');
                $user = new User();
                $salt = Hash::salt(32);
                try

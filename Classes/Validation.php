@@ -52,7 +52,8 @@ class Validation
                                 }
                             break;
                         case 'unique' :
-                                $check = $this->_db->query();
+                                //$check = $this->_db->query();
+                                $check = $this->_db->get($ruleValue, array($item, '=', $value) );
                                 if ($check->count())
                                 {
                                     $this->addError("{$item} est déjà utilisé.");
@@ -79,6 +80,6 @@ class Validation
     }
     public function passed()
     {
-
+        return $this->_passed;
     }
 }

@@ -41,9 +41,9 @@ class User
         }
     }
 
-    public function create()
+    public function create($fields = array())
     {
-        if (!$this->_db->query())
+        if (!$this->_db->insert('Users', $fields))
         {
             throw new Exception("Il y a eu un probleme empêchant de créer l''utilisateur");
         }
@@ -54,8 +54,8 @@ class User
         if ($user)
         {
             $field = (is_numeric($user)) ? 'id' : 'username';
-//            $data = $this->_db->get('user', array($field, '=', $user));
-            $data = $this->_db->query();
+            $data = $this->_db->get('User', array($field, '=', $user));
+//            $data = $this->_db->query();
 
             if ($data->count())
             {

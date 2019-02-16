@@ -16,17 +16,17 @@ class Database
     private $password = "?h17b+gplF;H";
     private $socket_type = "mysql";
 
-    private $_db = null;
+    private $_PDO = null;
     private $_querry;
     private $_error = false;
     private $_results;
-    private $_count;
+    private $_count = 0;
 
     private function __construct()
     {
         try
             {
-                $this->_db = new PDO(
+                $this->_PDO = new PDO(
                     ''. $this->socket_type.':host='. $this->host. ';dbname='. $this->db_name .'', $this->usename, $this->password
                 );
             }
@@ -48,11 +48,11 @@ class Database
     public function query($sql, $params = array())
     {
         $this->_error = false;
-        if ($this->_querry = $this->_db->prepare($sql))
+        if ($this->_querry = $this->_PDO->prepare($sql))
         {
+            $i = 1;
             if (count($params))
             {
-                $i = 1;
                 foreach ($params as $param)
                 {
                     $this->_querry->bindValue($i, $param);
@@ -92,7 +92,7 @@ class Database
             if (in_array($operator, $operators))
             {
                 $sql = "{$action} FROM {$table} WHERE {$field} {$operator} ?";
-                if (!$this->query($sql, array($value)))
+                if (!$this->query($sql, array($value))->error())
                 {
                     return $this;
                 }
@@ -103,7 +103,7 @@ class Database
 
     public function get($table, $where )
     {
-        return $this->_action('SELECT *', $table, $where );
+        return $this->action('SELECT *', $table, $where );
     }
 
     public function delete($table, $where)

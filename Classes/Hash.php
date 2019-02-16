@@ -10,6 +10,7 @@ class Hash
 {
     public static function make($string, $salt = '')
     {
+//        return password_hash($string . $salt, PASSWORD_DEFAULT);
         return hash('sha256', $string . $salt);
     }
 
