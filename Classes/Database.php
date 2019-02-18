@@ -17,9 +17,9 @@ class Database
     private $socket_type = "mysql";
 
     private $_PDO = null;
-    private $_querry;
+    private $_query;
     private $_error = false;
-    private $_results;
+    private $_results = array();
     private $_count = 0;
 
     private function __construct()
@@ -48,22 +48,25 @@ class Database
     public function query($sql, $params = array())
     {
         $this->_error = false;
-        if ($this->_querry = $this->_PDO->prepare($sql))
+        if ($this->_query = $this->_PDO->prepare($sql))
         {
             $i = 1;
             if (count($params))
             {
                 foreach ($params as $param)
                 {
-                    $this->_querry->bindValue($i, $param);
+                    $this->_query->bindValue($i, $param);
                     $i++;
                 }
             }
-           if ($this-> _querry->execute())
+           if ($this-> _query->execute())
            {
-               $this->_results = $this->_querry->fetchAll(PDO::FETCH_OBJ);
-//               $this->_results = $this->_querry->fetchAll(SQLSRV_FETCH_ASSOC);
-               $this->_count = $this->_querry->rowCount();
+//                while ($row = $this->_query->fetch(PDO::FETCH_ASSOC|PDO::FETCH_GROUP))
+//                {
+//                    $this->_results[] = $row;
+//                }
+               $this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
+               $this->_count = $this->_query->rowCount();
            }
            else
            {
@@ -74,9 +77,33 @@ class Database
         return $this;
     }
 
-    public function toJson ()
+    public function queryb($sql, $params = array())
     {
-        json_encode($this->_results);
+        $this->_error = false;
+        if ($this->_query = $this->_PDO->prepare($sql))
+        {
+            $i = 1;
+            if (count($params))
+            {
+                foreach ($params as $param)
+                {
+                    $this->_query->bindValue($i, $param);
+                    $i++;
+                }
+            }
+            if ($this->_query->execute())
+            {
+//                $this->_results = $this->_querry->fetchAll(PDO::FETCH_ASSOC);
+//                $this->_count = $this->_querry->rowCount();
+                return $this->_query;
+            }
+            else
+            {
+                $this->_error = true;
+            }
+        }
+
+        return $this;
     }
 
     public function action($action, $table, $where = array())
@@ -159,9 +186,18 @@ class Database
         return false;
     }
 
+    public function getQuery(){
+        return $this->_query;
+    }
+
     public function results()
     {
         return $this->_results;
+    }
+
+    public function toJson ()
+    {
+        json_encode($this->_results);
     }
 
     public function firstRecord()

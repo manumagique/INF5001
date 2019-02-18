@@ -6,16 +6,17 @@
  * Time: 21:30
  */
 
-$listeProduits = array();
+$listeProduits;
 $db = Database::getInstance();
 
-
-
 $listeProduits = $db->query('SELECT * FROM Produit');
+$res = json_encode($data);
 
-
-$res = $db->toJson();
-
-
+//if ($_GET['supplierId'] ) {
+//
+//    $listeProduits = $db->query('SELECT * FROM Produit');
+//    $res = json_encode($data);
+//
+//}
 
 
