@@ -11,7 +11,7 @@ class Produit {
     private $_prix;
     private $_description;
     private $_origine;
-    private $_codes;
+    private $_code;
     private $_format;
     
     
@@ -48,9 +48,9 @@ class Produit {
         return $this->_origine;
     }
     
-    public function get_codes() {
+    public function get_code() {
         
-        return $this->_codes;
+        return $this->_code;
     }
     
     public function get_format() {
@@ -108,10 +108,10 @@ class Produit {
         
     }
     
-    public function set_codes($codes) {
+    public function set_code($codes) {
         
         if (preg_match('~^[01]+$~', $codes)) {
-            $this->_codes = $codes;
+            $this->_code = $codes;
             
         } else {
             throw new Exception("Les codes saisis ne sont pas valides.");
