@@ -5,6 +5,7 @@
  * Date: Winter 2019
  */
 
+
 class Produit {
     
     private $_nomProduit;
@@ -139,7 +140,14 @@ class Produit {
     public function format_valide() {
         //TODO
     }
-    
+
+    public function create($fields = array())
+    {
+        if (!$this->_db->insert('Produit', $fields))
+        {
+            throw new Exception("Il y a eu un probleme empêchant de créer le produit");
+        }
+    }
 }
 
 ?>

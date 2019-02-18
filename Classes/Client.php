@@ -122,4 +122,30 @@ class Client
 
     }
 
+    public function create($fields = array())
+    {
+        if (!$this->_db->insert('Client', $fields))
+        {
+            throw new Exception("Il y a eu un probleme empêchant de créer le client");
+        }
+    }
+
+    public function deleate($fields = array())
+    {
+        if (!$this->_db->deleate('Client', $fields))
+        {
+            throw new Exception("Il y a eu un probleme empêchant de créer le client");
+        }
+    }
+
+    public function update($fields = array())
+    {
+        if (!$this->_db->update('Client', $fields))
+        {
+            throw new Exception("Il y a eu un probleme empêchant de créer le client");
+        }
+    }
+
+
+
 }
