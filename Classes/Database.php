@@ -25,14 +25,14 @@ class Database
     private function __construct()
     {
         try
-            {
-                $this->_PDO = new PDO(
-                    ''. $this->socket_type.':host='. $this->host. ';dbname='. $this->db_name .'', $this->usename, $this->password
-                );
-            }
-            catch (PDOException $e)
-            {
-                die($e->getMessage());
+        {
+            $this->_PDO = new PDO(
+                ''. $this->socket_type.':host='. $this->host. ';dbname='. $this->db_name .'', $this->usename, $this->password
+            );
+        }
+        catch (PDOException $e)
+        {
+            die($e->getMessage());
         }
     }
 
@@ -59,43 +59,10 @@ class Database
                     $i++;
                 }
             }
-           if ($this-> _query->execute())
-           {
-//                while ($row = $this->_query->fetch(PDO::FETCH_ASSOC|PDO::FETCH_GROUP))
-//                {
-//                    $this->_results[] = $row;
-//                }
-               $this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
-               $this->_count = $this->_query->rowCount();
-           }
-           else
-           {
-               $this->_error = true;
-           }
-        }
-
-        return $this;
-    }
-
-    public function queryb($sql, $params = array())
-    {
-        $this->_error = false;
-        if ($this->_query = $this->_PDO->prepare($sql))
-        {
-            $i = 1;
-            if (count($params))
+            if ($this-> _query->execute())
             {
-                foreach ($params as $param)
-                {
-                    $this->_query->bindValue($i, $param);
-                    $i++;
-                }
-            }
-            if ($this->_query->execute())
-            {
-//                $this->_results = $this->_querry->fetchAll(PDO::FETCH_ASSOC);
-//                $this->_count = $this->_querry->rowCount();
-                return $this->_query;
+                $this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
+                $this->_count = $this->_query->rowCount();
             }
             else
             {
@@ -140,27 +107,27 @@ class Database
 
     public function insert($table, $fields)
     {
-            $keys = array_keys($fields);
-            $values = '';
-            $x = 1;
+        $keys = array_keys($fields);
+        $values = '';
+        $x = 1;
 
-            foreach ($fields as $field)
+        foreach ($fields as $field)
+        {
+            $values .= '?';
+            if ($x < count($fields))
             {
-                $values .= '?';
-                if ($x < count($fields))
-                {
-                    $values .= ', ';
-                }
-                $x++;
+                $values .= ', ';
             }
+            $x++;
+        }
 
-            $sql = "INSERT INTO {$table}  (`" . implode('`,`', $keys) . "`) VALUES ({$values})";
-            if (!$this->query($sql, $fields)->error())
-            {
-                return true;
-            }
+        $sql = "INSERT INTO {$table}  (`" . implode('`,`', $keys) . "`) VALUES ({$values})";
+        if (!$this->query($sql, $fields)->error())
+        {
+            return true;
+        }
 
-            return false;
+        return false;
     }
 
     public function update($table, $id, $fields )
@@ -177,7 +144,7 @@ class Database
             }
             $x++ ;
         }
-        
+
         $sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
         if (!$this->query($sql, $fields)->error())
         {
@@ -186,18 +153,19 @@ class Database
         return false;
     }
 
-    public function getQuery(){
-        return $this->_query;
-    }
-
     public function results()
     {
         return $this->_results;
     }
 
-    public function toJson ()
+    public function resultsToJson ()
     {
-        json_encode($this->_results);
+        $res = array();
+        foreach ($this->results() as $result)
+        {
+            array_push($res, array($result));
+        }
+        return json_encode($this->_results);
     }
 
     public function firstRecord()
