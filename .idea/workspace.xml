@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e139b306-00b2-4dd6-8f17-fc3c6692e95f" name="Default Changelist" comment="Correction de bug et procedure d'Ajout d'un utilisateur fonctionel">
+    <list default="true" id="e139b306-00b2-4dd6-8f17-fc3c6692e95f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/clientList.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/produitList.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/supplier.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/supplierClients.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/supplierClients.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Client.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Client.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Produit.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Produit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/SupplierClientsList.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/SupplierClientsList.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue/logIn_vue.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +97,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Classes/Client.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
+            <state relative-caret-position="-137">
               <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
             </state>
           </provider>
@@ -316,7 +305,7 @@
       <workItem from="1550158169220" duration="20028000" />
       <workItem from="1550265289910" duration="11717000" />
       <workItem from="1550304197035" duration="86000" />
-      <workItem from="1550436016991" duration="60292000" />
+      <workItem from="1550436016991" duration="60508000" />
     </task>
     <task id="LOCAL-00001" summary="Classe Databse terminé">
       <created>1550262577080</created>
@@ -360,11 +349,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550592047321</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Correction de bug et procedure d'Ajout d'un utilisateur fonctionel">
+      <created>1550606498271</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1550606498271</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99067000" />
+    <option name="totallyTimeSpent" value="99283000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -809,7 +805,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Classes/Client.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
+        <state relative-caret-position="-137">
           <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
