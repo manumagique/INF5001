@@ -66,6 +66,7 @@ class Database
             }
             else
             {
+
                 $this->_error = true;
             }
         }
@@ -165,7 +166,7 @@ class Database
         {
             array_push($res, array($result));
         }
-        return json_encode($this->_results);
+        return json_encode($res);
     }
 
     public function firstRecord()

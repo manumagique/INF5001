@@ -8,22 +8,27 @@
 
 class Produit {
     
+    /* proprietes */
+    
     private $_nomProduit;
     private $_prix;
     private $_description;
     private $_origine;
     private $_code;
     private $_format;
+    private $_logo;
     
+    /* constructeur */
     
-    public function __construct($nomProduit, $prix, $description, $origine, $codes, $format) {
+    public function __construct($nomProduit, $prix, $description, $origine, $code, $format, $logo) {
         
         $this->set_nom($nomProduit);
         $this->set_prix($prix);
         $this->set_description($description);
         $this->set_origine($origine);
-        $this->set_code($codes);
+        $this->set_code($code);
         $this->set_format($format);
+        $this->set_logo($logo);
         
     }
     
@@ -55,7 +60,13 @@ class Produit {
     }
     
     public function get_format() {
+        
         return $this->_format;
+    }
+    
+    public function get_logo() {
+        
+        return $this->_logo;
     }
     
     /* setters */
@@ -109,10 +120,10 @@ class Produit {
         
     }
     
-    public function set_code($codes) {
+    public function set_code($code) {
         
-        if (preg_match('~^[01]+$~', $codes)) {
-            $this->_code = $codes;
+        if (!preg_match('/[^A-Za-z0-9]/', $code)) {
+            $this->_code = $code;
             
         } else {
             throw new Exception("Les codes saisis ne sont pas valides.");
@@ -131,6 +142,17 @@ class Produit {
         
     }
     
+    public function set_logo($logo){
+        
+        if(isset($logo)) {
+            $this->_logo = $logo;
+            
+        } else {
+            throw new Exception("Le logo saisi n'est pas valide.");
+        }
+        
+    }
+    
     /* methodes de validation */
     
     public function origine_valide() {
@@ -140,6 +162,8 @@ class Produit {
     public function format_valide() {
         //TODO
     }
+    
+    /* fonctions de traitement */
 
     public function create($fields = array())
     {
@@ -148,6 +172,23 @@ class Produit {
             throw new Exception("Il y a eu un probleme empêchant de créer le produit");
         }
     }
+    
+    public function delete($fields = array())
+    {
+        if (!$this->_db->delete('Produit', $fields))
+        {
+            throw new Exception("Il y a eu un probleme empêchant de créer le produit");
+        }
+    }
+    
+    public function update($fields = array())
+    {
+        if (!$this->_db->update('Produit', $fields))
+        {
+            throw new Exception("Il y a eu un probleme empêchant de créer le produit");
+        }
+    }
+    
 }
 
 ?>

@@ -9,9 +9,9 @@
 class SupplierClientsList
 {
     private $_supplierId,
-            $_data,
-            $_sessionName,
-            $_db;
+        $_data,
+        $_sessionName,
+        $_db;
 
     public function __construct($supplierId)
     {
@@ -20,47 +20,11 @@ class SupplierClientsList
         $this->_supplierId = $supplierId;
 
         $this->_db->query('Select * FROM Client WHERE fkidSupplier = ?', array($supplierId));
-        $this->_data = $this->_db->results();
+        $this->_data = $this->_db->resultsToJson();
     }
 
-    public function getDB()
-    {
-        return $this->_db;
-    }
-    public function getResults()
-    {
-        $this->_db->results();
-    }
     public function data(){
         return $this->_data;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getData()
-    {
-        return $this->_db->results();
-    }
-
-    public function getJSON()
-    {
-        $rows = array();
-        $res = array();
-        while ($row = $this->_data->fetch(PDO::FETCH_ASSOC)){
-            $res [] = array(
-                'idClient' => $row['idClient'],
-                'nom' => $row['nom'],
-                'courriel' => $row['courriel'],
-                'condition_achat' => $row['condition_achat'],
-                'adresseFacturation' => $row['adresseFacturation'],
-                'adresseLivraison' => $row['adresseLivraison'],
-                'fkidSupplier' => $row['fkidSupplier']
-
-            );
-            array_push($rows, $res);
-        };
-        return $rows;
     }
 
     public  function __destruct()

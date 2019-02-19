@@ -6,6 +6,4 @@
  * Time: 12:20 PM
  */
 
-function logIn(){
-    include '../vue/loIn_vue.php';
-}
+f

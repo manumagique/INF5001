@@ -43,7 +43,7 @@ class User
 
     public function create($fields = array())
     {
-        if (!$this->_db->insert('Users', $fields))
+        if (!$this->_db->insert('User', $fields))
         {
             throw new Exception("Il y a eu un probleme empêchant de créer l''utilisateur");
         }

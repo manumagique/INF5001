@@ -2,17 +2,17 @@
 /**Jade Pomerleau Gauthier*/
 
 // Essaie lecture Json
-$json = file_get_contents("clientList.json");
-$parsed_json = json_decode($json);
-
-$_nom = $parsed_json->{'name'};
-$_compagnie = $parsed_json->{'compagny'};
-$_courriel = $parsed_json->{'email'};
-$_condition_achat = $parsed_json->{'buy_condition'};
-$_adresse_facturation = $parsed_json->{'rec_adress'};
-$_adresse_livraison = $parsed_json->{'ship_adress'};
-$_logo = $parsed_json->{'logo'};
-$_nb_commande = $parsed_json->{'nb_commande'};
+//$json = file_get_contents("clientList.json");
+//$parsed_json = json_decode($json);
+//
+//$_nom = $parsed_json->{'name'};
+//$_compagnie = $parsed_json->{'compagny'};
+//$_courriel = $parsed_json->{'email'};
+//$_condition_achat = $parsed_json->{'buy_condition'};
+//$_adresse_facturation = $parsed_json->{'rec_adress'};
+//$_adresse_livraison = $parsed_json->{'ship_adress'};
+//$_logo = $parsed_json->{'logo'};
+//$_nb_commande = $parsed_json->{'nb_commande'};
 
 
 class Client
@@ -25,6 +25,10 @@ class Client
     private $_adresse_livraison;
     private $_logo;
     private $_nb_commande;
+
+    public function __construct()
+    {
+    }
 
     public function nouveau_client($nom, $compagnie, $courriel, $condition_achat, $adresse_facturation, $adresse_livraison, $logo, $nb_commande){
         $this->setNom($nom);
@@ -130,9 +134,9 @@ class Client
         }
     }
 
-    public function deleate($fields = array())
+    public function delete($fields = array())
     {
-        if (!$this->_db->deleate('Client', $fields))
+        if (!$this->_db->delete('Client', $fields))
         {
             throw new Exception("Il y a eu un probleme empêchant de créer le client");
         }
