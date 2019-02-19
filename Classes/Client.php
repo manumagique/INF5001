@@ -1,20 +1,6 @@
 <?php
 /**Jade Pomerleau Gauthier*/
 
-// Essaie lecture Json
-//$json = file_get_contents("clientList.json");
-//$parsed_json = json_decode($json);
-//
-//$_nom = $parsed_json->{'name'};
-//$_compagnie = $parsed_json->{'compagny'};
-//$_courriel = $parsed_json->{'email'};
-//$_condition_achat = $parsed_json->{'buy_condition'};
-//$_adresse_facturation = $parsed_json->{'rec_adress'};
-//$_adresse_livraison = $parsed_json->{'ship_adress'};
-//$_logo = $parsed_json->{'logo'};
-//$_nb_commande = $parsed_json->{'nb_commande'};
-
-
 class Client
 {
     private $_nom;
