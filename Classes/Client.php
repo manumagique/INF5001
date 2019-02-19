@@ -130,7 +130,7 @@ class Client
         }
     }
 
-    public function deleate($fields = array())
+    public function delete($fields = array())
     {
         if (!$this->_db->deleate('Client', $fields))
         {
