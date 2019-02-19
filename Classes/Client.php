@@ -132,7 +132,7 @@ class Client
 
     public function delete($fields = array())
     {
-        if (!$this->_db->deleate('Client', $fields))
+        if (!$this->_db->delete('Client', $fields))
         {
             throw new Exception("Il y a eu un probleme empêchant de créer le client");
         }

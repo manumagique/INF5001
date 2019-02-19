@@ -175,7 +175,7 @@ class Produit {
     
     public function delete($fields = array())
     {
-        if (!$this->_db->deleate('Produit', $fields))
+        if (!$this->_db->delete('Produit', $fields))
         {
             throw new Exception("Il y a eu un probleme empêchant de créer le produit");
         }
