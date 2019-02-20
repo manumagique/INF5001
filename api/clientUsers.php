@@ -10,7 +10,7 @@ header('Content-Type: application/json');
 
 if (isset($_GET))
 {
-    $data  = new CLientUsersList($_GET['idClient']);
+    $data  = new ClientUsers($_GET['idClient']);
 
     echo $data->data();
 

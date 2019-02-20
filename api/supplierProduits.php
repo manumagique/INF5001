@@ -10,7 +10,7 @@ header('Content-Type: application/json');
 
 if (isset($_GET))
 {
-    $data  = new SupplierProduitsList($_GET['idSupplier']);
+    $data  = new SupplierProduits($_GET['idSupplier']);
 
     echo $data->data();
 
