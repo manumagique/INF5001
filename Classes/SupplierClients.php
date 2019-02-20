@@ -6,7 +6,7 @@
  * Time: 00:27
  */
 
-class SupplierClientsList
+class SupplierClients
 {
     private $_supplierId,
         $_data,

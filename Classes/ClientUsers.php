@@ -3,23 +3,23 @@
  * Created by PhpStorm.
  * User: emmanuelboyer
  * Date: 2019-02-19
- * Time: 00:03
+ * Time: 01:30
  */
 
-class SupplierProduitsList
+class ClientUsers
 {
-    private $_supplierId,
+    private $_clientId,
         $_data,
         $_sessionName,
         $_db;
 
-    public function __construct($supplierId)
+    public function __construct($clientId)
     {
         $this->_db = Database::getInstance();
         $this->_sessionName = Config::get('session/session_name');
-        $this->_supplierId = $supplierId;
+        $this->_clientId = $clientId;
 
-        $this->_db->query('Select * FROM Produit WHERE fkidSupplier = ?', array($supplierId));
+        $this->_db->query('Select id, username, userCat FROM User WHERE fkidClient = ?', array($clientId));
         $this->_data = $this->_db->resultsToJson();
     }
 
