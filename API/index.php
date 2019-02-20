@@ -6,10 +6,6 @@
  * Time: 8:58 PM
  */
 
-include('../Classes/SupplierClientsList.php');
-include('../Classes/SupplierProduitsList.php');
-include('../Classes/SupplierUsersList.php');
-include('../Classes/ClientUsersList.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
