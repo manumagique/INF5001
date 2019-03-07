@@ -59,6 +59,14 @@ class Validation
                                     $this->addError("{$item} est déjà utilisé.");
                                 }
                             break;
+                        case 'numeric' :
+                            //$check = $this->_db->query();
+                            $check = $this->_db->get($ruleValue, array($item, '=', $value) );
+                            if ($check->count())
+                            {
+                                $this->addError("{$item} est déjà utilisé.");
+                            }
+                            break;
                     }
                 }
             }

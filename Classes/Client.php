@@ -27,6 +27,9 @@ class Client
         $this->setNbCommande($nb_commande);
     }
 // getters
+    public function loadFromDB (){
+        echo "bla bla bla";
+    }
     public function getNom(){
         return $this->_nom;
     }

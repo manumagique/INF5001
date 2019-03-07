@@ -161,12 +161,12 @@ class Database
 
     public function resultsToJson ()
     {
-        $res = array();
-        foreach ($this->results() as $result)
-        {
-            array_push($res, array($result));
-        }
-        return json_encode($res);
+//        $res = array();
+//        foreach ($this->results() as $result)
+//        {
+//            array_push($res, array($result));
+//        }
+        return json_encode($this->results());
     }
 
     public function firstRecord()

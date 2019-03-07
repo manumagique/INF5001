@@ -9,15 +9,23 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    $page = $_GET['page'];
-
-
     $idSupplier = $_GET['idSupplier'];
 
-    if($page == "client") {
+    $about = $_GET['about'];
+    $idAbout = $_GET['idAbout'];
 
-        if(!empty($id))
-            include('supplierClients.php');
+    if($about == "client") {
+
+        if(!empty($idAbout))
+        {
+            $res = new Supplier();
+            echo $res->getClientList();
+        }
+        else
+        {
+            $res = new Client();
+            echo $res->loadFromDB($idAbout);
+        }
 
     } else if($page == "produit") {
 
@@ -29,7 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(!empty($id))
             include('supplierUsers.php');
 
+    }else if($page == "commande") {
+
+        if(!empty($id))
+            include('supplierUsers.php');
+
     }
+
+//fin de GET
+
+
+
+
 
 
 } else  if ($_SERVER['REQUEST_METHOD'] == 'POST') {

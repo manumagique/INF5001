@@ -10,7 +10,12 @@ class Produit {
     
     /* proprietes */
     
-    private $_nomProduit;
+    private $_db;
+    private $_data;
+
+    private $_idSupplier;
+    private $_idProduit;
+    private $_nom;
     private $_prix;
     private $_description;
     private $_origine;
@@ -19,24 +24,65 @@ class Produit {
     private $_logo;
     
     /* constructeur */
-    
-    public function __construct($nomProduit, $prix, $description, $origine, $code, $format, $logo) {
-        
-        $this->set_nom($nomProduit);
-        $this->set_prix($prix);
-        $this->set_description($description);
-        $this->set_origine($origine);
-        $this->set_code($code);
-        $this->set_format($format);
-        $this->set_logo($logo);
-        
+
+    public function __construct($idProduit = null)
+    {
+        $this->_db = Database::getInstance();
+        if ($idProduit)
+        {
+            $this->loadFromDb($idProduit);
+        }
     }
+
+    private function loadFromDb($idProduit)
+    {
+
+        if($this->_db->query('SELECT * FROM Produit WHERE idProduit = ?', array($idProduit)))
+        {
+            $this->_idProduit = $idProduit;
+            $this->_data = $this->_db->results()[0];
+
+            $this->_nom = $this->_data->nom ;
+            $this->_prix = $this->_data->prix ;
+            $this->_description = $this->_data->description ;
+            $this->_origine = $this->_data->origine ;
+            $this->_code = $this->_data->code ;
+            $this->_format = $this->_data->format ;
+            $this->_fkidSupplier = $this->_data->fkidSupplier ;
+        }
+    }
+
+    public function save()
+    {
+        if ($this->_idProduit)
+        {
+            $this->_db->update('Produit', $this->_idProduit,
+                array( 'nom' => $this->get_nom().'updated'
+            ));
+        }
+    }
+
+    public function updateCHeck()
+    {
+        $obj =array($this);
+        $keys = array_keys($obj);
+        $changedFIeld = array();
+        foreach ($keys as $key => $field) {
+            if ($this.'->_'.$field != $this->_data.'->$field')
+            {
+                array_push($changedFIeld, $field);
+            }
+        }
+        return $changedFIeld;
+    }
+
     
     /* getters */
+
     
     public function get_nom() {
         
-        return $this->_nomProduit;
+        return $this->_nom;
     }
     
     public function get_prix() {
@@ -74,7 +120,7 @@ class Produit {
     public function set_nom($nom_produit) {
         
         if(is_string($nom_produit)){
-            $this->_nomProduit = $nom_produit;
+            $this->_nom = $nom_produit;
             
         } else {
             throw new Exception("Le nom du produit saisi n'est pas valide.");
@@ -151,6 +197,11 @@ class Produit {
             throw new Exception("Le logo saisi n'est pas valide.");
         }
         
+    }
+
+    public function setIdSupplier($idSupplier)
+    {
+        $this->_idSupplier = $idSupplier;
     }
     
     /* methodes de validation */

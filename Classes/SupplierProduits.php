@@ -20,7 +20,8 @@ class SupplierProduits
         $this->_supplierId = $supplierId;
 
         $this->_db->query('Select * FROM Produit WHERE fkidSupplier = ?', array($supplierId));
-        $this->_data = $this->_db->resultsToJson();
+        $this->_data = $this->_db->results();
+        $this->_db = null;
     }
 
     public function data(){

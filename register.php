@@ -17,6 +17,7 @@ if (Input::exists())
             $validation = $validate->check($_POST, array(
                 'username' => array(
                     'required' => true,
+                    'numeric'=> true,
                     'min' => 2,
                     'max' => 20,
                     'unique' => 'Users'
