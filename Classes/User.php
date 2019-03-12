@@ -95,4 +95,21 @@ class User
     {
         return $this->_isLoggedIn;
     }
+
+    /**Code de Jade ci-dessous**/
+
+    /** Retourne l'information d'un utilisateur**/
+    public function loadFromDB ()
+    {
+        $db = Database::getInstance();
+        $db->query("SELECT * FROM User WHERE id = ?", ['id', $this->_id]);
+    }
+
+    /**Ajouter un utilisateur à un fournisseur**/
+    public function addUser($idSupplier)
+    {
+        $db = Database::insert();
+        //$db->query("SELECT * FROM Supplier WHERE id = ?", ['id', $this->_id]);
+
+    }
 }
