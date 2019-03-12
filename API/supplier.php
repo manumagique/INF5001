@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $idSupplier = $_GET['idSupplier'];
     $about = $_GET['about'];
     $idAbout = $_GET['idAbout'];
+    $res = new Supplier();
 
     /**L'URL est de type http....com/API/Fournisseur/1/about/idabout
      *
@@ -23,15 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * tous les clients du fournisseur 1.
          */
         if(empty($idAbout)){
-            $res = new Supplier();
             echo $res->getClientList();
+
         /**L'URL est de type http....com/API/Fournisseur/1/Client/idabout
          * Si on a le idabout, cela veut dire qu'on veut avoir la liste du
          *  client ayant l'id égale à la variable id about .
          */
         } else {
-            $res = new Client();
-            echo $res->loadFromDB($idAbout);
+            echo $res->getClient($idAbout);
         }
 
     } else if($about == "product") {
@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * tous les produits du fournisseur 1.
          */
         if(empty($idAbout)) {
-            $res = new Supplier();
             echo $res->getProductList();
 
             /**L'URL est de type http....com/API/Fournisseur/1/Produit/1
@@ -48,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * produit 1 du fournisseur 1.
              */
         } else {
-            $res = new Product();
             echo $res->loadFromDB($idAbout);
         }
 
@@ -58,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * tous les utilisateurs du fournisseur 1.
          */
         if(empty($idAbout)) {
-            $res = new Supplier();
             echo $res->getUserList();
 
             /**L'URL est de type http....com/API/Fournisseur/1/User/1
@@ -66,18 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * l'utilisateur 1 du fournisseur 1.
              */
         } else {
-            $res = new User();
-            echo $res->loadFromDB($idAbout);
+            echo $res->getUser($idAbout);
         }
 
     }else if($about == "order") {
 
         if(empty($idAbout)) {
-            $res = new Supplier();
             echo $res->getOrderList();
         } else {
-            $res = new Order();
-            echo $res->loadFromDB($idAbout);
+            echo $res->getOrder($idAbout);
         }
     }
 
