@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $idSupplier = $_GET['idSupplier'];
     $about = $_GET['about'];
     $idAbout = $_GET['idAbout'];
-    $res = new Supplier();
+    $res = new Supplier($idSupplier);
 
     /**L'URL est de type http....com/API/Fournisseur/1/about/idabout
      *
