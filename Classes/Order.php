@@ -29,4 +29,24 @@ class Order
         //$db->query("SELECT * FROM Supplier WHERE id = ?", ['id', $this->_id]);
 
     }
+
+    public function compareOrder($id)
+    {
+
+    }
+
+    public function itemsListOrder()
+    {
+
+    }
+
+    public function updateOrder($id)
+    {
+
+    }
+
+    public function deleteOrder($id) {
+
+    }
+
 }

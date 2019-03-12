@@ -31,6 +31,19 @@ class Product {
 
     }
 
+    public function updateProduct($id) {
+
+    }
+
+    public function compareProduct($id) {
+
+    }
+
+    public function deleteProduct($id) {
+
+    }
+
+
 //    /* proprietes */
 //
 //    private $_db;

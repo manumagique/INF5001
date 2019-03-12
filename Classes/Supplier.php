@@ -57,4 +57,10 @@ class Supplier
     {
         echo "Suprimer le client X ";
     }
+
+    public function deleteAllProducts()
+    {
+
+    }
+
 }

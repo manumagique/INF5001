@@ -112,4 +112,14 @@ class User
         //$db->query("SELECT * FROM Supplier WHERE id = ?", ['id', $this->_id]);
 
     }
+
+    public function updateUser($id)
+    {
+
+    }
+
+    public function deleteUser($id) {
+
+    }
+
 }

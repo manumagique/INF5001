@@ -19,12 +19,47 @@ class Client
     }
 
     /**Ajouter un client à un fournisseur**/
-    public function addClient($idSupplier)
+    public function addClient($idClient)
     {
         $db = Database::insert();
         //$db->query("SELECT * FROM Supplier WHERE id = ?", ['id', $this->_id]);
 
     }
+
+    /* obtenir la liste des utilisateurs client */
+    public function getClientUsersList()
+    {
+        $db = Database::getInstance();
+        $db->query("SELECT * FROM Client");
+
+        $db->resultsToJson();
+    }
+
+    public function deleteAllUsers()
+    {
+
+    }
+
+    public function compareClient($id)
+    {
+
+    }
+
+    public function getClientOrdersList($id)
+    {
+
+    }
+
+    public function updateClient($id)
+    {
+
+    }
+
+    public function deleteAllOrders($id)
+    {
+
+    }
+
 
 //    private $_nom;
 //    private $_compagnie;
