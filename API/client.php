@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             /* obtenir la liste des produits du fournisseur rattaché au client */
         if (empty($idAbout)) {
             //include('supplierProduits.php');
-            $res = new Supplier();
+            $var = "SELECT fkidSupplier FROM Client WHERE id=$idClient";
+            $res = new Supplier($var);
             echo $res->getProductList();
 
             /* obtenir la description d'un produit */
