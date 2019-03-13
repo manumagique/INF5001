@@ -211,6 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $idSupplier = $_DELETE['idSupplier'];
     $about = $_DELETE['about'];
     $idAbout = $_DELETE['idAbout'];
+    $res = new Supplier($idSupplier);
 
     if($about == "client") {
 
@@ -218,11 +219,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * Si on n'a pas le idabout, on veut supprimer tous les clients du fournisseur
          */
         if(empty($idAbout)){
-            $res = new Supplier();
             $res->deleteAllClient();
             //Supprimer tous les clients d'un fournisseur
         } else {
-            $res = new Supplier();
             $res->deleteClient($idAbout);
             //Supprimer le client $idabout du fournisseur
 
@@ -231,19 +230,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } else if($about == "product") {
 
         if(empty($idAbout)) {
-            //Supprimer tous les produits du fournisseur
+            $res->deleteAllProduct();
         } else {
-            //Supprimer un produit
+            $res->deleteProduct();
         }
 
     } else if($about == "user") {
 
         if(empty($idAbout)) {
-           //Supprimer tous les utilisateur du fournisseur
+            $res->deleteAllUser();
         } else {
-            //Supprimer l'utilisateur X du fournisseur
+            $res->deleteUser();
         }
 
+        //ATTENDRE BASE DE DONNEES
     }else if($about == "order") {
 
         if(empty($idAbout)) {

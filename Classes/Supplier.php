@@ -91,19 +91,56 @@ class Supplier
 
 
     /**Supprime tous les clients du fournisseur**/
+    //À voir si c'est pertinent ?
     public function deleteAllClient()
     {
-        echo "Supprimer tous les clients";
+        //supprimer tous les clients ayant le fournisseur X
+        // penser au cas où un client a plusieurs fournisseurs
+        $db = Database::getInstance();
+        $req = $db->prepare('DELETE from Client WHERE fkidSupplier=?');
+        $req ->execute(array(this));
+
+
     }
 
     /**Supprime un client du fournisseur**/
-    public function deleteClient($idabout)
+    public function deleteClient($idAbout)
     {
-        echo "Suprimer le client X ";
+        $db = Database::getInstance();
+        $req = $db->prepare('DELETE from Client WHERE fkidSupplier=? AND idClient=?');
+        $req ->execute(array(this,$idAbout));
+        //penser à supprimer aussi les commandes
     }
 
-    public function deleteAllProducts()
+    //à voir si c'est pertinent ?
+    public function deleteAllProduct()
     {
+
+    }
+
+    public function deleteProduct($idAbout)
+    {
+        //Supprimer le produit de la table produit
+        $db = Database::getInstance();
+        $req = $db->prepare('DELETE from Produit WHERE fkidSupplier=? AND idProduit=?');
+        $req ->execute(array(this,$idAbout));
+
+
+    }
+
+    //à voir si c'est pertinent ?
+    public function deleteAllUser()
+    {
+
+    }
+
+    public function deleteUser($idAbout)
+    {
+
+        $db = Database::getInstance();
+        $req = $db->prepare('DELETE from User WHERE fkidSupplier=? AND id=?');
+        $req ->execute(array(this,$idAbout));
+
 
     }
 
