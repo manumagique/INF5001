@@ -22,6 +22,7 @@ class Database
     private $_results = array();
     private $_count = 0;
 
+    /*Connexion à la base de données*/
     private function __construct()
     {
         try
@@ -36,6 +37,7 @@ class Database
         }
     }
 
+    /*Connexion à la base de données*/
     public static function getInstance()
     {
         if (!isset(self::$_instance))
@@ -45,6 +47,12 @@ class Database
         return self::$_instance;
     }
 
+    /*
+     * Effectuer un action sur la base de données
+     *
+     * $sql: la requête ex: "SELECT * FROM Client WHERE id = ?"
+     * $params : les conditions de recherche
+     * */
     public function query($sql, $params = array())
     {
         $this->_error = false;
@@ -74,6 +82,15 @@ class Database
         return $this;
     }
 
+    /*
+     * Effectuer un action sur la base de données
+     *
+     * $action: L'action qu'on veut effectuer ex: SELECT, DELETE, INSERT
+     * $table: le nom de la table dans la base de données
+     * $where: tableau des conditions de recherche ex:
+     *
+     * N'est pas vrm utilisé dans nos classes
+     * */
     public function action($action, $table, $where = array())
     {
         if (count($where) === 3)
@@ -96,16 +113,34 @@ class Database
         return false;
     }
 
+    /*
+     * Retourner (SELECT) tous les attributs (*) d'un élément d'une table ($table)
+     *
+     * $table: le nom de la table de la base de données
+     * $where: la condition ex: WHERE idClient=2
+     * */
     public function get($table, $where )
     {
         return $this->action('SELECT *', $table, $where );
     }
 
+    /*
+     * Supprimer (DELETE) un élément d'une table ($table)
+     *
+     * $table: le nom de la table de la base de données
+     * $where: la condition ex: WHERE idClient=2
+     * */
     public function delete($table, $where)
     {
         return $this->action('DELETE' , $table, $where);
     }
 
+    /*
+     * Ajouter une entité à la base de données
+     *
+     * $table: le nom de la table dans la base de données où on veut ajouter l'élément
+     * $fields: l'array des éléments à ajouter
+     * */
     public function insert($table, $fields)
     {
         $keys = array_keys($fields);
@@ -131,6 +166,14 @@ class Database
         return false;
     }
 
+    /*
+     * Mettre à jour une entité dans la base de données
+     *
+     * $table: le nom de la table dans la base de données où se trouve l'élément (entité)
+     * $id: l'id de l'élément modifier
+     * $fields: l'array des éléments à modifier
+     *
+     * */
     public function update($table, $id, $fields )
     {
         $set = '';
@@ -154,11 +197,17 @@ class Database
         return false;
     }
 
+    /*
+     * Ne sais pas ce que ca fait ..
+     * */
     public function results()
     {
         return $this->_results;
     }
 
+    /*
+     * Retourner un Json
+     */
     public function resultsToJson ()
     {
 //        $res = array();
@@ -169,21 +218,34 @@ class Database
         return json_encode($this->results());
     }
 
+    /*
+     * Ne sais pas
+     * Peut-etre pour l'affichage d'Olivier on veut avoir le premier élément de la base de données ?
+     * */
     public function firstRecord()
     {
         return $this->results()[0];
     }
 
+    /*Message d'erreur */
     public function error()
     {
         return $this->_error;
     }
 
+    /*
+     * Compter le nombre d'éléments dans la base de données ??
+     * => Je crois qu'olivier a dit que ca se faisait directement avec la base de données ?
+     *  */
     public function count()
     {
         return $this->_count;
     }
 
+    /*
+     * Détruire une table de la base de données ?
+     * Ne sais pas si c'est utile dans notre cas
+     * */
 //    private function __destruct()
 //    {
 //        // TODO: Implement __destruct() method Database.
