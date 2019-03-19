@@ -99,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "erreur";
         } else {
 
-            $res = new Client();
-            $res->addClient($idSupplier);
+//            $res = new Client();
+            $res->addClient();
 
         }
 
@@ -109,8 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-            $res = new Product();
-            $res->addProduct($idSupplier);
+//            $res = new Product();
+            $res->addProduct();
         }
 
     } else if($about == "user") {
@@ -118,8 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-            $res = new User();
-            $res->addUser($idSupplier);
+//            $res = new User();
+            $res->addUser();
         }
 
     }else if($about == "order") {
@@ -127,8 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-            $res = new Order();
-            $res->addOrder($idSupplier);
+//            $res = new Order();
+            $res->addOrder();
         }
     }
 
@@ -151,9 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * d'un client
              */
         } else {
-            //On doit recevoir de nouveau array client
-            // le valider
-            //Le remplacer dans la base de données à la place du $idabout
+            $res->editClient($idAbout);
 
         }
 
@@ -170,9 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * produit 1 du fournisseur 1.
              */
         } else {
-            //On doit recevoir de nouveau array product
-            // le valider
-            //Le remplacer dans la base de données à la place du $idabout
+            $res->editProduct($idAbout);
         }
 
     } else if($about == "user") {
@@ -188,9 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * l'utilisateur 1 du fournisseur 1.
              */
         } else {
-            //On doit recevoir de nouveau array user
-            // le valider
-            //Le remplacer dans la base de données à la place du $idabout
+            $res->editUser($idAbout);
         }
 
     }else if($about == "order") {
@@ -198,9 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur, impossible de modifier toutes les commandes en même temps";
         } else {
-            //On doit recevoir de nouveau array user
-            // le valider
-            //Le remplacer dans la base de données à la place du $idabout
+            $res->editOrder($idAbout);
         }
     }
 

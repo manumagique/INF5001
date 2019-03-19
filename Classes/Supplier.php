@@ -16,6 +16,8 @@ class Supplier
         $this->_id = $id;
     }
 
+
+    /** GET **/
     /**Retourne le nom d'un fournisseur**/
     public function getSupplier ()
     {
@@ -105,7 +107,76 @@ class Supplier
 ////        $req ->execute(array(this, $idUser));
 //    }
 
+    /**POST**/
+    // Comment on recoit l.info ?
+    //Possible d'indiquer fkidSupplier ?
+    public function addClient()
+    {
+        $db = Database::getInstance();
+        $db->insert(Client, array());
 
+    }
+
+    public function addProduct()
+    {
+        $db = Database::getInstance();
+        $db->insert(Produit, array());
+    }
+
+    public function addUser()
+    {
+        $db = Database::getInstance();
+        $db->insert(User, array());
+    }
+
+    public function addOrder()
+    {
+        $db = Database::getInstance();
+        $db->insert(Order, array());
+    }
+
+
+    /**PUT**/
+    // Comment on recoit l.info ?
+    //$array: key-value des nouvelle valeurs
+    // ex :
+    //          $query = "UPDATE
+    //                " . $this->table_name . "
+    //            SET
+    //                name = :name,
+    //                price = :price,
+    //                description = :description,
+    //                category_id = :category_id
+    //            WHERE
+    //                id = :id";
+
+    public function editClient($idClient)
+    {
+        $db = Database::getInstance();
+        $db->query("UPDATE Client SET  WHERE idClient = ?", array($idClient));
+
+    }
+
+    public function editProduct($idProduct)
+    {
+        $db = Database::getInstance();
+        $db->query("UPDATE Produit SET WHERE idProduit = ?", array($idProduct));
+    }
+
+    public function editUser($idUser)
+    {
+        $db = Database::getInstance();
+        $db->query("UPDATE User SET WHERE id = ?", array($idUser));
+    }
+
+    public function editOrder($idOrder)
+    {
+        $db = Database::getInstance();
+        $db->query("UPDATE Order SET WHERE idOrder = ?", array($idOrder));
+    }
+
+
+    /**DELETE**/
     /**Supprime tous les clients du fournisseur**/
     //À voir si c'est pertinent ?
     public function deleteAllClient()
@@ -126,12 +197,12 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("DELETE FROM Client WHERE fkidSupplier = ? AND idClient=?", array(this,$idAbout));
-        /*
+        /**
          * penser à supprimer aussi les commandes => ATTENDRE BASE DE DONNÉES POUR ORDER
          * $db = Database::getInstance();
          * $db->query("DELETE FROM Order WHERE fkidSupplier = ? AND idClient=?", array(this,$idAbout));
          * penser à supprimer l'idClient dans la table supplier
-         * */
+         * **/
 //        $req = $db->prepare('DELETE from Client WHERE fkidSupplier=? AND idClient=?');
 //        $req ->execute(array(this,$idAbout));
 
