@@ -9,13 +9,15 @@ header('Content-Type: application/json');
  *
  */
 
+$idSupplier = $_GET['idSupplier'];
+$about = $_GET['about'];
+$idAbout = $_GET['idAbout'];
+$res = new Supplier($idSupplier);
+
 /**GET pour aller chercher sur la base de données**/
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    $idSupplier = $_GET['idSupplier'];
-    $about = $_GET['about'];
-    $idAbout = $_GET['idAbout'];
-    $res = new Supplier($idSupplier);
+
 
     /**L'URL est de type http....com/API/Fournisseur/1/about/idabout
      *
@@ -87,9 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Ajouter**/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $idSupplier = $_POST['idSupplier'];
-    $about = $_POST['about'];
-    $idAbout = $_POST['idAbout'];
 
     if($about == "client") {
 
@@ -137,9 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 /**Modifier la base de données**/
 /**Fonction update de la database **/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    $idSupplier = $_PUT['idSupplier'];
-    $about = $_PUT['about'];
-    $idAbout = $_PUT['idAbout'];
+
 
     if($about == "client") {
 
@@ -211,10 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Supprimer**/
     /**Fonction 'delete' de la database**/
 }else  if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    $idSupplier = $_DELETE['idSupplier'];
-    $about = $_DELETE['about'];
-    $idAbout = $_DELETE['idAbout'];
-    $res = new Supplier($idSupplier);
+
 
     if($about == "client") {
 
