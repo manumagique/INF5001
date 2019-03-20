@@ -2,30 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e139b306-00b2-4dd6-8f17-fc3c6692e95f" name="Default Changelist" comment="Correction des nom des classes causant un problème dans les requêtes">
-      <change afterPath="$PROJECT_DIR$/API/xxx/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/xxx/login.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/xxx/produitList.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/API/xxx/supplierClients.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/428dbea8-eb8a-42a4-a50c-c7ab96c4935b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/428dbea8-eb8a-42a4-a50c-c7ab96c4935b.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/login.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/produitList.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/supplierClients.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/supplierProduits.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/supplierUsers.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Client.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Client.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Produit.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Produit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/Supplier.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/Supplier.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/SupplierProduits.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/SupplierProduits.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classes/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/xxx/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/createClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/xxx/createClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/createUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/xxx/createUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/supplierProduits.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/xxx/supplierProduits.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/supplierUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/API/xxx/supplierUsers.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,22 +41,23 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6154847">
+    <splitter split-orientation="horizontal" split-proportion="0.49405178">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/api/supplier.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-3380">
-                  <caret line="7" selection-start-line="7" selection-end-line="7" />
-                  <folding>
-                    <element signature="e#340#419#0#PHP" />
-                    <element signature="e#424#2380#0#PHP" />
-                    <element signature="e#1031#2380#0#PHP" />
-                    <element signature="e#1655#1855#0#PHP" />
-                    <element signature="e#1864#2199#0#PHP" />
-                    <element signature="e#2252#2323#0#PHP" />
-                  </folding>
+                <state relative-caret-position="161">
+                  <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/api/client.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="161">
+                  <caret line="24" selection-start-line="24" selection-end-line="24" />
                 </state>
               </provider>
             </entry>
@@ -87,7 +65,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Classes/Client.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="72">
+                <state relative-caret-position="644">
                   <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
                 </state>
               </provider>
@@ -96,17 +74,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Classes/Supplier.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="82" column="56" lean-forward="true" selection-start-line="82" selection-start-column="56" selection-end-line="82" selection-end-column="56" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/api/client.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="437">
-                  <caret line="58" column="12" lean-forward="true" selection-start-line="58" selection-start-column="12" selection-end-line="59" selection-end-column="44" />
+                <state relative-caret-position="713">
+                  <caret line="36" column="5" lean-forward="true" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
@@ -114,8 +83,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Classes/Order.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="415">
-                  <caret line="28" column="33" lean-forward="true" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+                <state relative-caret-position="529">
+                  <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
                 </state>
               </provider>
             </entry>
@@ -123,16 +92,16 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Classes/Product.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="557">
-                  <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+                <state relative-caret-position="713">
+                  <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Classes/User.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="516">
+                <state relative-caret-position="813">
                   <caret line="106" column="35" selection-start-line="106" selection-start-column="35" selection-end-line="106" selection-end-column="35" />
                 </state>
               </provider>
@@ -141,7 +110,7 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
             <entry file="das://428dbea8-eb8a-42a4-a50c-c7ab96c4935b/schema/lango721_gestiondecommandes/table/Client">
               <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
@@ -156,6 +125,24 @@
               <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
                 <state>
                   <filtering enabled="true" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/api/controller.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="23">
+                  <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/api/xxx/createClient.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="169">
+                  <caret line="12" column="9" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="9" />
                 </state>
               </provider>
             </entry>
@@ -245,17 +232,16 @@
       </list>
     </option>
   </component>
-  <component name="PhpDebugGeneral" break_at_first_line="true" listening_started="true" />
+  <component name="PhpDebugGeneral" break_at_first_line="true" />
   <component name="PhpServers">
     <servers>
       <server host="localhost" id="bce2cc08-1612-4d91-bab2-51fb2702d6c6" name="localhost" port="8888" />
     </servers>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="4" />
     <option name="y" value="23" />
-    <option name="width" value="1902" />
-    <option name="height" value="1417" />
+    <option name="width" value="1680" />
+    <option name="height" value="1027" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -274,17 +260,7 @@
             <path>
               <item name="INF5001" type="b2602c69:ProjectViewProjectNode" />
               <item name="INF5001" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="INF5001" type="b2602c69:ProjectViewProjectNode" />
-              <item name="INF5001" type="462c0819:PsiDirectoryNode" />
               <item name="Classes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="INF5001" type="b2602c69:ProjectViewProjectNode" />
-              <item name="INF5001" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -365,7 +341,9 @@
       <workItem from="1552393356342" duration="7000" />
       <workItem from="1552393408251" duration="12674000" />
       <workItem from="1552966136562" duration="733000" />
-      <workItem from="1553034708582" duration="23266000" />
+      <workItem from="1553034708582" duration="23503000" />
+      <workItem from="1553118347773" duration="1967000" />
+      <workItem from="1553121898568" duration="1682000" />
     </task>
     <task id="LOCAL-00001" summary="Classe Databse terminé">
       <created>1550262577080</created>
@@ -434,7 +412,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="204487000" />
+    <option name="totallyTimeSpent" value="208373000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -446,10 +424,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="4" y="23" width="1902" height="1417" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17365591" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12759463" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="File Transfer" order="0" sideWeight="0.49871135" weight="0.32849503" />
@@ -457,7 +435,7 @@
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.20091674" />
       <window_info anchor="bottom" id="Run" order="4" />
-      <window_info active="true" anchor="bottom" id="Debug" order="5" sideWeight="0.49811795" visible="true" weight="0.2971734" />
+      <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.49811795" weight="0.41240478" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.32987553" />
@@ -467,11 +445,11 @@
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32987553" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50128865" side_tool="true" weight="0.32861805" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="14" weight="0.32925898" />
-      <window_info anchor="right" id="Remote Host" order="0" weight="0.18412699" />
+      <window_info anchor="right" id="Remote Host" order="0" weight="0.18376069" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" id="Database" order="4" weight="0.15645161" />
+      <window_info anchor="right" id="Database" order="4" weight="0.21916972" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20499243" />
@@ -558,7 +536,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vue/logIn_vue.php" />
     <entry file="das://fde17f35-1a5f-428b-a457-61cb67d3ca51/schema/lango721_gestiondecommandes/table/appUser" />
     <entry file="file://$PROJECT_DIR$/Classes/prouteList.php" />
     <entry file="file://$PROJECT_DIR$/api/proute.php" />
@@ -670,13 +647,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/xxx/createClient.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/xxx/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -754,13 +724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://428dbea8-eb8a-42a4-a50c-c7ab96c4935b/schema/lango721_gestiondecommandes/table/User">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Classes/SupplierClients.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
@@ -785,13 +748,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://428dbea8-eb8a-42a4-a50c-c7ab96c4935b/schema/lango721_gestiondecommandes/table/Client">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Classes/Database.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="676">
@@ -802,60 +758,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Classes/Product.php">
+    <entry file="file://$PROJECT_DIR$/api/supplier.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="557">
-          <caret line="34" column="5" lean-forward="true" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Classes/Order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="28" column="33" lean-forward="true" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+        <state relative-caret-position="161">
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Classes/Client.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
+        <state relative-caret-position="644">
           <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Classes/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="106" column="35" selection-start-line="106" selection-start-column="35" selection-end-line="106" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Classes/Supplier.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="82" column="56" lean-forward="true" selection-start-line="82" selection-start-column="56" selection-end-line="82" selection-end-column="56" />
+        <state relative-caret-position="713">
+          <caret line="36" column="5" lean-forward="true" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/client.php">
+    <entry file="file://$PROJECT_DIR$/Classes/Order.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="58" column="12" lean-forward="true" selection-start-line="58" selection-start-column="12" selection-end-line="59" selection-end-column="44" />
+        <state relative-caret-position="529">
+          <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/supplier.php">
+    <entry file="file://$PROJECT_DIR$/Classes/Product.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3380">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#340#419#0#PHP" />
-            <element signature="e#424#2380#0#PHP" />
-            <element signature="e#1031#2380#0#PHP" />
-            <element signature="e#1655#1855#0#PHP" />
-            <element signature="e#1864#2199#0#PHP" />
-            <element signature="e#2252#2323#0#PHP" />
-          </folding>
+        <state relative-caret-position="713">
+          <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://428dbea8-eb8a-42a4-a50c-c7ab96c4935b/schema/lango721_gestiondecommandes/table/Client">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://428dbea8-eb8a-42a4-a50c-c7ab96c4935b/schema/lango721_gestiondecommandes/table/User">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/xxx/createClient.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -863,6 +825,20 @@
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Classes/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="813">
+          <caret line="106" column="35" selection-start-line="106" selection-start-column="35" selection-end-line="106" selection-end-column="35" />
         </state>
       </provider>
     </entry>
