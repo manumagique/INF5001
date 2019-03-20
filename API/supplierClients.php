@@ -8,6 +8,7 @@
 require_once '../core/init.php';
 header('Content-Type: application/json');
 
+
 if (isset($_GET))
 {
     $data  = new SupplierClients($_GET['idSupplier']);
