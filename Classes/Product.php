@@ -8,19 +8,30 @@
 
 class Product {
 
-    private $_id;
+    private $_id,
+            $_data;
 
 
     public function __construct($id)
     {
-        $this->_id = $id;
+        if ($id != null)
+        {
+            $this->_id = $id;
+            $this->loadFromDB();
+        }
     }
 
     /**Retourne l'information d'un produit**/
     public function loadFromDB ()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Product WHERE id = ?", ['id', $this->_id]);
+        $db->query("SELECT * FROM Product WHERE idProduct = ?", array( $this->_id));
+        $this->_data = $db->results();
+    }
+
+    public function toJSON()
+    {
+        return json_encode($this->_data);
     }
 
     /**Ajouter un produit à un fournisseur**/

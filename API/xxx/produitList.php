@@ -9,7 +9,7 @@
 $listeProduits;
 $db = Database::getInstance();
 
-$listeProduits = $db->query('SELECT * FROM Produit');
+$listeProduits = $db->query('SELECT * FROM Product');
 $res = json_encode($data);
 
 //if ($_GET['supplierId'] ) {

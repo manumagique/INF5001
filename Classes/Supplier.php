@@ -8,7 +8,8 @@
 /**Jade**/
 class Supplier
 {
-    private $_id;
+    private $_id,
+            $_data;
 
 
     public function __construct($id)
@@ -28,31 +29,35 @@ class Supplier
     public function getClientList()
     {
         $db = Database::getInstance();
-        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ?');
-        $req ->execute(array(this));
+        $db->query("SELECT idClient, nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ?", array($this->_id));
+//        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ?');
+//        $req ->execute(array(this));
+        $res = $db->results();
+        return $db->resultsToJson();
     }
 
     /**Retourne la fiche détaillée d'un client  du fournisseur**/
-    public function getClient($idClient)
-    {
-        $db = Database::getInstance();
-        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ? AND idClient = ?');
-        $req ->execute(array(this,$idClient));
-    }
+//    public function getClient($idClient)
+//    {
+//        $db = Database::getInstance();
+//        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ? AND idClient = ?');
+//        $req ->execute(array(this,$idClient));
+//    }
 
     /**Retourne la liste des produits du fournisseur**/
     public function getProductList()
     {
         $db = Database::getInstance();
-        $req = $db->prepare('SELECT nom, prix, description, origine, code, format FROM Produit WHERE fkidSupplier = ?');
-        $req ->execute(array(this));
+        $db->query("SELECT idProduct, nom, prix, description, origine, code, format FROM Product WHERE fkidSupplier = ?", array($this->_id));
+        $res = $db->resultsToJson();
+        return $res;
     }
 
     /**Retourne le détail d'un produit du fournisseur**/
     public function getProduct($idProduct)
     {
         $db = Database::getInstance();
-        $req = $db->prepare('SELECT nom, prix, description, origine, code, format FROM Produit WHERE fkidSupplier = ? AND idProduit=?');
+        $req = $db->prepare('SELECT nom, prix, description, origine, code, format FROM Product WHERE fkidSupplier = ? AND idProduct=?');
         $req ->execute(array(this, $idProduct));
     }
 
@@ -60,8 +65,10 @@ class Supplier
     public function getUserList()
     {
         $db = Database::getInstance();
-        $req = $db->prepare('SELECT username FROM User WHERE fkidSupplier = ?');
-        $req ->execute(array(this));
+        $db->query("SELECT id, username FROM User WHERE fkidSupplier = ?", array($this->_id));
+//        $req = $db->prepare('SELECT username FROM User WHERE fkidSupplier = ?');
+//        $req ->execute(array(this));
+        return $db->resultsToJson();
     }
 
     /**Retourne d'un utilisateur du fournisseur**/
@@ -73,21 +80,21 @@ class Supplier
     }
 
     /**ATTENDRE TABLE BASE DE DONNÉES COMMANDE **/
-//    /**Retourne la liste des commandes du fournisseur**/
-//    public function getOrderList()
-//    {
-//       $db = Database::getInstance();
-//       $req = $db->prepare('SELECT  FROM Order WHERE fkidSupplier = ? ');
-//        $req ->execute(array(this));
-//    }
-//
-//    /**Retourne une commande du fournisseur**/
-//    public function getOrder($idOrder)
-//    {
-//        $db = Database::getInstance();
-//        $req = $db->prepare('SELECT  FROM Order WHERE fkidSupplier = ? AND idOrder = ?');
-//        $req ->execute(array(this, $idUser));
-//    }
+    /**Retourne la liste des commandes du fournisseur**/
+    public function getOrderList()
+    {
+       $db = Database::getInstance();
+       $req = $db->prepare('SELECT  FROM ClientOrder WHERE fkidSupplier = ? ');
+       $req ->execute(array(this));
+    }
+
+    /**Retourne une commande du fournisseur**/
+    public function getOrder($idOrder)
+    {
+        $db = Database::getInstance();
+        $req = $db->prepare('SELECT  FROM ClientOrder WHERE fkidSupplier = ? AND idOrder = ?');
+        $req ->execute(array(this, $idUser));
+    }
 
 
     /**Supprime tous les clients du fournisseur**/
@@ -122,7 +129,7 @@ class Supplier
     {
         //Supprimer le produit de la table produit
         $db = Database::getInstance();
-        $req = $db->prepare('DELETE from Produit WHERE fkidSupplier=? AND idProduit=?');
+        $req = $db->prepare('DELETE from Product WHERE fkidSupplier=? AND idProduct=?');
         $req ->execute(array(this,$idAbout));
 
 

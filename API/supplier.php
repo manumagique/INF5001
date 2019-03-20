@@ -5,6 +5,8 @@
  * 1 est l'idSupplier
  *
  */
+require_once '../core/init.php';
+header('Content-Type: application/json');
 
 /**GET pour aller chercher sur la base de données**/
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -12,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $idSupplier = $_GET['idSupplier'];
     $about = $_GET['about'];
     $idAbout = $_GET['idAbout'];
-    $res = new Supplier($idSupplier);
+    $supplier = new Supplier($idSupplier);
 
     /**L'URL est de type http....com/API/Fournisseur/1/about/idabout
      *
@@ -24,14 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * tous les clients du fournisseur 1.
          */
         if(empty($idAbout)){
-            echo $res->getClientList();
+            echo $supplier->getClientList();
 
         /**L'URL est de type http....com/API/Fournisseur/1/Client/idabout
          * Si on a le idabout, cela veut dire qu'on veut avoir la liste du
          *  client ayant l'id égale à la variable id about .
          */
         } else {
-            echo $res->getClient($idAbout);
+            $client = new Client($idAbout);
+            echo $client->toJSON();
         }
 
     } else if($about == "product") {
@@ -40,14 +43,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * tous les produits du fournisseur 1.
          */
         if(empty($idAbout)) {
-            echo $res->getProductList();
+            echo $supplier->getProductList();
 
             /**L'URL est de type http....com/API/Fournisseur/1/Produit/1
              * idabout = 1, signifie qu'on veut avoir le descriptif du
              * produit 1 du fournisseur 1.
              */
         } else {
-            echo $res->loadFromDB($idAbout);
+            $prod = new Product($idAbout);
+            echo $prod->toJSON();
         }
 
     } else if($about == "user") {
@@ -56,30 +60,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * tous les utilisateurs du fournisseur 1.
          */
         if(empty($idAbout)) {
-            echo $res->getUserList();
+            echo $supplier->getUserList();
 
             /**L'URL est de type http....com/API/Fournisseur/1/User/1
              * idabout = 1, signifie qu'on veut avoir le descriptif de
              * l'utilisateur 1 du fournisseur 1.
              */
         } else {
-            echo $res->getUser($idAbout);
+            $user = new User();
+            echo $user->loadFromDB($idAbout);
+//            echo $res->getUser($idAbout);
         }
 
     }else if($about == "order") {
 
         if(empty($idAbout)) {
-            echo $res->getOrderList();
+            echo $supplier->getOrderList();
         } else {
-            echo $res->getOrder($idAbout);
+            $order = new Order($idAbout);
+            echo $order->loadFromDB($idAbout);
         }
     }
 
 //fin de GET
-
-
-
-
 
     /**Ajouter**/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -97,8 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "erreur";
         } else {
 
-            $res = new Client();
-            $res->addClient($idSupplier);
+            $supplier = new Client();
+            $supplier->addClient($idSupplier);
 
         }
 
@@ -107,8 +110,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-            $res = new Product();
-            $res->addProduct($idSupplier);
+            $supplier = new Product();
+            $supplier->addProduct($idSupplier);
         }
 
     } else if($about == "user") {
@@ -116,8 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-            $res = new User();
-            $res->addUser($idSupplier);
+            $supplier = new User();
+            $supplier->addUser($idSupplier);
         }
 
     }else if($about == "order") {
@@ -125,8 +128,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-            $res = new Order();
-            $res->addOrder($idSupplier);
+            $supplier = new Order();
+            $supplier->addOrder($idSupplier);
         }
     }
 
@@ -211,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $idSupplier = $_DELETE['idSupplier'];
     $about = $_DELETE['about'];
     $idAbout = $_DELETE['idAbout'];
-    $res = new Supplier($idSupplier);
+    $supplier = new Supplier($idSupplier);
 
     if($about == "client") {
 
@@ -219,10 +222,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          * Si on n'a pas le idabout, on veut supprimer tous les clients du fournisseur
          */
         if(empty($idAbout)){
-            $res->deleteAllClient();
+            $supplier->deleteAllClient();
             //Supprimer tous les clients d'un fournisseur
         } else {
-            $res->deleteClient($idAbout);
+            $supplier->deleteClient($idAbout);
             //Supprimer le client $idabout du fournisseur
 
         }
@@ -230,17 +233,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } else if($about == "product") {
 
         if(empty($idAbout)) {
-            $res->deleteAllProduct();
+            $supplier->deleteAllProduct();
         } else {
-            $res->deleteProduct();
+            $supplier->deleteProduct();
         }
 
     } else if($about == "user") {
 
         if(empty($idAbout)) {
-            $res->deleteAllUser();
+            $supplier->deleteAllUser();
         } else {
-            $res->deleteUser();
+            $supplier->deleteUser();
         }
 
         //ATTENDRE BASE DE DONNEES

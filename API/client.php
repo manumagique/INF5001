@@ -5,59 +5,46 @@
  * Date: 2019-02-19
  * Time: 01:30
  */
-require_once '../core/init.php';
-header('Content-Type: application/json');
-
-/*if (isset($_GET))
-{
-    $data  = new ClientUsers($_GET['idClient']);
-
-    echo $data->data();
-
-}*/
-
-
 /**
  * Author: Valentina
  * Date: Winter 2019
  */
-
+require_once '../core/init.php';
+header('Content-Type: application/json');
 
 /* GET : obtenir info de la BD */
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $idClient = $_GET['idClient'];
-
     $about = $_GET['about'];
     $idAbout = $_GET['idAbout'];
 
+    $client = new Client($idClient);
     if ($about == "produit") {
 
             /* obtenir la liste des produits du fournisseur rattaché au client */
         if (empty($idAbout)) {
             //include('supplierProduits.php');
-            $res = new Supplier();
-            echo $res->getProductList();
+            $supplier = new Supplier($client->getClientSupplier());
+            echo $supplier->getProductList();
 
             /* obtenir la description d'un produit */
         } else {
-            $res = new Product();
-            echo $res->loadFromDB($idAbout);
+            $res = new Product($idAbout);
+            echo $res->toJSON();
         }
 
     } else if ($about == "user") {
 
             /* obtenir la liste des utilisateurs client */
         if (empty($idAbout)) {
-            //include('supplierUsers.php');
-            $res = new Client($idClient);
-            echo $res->getClientUsersList();
+            echo $client->getClientUsersList();
 
             /* obtenir la description d'un utilisateurs */
         } else {
-            $res = new User();
-            echo $res->loadFromDB($idAbout);
+            $user = new User();
+            echo $user->loadFromDB($idAbout);
         }
 
     } else if ($about == "order") {
@@ -65,12 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             /* obtenir la liste des commandes du fournisseur rattaché au client */
         if (empty($idAbout)) {
             //include('supplierUsers.php');
-            $res = new Client($idClient);
-            echo $res->getClientOrdersList();
+            echo $client->getClientOrdersList();
 
             /* obtenir la description d'une commande */
         } else {
-            $res = new Order();
+            $res = new Order($idAbout);
             echo $res->loadFromDB($idAbout);
         }
     }

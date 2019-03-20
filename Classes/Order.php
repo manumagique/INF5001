@@ -19,7 +19,8 @@ class Order
     public function loadFromDB ()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Order WHERE id = ?", ['id', $this->_id]);
+        $db->query("SELECT * FROM ClientOrder WHERE id = ?", array($this->_id));
+        return $db->resultsToJson();
     }
 
     /**Ajouter une commande à un fournisseur**/

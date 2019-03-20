@@ -12,6 +12,7 @@ class User
     private $_data;
     private $_sessionName;
     private $_isLoggedIn;
+    private $_id;
 
     public function __construct($user = null )
     {
@@ -99,10 +100,11 @@ class User
     /**Code de Jade ci-dessous**/
 
     /** Retourne l'information d'un utilisateur**/
-    public function loadFromDB ()
+    public function loadFromDB ($id)
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM User WHERE id = ?", ['id', $this->_id]);
+        $db->query("SELECT id,username FROM User WHERE id = ?", array( $id));
+        return $db->resultsToJson();
     }
 
     /**Ajouter un utilisateur à un fournisseur**/

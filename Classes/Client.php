@@ -3,19 +3,30 @@
 
 class Client
 {
-    private $_id;
+    private $_id,
+            $_data;
 
 
-    public function __construct($id)
+    public function __construct($id = null)
     {
-        $this->_id = $id;
+        if ($id != null)
+        {
+            $this->_id = $id;
+            $this->loadFromDB();
+        }
     }
 
     /** Retourne l'information d'un client**/
     public function loadFromDB ()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client WHERE id = ?", ['id', $this->_id]);
+        $db->query("SELECT * FROM Client WHERE idClient = ?", [$this->_id]);
+        $this->_data = $db->results();
+    }
+
+    public function toJSON()
+    {
+        return json_encode($this->_data);
     }
 
     /**Ajouter un client à un fournisseur**/
@@ -30,9 +41,17 @@ class Client
     public function getClientUsersList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client");
+        $db->query("SELECT id,username FROM User WHERE fkidClient = ?", array($this->_id));
+        return $db->resultsToJson();
+    }
 
-        $db->resultsToJson();
+    public function getClientSupplier()
+    {
+        foreach ($this->_data as $row)
+        {
+            $res = $row->fkidSupplier;
+        }
+        return $res;
     }
 
     public function deleteAllUsers()
@@ -45,9 +64,11 @@ class Client
 
     }
 
-    public function getClientOrdersList($id)
+    public function getClientOrdersList()
     {
-
+        $db = Database::getInstance();
+        $db->query("SELECT * FROM ClientOrder WHERE fkidClient = ?", array($this->_id));
+        return $db->resultsToJson();
     }
 
     public function updateClient($id)

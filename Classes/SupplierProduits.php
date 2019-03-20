@@ -19,7 +19,7 @@ class SupplierProduits
         $this->_sessionName = Config::get('session/session_name');
         $this->_supplierId = $supplierId;
 
-        $this->_db->query('Select * FROM Produit WHERE fkidSupplier = ?', array($supplierId));
+        $this->_db->query('Select * FROM Product WHERE fkidSupplier = ?', array($supplierId));
         $this->_data = $this->_db->results();
         $this->_db = null;
     }

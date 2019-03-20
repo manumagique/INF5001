@@ -37,7 +37,7 @@ class Produit {
     private function loadFromDb($idProduit)
     {
 
-        if($this->_db->query('SELECT * FROM Produit WHERE idProduit = ?', array($idProduit)))
+        if($this->_db->query('SELECT * FROM Product WHERE idProduct = ?', array($idProduit)))
         {
             $this->_idProduit = $idProduit;
             $this->_data = $this->_db->results()[0];
