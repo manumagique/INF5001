@@ -32,46 +32,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $about = $_GET['about'];
     $idAbout = $_GET['idAbout'];
 
-    if ($about == "produit") {
+    $res = new Client($idClient);
+
+    if (empty($about)) {
+        $resutat = $res->getClientDetails();
+        echo $resutat;
+
+    } else if ($about == "produit") {
 
             /* obtenir la liste des produits du fournisseur rattaché au client */
         if (empty($idAbout)) {
+            $resutat = $res->getProductsList();
+            echo $resutat;
+
             //include('supplierProduits.php');
-            $res = new Supplier();
-            echo $res->getProductList();
+            //$res = new Supplier();
+            //echo $res->getProductList();
 
             /* obtenir la description d'un produit */
         } else {
-            $res = new Product();
-            echo $res->loadFromDB($idAbout);
+            $resutat = $res->getProductDetails($idAbout);
+            echo $resutat;
+
+            //$res = new Product();
+            //echo $res->loadFromDB($idAbout);
         }
 
     } else if ($about == "user") {
 
             /* obtenir la liste des utilisateurs client */
         if (empty($idAbout)) {
+            $resutat = $res->getUsersList();
+            echo $resutat;
+
             //include('supplierUsers.php');
-            $res = new Client($idClient);
-            echo $res->getClientUsersList();
+            //$res = new Client($idClient);
+            //echo $res->getClientUsersList();
 
             /* obtenir la description d'un utilisateurs */
         } else {
-            $res = new User();
-            echo $res->loadFromDB($idAbout);
+            $resutat = $res->getUser($idAbout);
+            echo $resutat;
+
+            //$res = new User();
+            //echo $res->loadFromDB($idAbout);
         }
 
     } else if ($about == "order") {
 
             /* obtenir la liste des commandes du fournisseur rattaché au client */
         if (empty($idAbout)) {
+            $resutat = $res->getOrdersList();
+            echo $resutat;
+
             //include('supplierUsers.php');
-            $res = new Client($idClient);
-            echo $res->getClientOrdersList();
+            //$res = new Client($idClient);
+            //echo $res->getClientOrdersList();
 
             /* obtenir la description d'une commande */
         } else {
-            $res = new Order();
-            echo $res->loadFromDB($idAbout);
+            $resutat = $res->getOrder($idAbout);
+            echo $resutat;
+
+            //$res = new Order();
+            //echo $res->loadFromDB($idAbout);
         }
     }
 
@@ -84,6 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $about = $_POST['about'];
     $idAbout = $_POST['idAbout'];
 
+    $res = new Client($idClient);
+
     if($about == "product") {
 
             /* erreur si produit non spécifié */
@@ -91,8 +117,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "Erreur";
 
         } else {
-            $res = new Product();
-            $res->addProduct($idAbout);
+            $url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
+            $donnees = json_decode($url, true);     //associative array
+            $res->addProduct($donnees);
+            echo "Succès";
+
+            //$res = new Product();
+            //$res->addProduct($idAbout);
         }
 
     } else if($about == "user") {
@@ -102,7 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "Erreur";
 
         } else {
-            include('createClient.php');
+            $url = file_get_contents("http://.../api/Client/".$idClient."/user/.".$idAbout);
+            $donnees = json_decode($url, true);     //associative array
+            $res->addUser($donnees);
+            echo "Succès";
         }
 
     }else if($about == "order") {
@@ -112,8 +146,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "Erreur";
 
         } else {
-            $res = new Order();
-            $res->addOrder($idAbout);
+            $url = file_get_contents("http://.../api/Client/".$idClient."/user/.".$idAbout);
+            $donnees = json_decode($url, true);     //associative array
+            $res->addOrder($donnees);
+            echo "Succès";
+
+            //$res = new Order();
+            //$res->addOrder($idAbout);
         }
     }
 
@@ -125,6 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $about = $_PUT['about'];
     $idAbout = $_PUT['idAbout'];
 
+    $res = new Client($idClient);
+
     if($about == "product") {
 
             /* erreur si produit non spécifié */
@@ -132,8 +173,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "Erreur";
 
         } else {
-            $res = new Product();
-            $res->updateProduct($idAbout);
+            $url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
+            $donnees = json_decode($url, true);     //associative array
+            $res->deleteProduct($idAbout);
+            $res->addProduct($donnees);
+            echo "Succès";
+
+            //$res = new Product();
+            //$res->updateProduct($idAbout);
+
         }
 
     } else if($about == "user") {
@@ -143,8 +191,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "Erreur";
 
         } else {
-            $res = new User();
-            echo $res->updateUser($idAbout);
+            $url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
+            $donnees = json_decode($url, true);     //associative array
+            $res->deleteUser($idAbout);
+            $res->addUser($donnees);
+            echo "Succès";
+
+            //$res = new User();
+            //echo $res->updateUser($idAbout);
         }
 
     }else if($about == "order") {
@@ -154,8 +208,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "Erreur";
 
         } else {
-            $res = new Order();
-            $res->updateOrder($idAbout);
+            $url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
+            $donnees = json_decode($url, true);     //associative array
+            $res->deleteOrder($idAbout);
+            $res->addOrder($donnees);
+            echo "Succès";
+
+            //$res = new Order();
+            //$res->updateOrder($idAbout);
         }
     }
 
@@ -167,37 +227,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $about = $_DELETE['about'];
     $idAbout = $_DELETE['idAbout'];
 
+    $res = new Client($idClient);
+
     if($about == "product") {
 
         if(empty($idAbout)) {
-            $res = new Supplier();
-            echo $res->deleteAllProducts();
+            $res->deleteAllProducts();
+            echo "Succès";
+
+            //$res = new Supplier();
+            //echo $res->deleteAllProducts();
 
         } else {
-            $res = new Product();
-            echo $res->deleteProduct($idAbout);
+            $res->deleteProduct($idAbout);
+            echo "Succès";
+
+            //$res = new Product();
+            //echo $res->deleteProduct($idAbout);
         }
 
     } else if($about == "user") {
 
         if(empty($idAbout)) {
-            $res = new Client($idClient);
-            echo $res->deleteAllUsers();
+            $res->deleteAllUsers();
+            echo "Succès";
+
+            //$res = new Client($idClient);
+            //echo $res->deleteAllUsers();
 
         } else {
-            $res = new User();
-            echo $res->deleteUser($idAbout);
+            $res->deleteUser($idAbout);
+            echo "Succès";
+
+            //$res = new User();
+            //echo $res->deleteUser($idAbout);
         }
 
     }else if($about == "order") {
 
         if(empty($idAbout)) {
-            $res = new Client($idClient);
-            echo $res->deleteAllOrders();
+            $res->deleteAllOrders();
+            echo "Succès";
+
+            //$res = new Client($idClient);
+            //echo $res->deleteAllOrders();
 
         } else {
-            $res = new Order();
             $res->deleteOrder($idAbout);
+            echo "Succès";
+
+            //$res = new Order();
+            //$res->deleteOrder($idAbout);
         }
     }
 }

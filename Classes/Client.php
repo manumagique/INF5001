@@ -1,9 +1,15 @@
 <?php
 /**Jade Pomerleau Gauthier*/
 
+/**
+ * Author: Valentina
+ * Date: Winter 2019
+ */
+
 class Client
 {
-    private $_id;
+    private $_id; //3
+    private $data;
 
 
     public function __construct($id)
@@ -12,53 +18,203 @@ class Client
     }
 
     /** Retourne l'information d'un client**/
-    public function loadFromDB ()
+    public function loadFromDB()
     {
+        //$db = Database::getInstance();
+        //$db->query("SELECT * FROM Client WHERE id = ?", ['id', $this->_id]);
+
+        $sql = "SELECT * FROM Client WHERE id = $this->_id";
+        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
+        $this->data = mysqli_fetch_array($req);
+
+        /*$this->_nom = $this->data['nom'];
+        $this->_courriel = $this->data['courriel'];
+        $this->_condition_achat = $this->data['condition_achat'];
+        $this->_adresseFacturation = $this->data['adresseFacturation'];
+        $this->_adresseLivraison = $this->data['adresseLivraison'];
+        $this->_fkidSupplier = $this->data['fkidSupplier'];*/
+
+        /*
+        Nom : <?php echo $data['nom'] ?>.<br />
+        Courriel : <?php echo $data['courriel'] ?>.<br />
+        Condition d'achat : <?php echo $data['condition_achat'] ?>.<br />
+        Adresse de facturation : <?php echo $data['adresseFacturation'] ?>.<br />
+        Adresse de livraison : <?php echo $data['adresseLivraison'] ?>.<br />
+
+        Nom : Exemple1
+        Courriel : exemple1@exemple.com
+        Condition d'achat : null
+        Adresse de facturation : 111 exemple
+        Adresse de livraison : 112 exemple
+        */
+
+    }
+
+    /* méthodes pour GET */
+
+    public function getClientDetails() {
+        $this->loadFromDB();
+        return json_encode($this->data);
+
+        /*$this->_nom = $this->data['nom'];
+        $this->_courriel = $this->data['courriel'];
+        $this->_condition_achat = $this->data['condition_achat'];
+        $this->_adresseFacturation = $this->data['adresseFacturation'];
+        $this->_adresseLivraison = $this->data['adresseLivraison'];
+        $this->_fkidSupplier = $this->data['fkidSupplier'];*/
+
+        /*
+        $this->_idProduit = $idProduit;
+        $this->_data = $this->_db->results()[0];
+
+        $this->_nom = $this->_data->nom ;
+        $this->_prix = $this->_data->prix ;
+        $this->_description = $this->_data->description ;
+        $this->_origine = $this->_data->origine ;
+        $this->_code = $this->_data->code ;
+        $this->_format = $this->_data->format ;
+        $this->_fkidSupplier = $this->_data->fkidSupplier ;
+        */
+
+        //$proprietesProduit = array(
+        // *              "id" => $_id,
+        // *              "name" => $_nomProduit,
+        // *              "prix" => $_prix,
+        // *              "description" => $_description,
+        // *              "origine" => $_origine,
+        // *              "code" => $_code,
+        // *              "format" => $_format,
+        // *              "logo" => $_logo
+        // *          );
+    }
+
+    public function getProductsList() {
+        $this->loadFromDB();
+        $sql = "SELECT * FROM Produit WHERE id = $this->data['fkidSupplier']";
+        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
+        $donnee = mysqli_fetch_array($req);
+        return json_encode($donnee);
+
+        //$db = Database::getInstance();
+        //$var = "SELECT fkidSupplier FROM Client WHERE id = $this->_id";
+        //$sql = "SELECT * FROM Produit WHERE id = $var";
+    }
+
+    public function getProductDetails($idAbout) {
+        $this->loadFromDB();
+        $sql = "SELECT $idAbout FROM Produit WHERE id = $this->data['fkidSupplier']";
+        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
+        $donnee = mysqli_fetch_array($req);
+        return json_encode($donnee);
+    }
+
+    public function getUsersList() {    //?
+        $sql = "SELECT * FROM User WHERE id = $this->_id";
+        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
+        $donnee = mysqli_fetch_array($req);
+        return json_encode($donnee);
+    }
+
+    public function getUser($idAbout) {     //?
+        $sql = "SELECT $idAbout FROM User WHERE id = $this->_id";
+        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
+        $donnee = mysqli_fetch_array($req);
+        return json_encode($donnee);
+    }
+
+    public function getOrdersList() {   //Order datatable manque
+        $sql = "SELECT * FROM Order WHERE id = $this->_id";
+        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
+        $donnee = mysqli_fetch_array($req);
+        return json_encode($donnee);
+    }
+
+    public function getOrder($idAbout) {   //Order datatable manque
+        $sql = "SELECT $idAbout FROM Order WHERE id = $this->_id";
+        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
+        $donnee = mysqli_fetch_array($req);
+        return json_encode($donnee);
+    }
+
+    /* méthodes pour POST */
+
+    public function addProduct($donnees) {     //?
+
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client WHERE id = ?", ['id', $this->_id]);
+        $db->insert(Produit, $donnees);
     }
 
-    /**Ajouter un client à un fournisseur**/
-    public function addClient($idClient)
-    {
-        $db = Database::insert();
-        //$db->query("SELECT * FROM Supplier WHERE id = ?", ['id', $this->_id]);
-
-    }
-
-    /* obtenir la liste des utilisateurs client */
-    public function getClientUsersList()
-    {
+    public function addUser($donnees) {     //?
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client");
-
-        $db->resultsToJson();
+        $db->insert(User, $donnees);
     }
 
-    public function deleteAllUsers()
-    {
-
+    public function addOrder($donnees) {     //?
+        $db = Database::getInstance();
+        $db->insert(Order, $donnees);
     }
 
-    public function compareClient($id)
-    {
 
+    /* méthodes pour DELETE */
+
+    public function deleteAllProducts() {
+        $this->loadFromDB();
+        $db = Database::getInstance();
+        $db->delete(Produit, $this->data['fkidSupplier']);
     }
 
-    public function getClientOrdersList($id)
-    {
-
+    public function deleteProduct($idAbout) {
+        $this->loadFromDB();
+        $db = Database::getInstance();
+        $db->delete(Produit, $idAbout);
     }
 
-    public function updateClient($id)
-    {
-
+    public function deleteAllUsers() {
+        $db = Database::getInstance();
+        $db->delete(User, $this->_id);
     }
 
-    public function deleteAllOrders($id)
-    {
-
+    public function deleteUser($idAbout) {
+        $db = Database::getInstance();
+        $db->delete(User, $idAbout);
     }
+
+    public function deleteAllOrders() {
+        $db = Database::getInstance();
+        $db->delete(Order, $this->_id);
+    }
+
+    public function deleteOrder($idAbout) {
+        $db = Database::getInstance();
+        $db->delete(Order, $idAbout);
+    }
+
+
+
+
+
+
+
+
+
+
+
+//    /**Ajouter un client à un fournisseur**/
+//    public function addClient($idClient)
+//    {
+//        $db = Database::insert();
+//        //$db->query("SELECT * FROM Supplier WHERE id = ?", ['id', $this->_id]);
+//
+//    }
+
+//    /* obtenir la liste des utilisateurs client */
+//    public function getClientUsersList()
+//    {
+//        $db = Database::getInstance();
+//        $db->query("SELECT * FROM Client");
+//
+//        $db->resultsToJson();
+//    }
 
 
 //    private $_nom;
