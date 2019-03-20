@@ -23,6 +23,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT * FROM Fournisseur WHERE idFournisseur = ?", array(this));
+        return $db->resultsToJson();
 //        $req = $db->preapre('SELECT nom  FROM Fournisseur WHERE idFournisseur = ?');
 //        $req ->execute(array(this));
     }
@@ -32,7 +33,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT * FROM Client WHERE fkidSupplier = ?", array(this));
-
+        return $db->resultsToJson();
 //        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ?');
 //        $req ->execute(array(this));
     }
@@ -42,7 +43,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT * FROM Client WHERE fkidSupplier = ? AND idClient = ?", array(this,$idClient));
-
+        return $db->resultsToJson();
 //        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ? AND idClient = ?');
 //        $req ->execute(array(this,$idClient));
     }
@@ -52,7 +53,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT * FROM Produit WHERE fkidSupplier = ?", array(this));
-
+        return $db->resultsToJson();
 //        $req = $db->prepare('SELECT nom, prix, description, origine, code, format FROM Produit WHERE fkidSupplier = ?');
 //        $req ->execute(array(this));
     }
@@ -62,7 +63,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT * FROM Produit WHERE fkidSupplier = ? AND idProduit = ?", array(this, $idProduct));
-
+        return $db->resultsToJson();
 //        $req = $db->prepare('SELECT nom, prix, description, origine, code, format FROM Produit WHERE fkidSupplier = ? AND idProduit=?');
 //        $req ->execute(array(this, $idProduct));
     }
@@ -72,7 +73,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT username FROM User WHERE fkidSupplier = ?", array(this));
-
+        return $db->resultsToJson();
 //        $req = $db->prepare('SELECT username FROM User WHERE fkidSupplier = ?');
 //        $req ->execute(array(this));
     }
@@ -82,7 +83,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT username FROM User WHERE fkidSupplier = ? AND id = ?", array(this, $idUser));
-
+        return $db->resultsToJson();
 
 //        $req = $db->prepare('SELECT username FROM User WHERE fkidSupplier = ? AND id = ?');
 //        $req ->execute(array(this, $idUser));
@@ -113,25 +114,29 @@ class Supplier
     public function addClient()
     {
         $db = Database::getInstance();
-        $db->insert(Client, array());
+        $data = json_decode(file_get_contents("php://input"));
+        $db->insert(Client, $data);
 
     }
 
     public function addProduct()
     {
         $db = Database::getInstance();
+        $data = json_decode(file_get_contents("php://input"));
         $db->insert(Produit, array());
     }
 
     public function addUser()
     {
         $db = Database::getInstance();
+        $data = json_decode(file_get_contents("php://input"));
         $db->insert(User, array());
     }
 
     public function addOrder()
     {
         $db = Database::getInstance();
+        $data = json_decode(file_get_contents("php://input"));
         $db->insert(Order, array());
     }
 
