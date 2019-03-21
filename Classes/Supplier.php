@@ -18,15 +18,6 @@ class Supplier
 
 
     /** GET **/
-    /**Retourne le nom d'un fournisseur**/
-    public function getSupplier ()
-    {
-        $db = Database::getInstance();
-        $db->query("SELECT * FROM Fournisseur WHERE idFournisseur = ?", array(this));
-        return $db->resultsToJson();
-//        $req = $db->preapre('SELECT nom  FROM Fournisseur WHERE idFournisseur = ?');
-//        $req ->execute(array(this));
-    }
 
     /**Retourne la liste des clients du fournisseur**/
     public function getClientList()
@@ -34,8 +25,7 @@ class Supplier
         $db = Database::getInstance();
         $db->query("SELECT * FROM Client WHERE fkidSupplier = ?", array(this));
         return $db->resultsToJson();
-//        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ?');
-//        $req ->execute(array(this));
+
     }
 
     /**Retourne la fiche détaillée d'un client  du fournisseur**/
@@ -44,8 +34,7 @@ class Supplier
         $db = Database::getInstance();
         $db->query("SELECT * FROM Client WHERE fkidSupplier = ? AND idClient = ?", array(this,$idClient));
         return $db->resultsToJson();
-//        $req = $db->prepare('SELECT nom, courriel, condition_achat, adresseFacturation, adresseLivraison FROM Client WHERE fkidSupplier = ? AND idClient = ?');
-//        $req ->execute(array(this,$idClient));
+
     }
 
     /**Retourne la liste des produits du fournisseur**/
@@ -54,8 +43,7 @@ class Supplier
         $db = Database::getInstance();
         $db->query("SELECT * FROM Produit WHERE fkidSupplier = ?", array(this));
         return $db->resultsToJson();
-//        $req = $db->prepare('SELECT nom, prix, description, origine, code, format FROM Produit WHERE fkidSupplier = ?');
-//        $req ->execute(array(this));
+
     }
 
     /**Retourne le détail d'un produit du fournisseur**/
@@ -64,8 +52,7 @@ class Supplier
         $db = Database::getInstance();
         $db->query("SELECT * FROM Produit WHERE fkidSupplier = ? AND idProduit = ?", array(this, $idProduct));
         return $db->resultsToJson();
-//        $req = $db->prepare('SELECT nom, prix, description, origine, code, format FROM Produit WHERE fkidSupplier = ? AND idProduit=?');
-//        $req ->execute(array(this, $idProduct));
+
     }
 
     /**Retourne la liste des utilisateurs du fournisseur**/
@@ -74,8 +61,7 @@ class Supplier
         $db = Database::getInstance();
         $db->query("SELECT username FROM User WHERE fkidSupplier = ?", array(this));
         return $db->resultsToJson();
-//        $req = $db->prepare('SELECT username FROM User WHERE fkidSupplier = ?');
-//        $req ->execute(array(this));
+
     }
 
     /**Retourne d'un utilisateur du fournisseur**/
@@ -85,37 +71,49 @@ class Supplier
         $db->query("SELECT username FROM User WHERE fkidSupplier = ? AND id = ?", array(this, $idUser));
         return $db->resultsToJson();
 
-//        $req = $db->prepare('SELECT username FROM User WHERE fkidSupplier = ? AND id = ?');
-//        $req ->execute(array(this, $idUser));
     }
 
     /**ATTENDRE TABLE BASE DE DONNÉES COMMANDE **/
-//    /**Retourne la liste des commandes du fournisseur**/
-//    public function getOrderList()
-//    {
-//       $db = Database::getInstance();
-//       $db->query("SELECT username FROM Order WHERE fkidSupplier = ? ", array(this));
-////       $req = $db->prepare('SELECT  FROM Order WHERE fkidSupplier = ? ');
-////        $req ->execute(array(this));
-//    }
-//
-//    /**Retourne une commande du fournisseur**/
-//    public function getOrder($idOrder)
-//    {
-//        $db = Database::getInstance();
-//       $db->query("SELECT username FROM Order WHERE fkidSupplier = ? AND idOrder = ?", array(this, $idUser));
-////        $req = $db->prepare('SELECT  FROM Order WHERE fkidSupplier = ? AND idOrder = ?');
-////        $req ->execute(array(this, $idUser));
-//    }
+    /**Retourne la liste des commandes du fournisseur**/
+    public function getOrderList()
+    {
+       $db = Database::getInstance();
+       $db->query("SELECT username FROM ClientOrder WHERE fkidSupplier = ? ", array(this));
+        return $db->resultsToJson();
+
+    }
+
+    /**Retourne une commande du fournisseur**/
+    public function getOrder($idOrder)
+    {
+        $db = Database::getInstance();
+       $db->query("SELECT username FROM ClientOrder WHERE fkidSupplier = ? AND id = ?", array(this, $idOrder));
+        return $db->resultsToJson();
+
+    }
 
     /**POST**/
     // Comment on recoit l.info ?
     //Possible d'indiquer fkidSupplier ?
-    public function addClient()
+    public function addClient($data)
     {
         $db = Database::getInstance();
-        $data = json_decode(file_get_contents("php://input"));
-        $db->insert(Client, $data);
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'nom' => $data->name,
+            'compagnie' => $data->compagny,
+            'courriel' => $data->email,
+            'condition_achat' => $data->buy_condition,
+            'adresseFacturation' => $data->rec_adress,
+            'adresseLivraison' => $data->ship_adress,
+            'logo' => $data->logo,
+            //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
+            'nb_commande' => $data->nb_commande,
+            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
+            'fkidSupplier' => this
+        );
+
+        $db->insert(Client, $fields);
 
     }
 
@@ -155,10 +153,25 @@ class Supplier
     //            WHERE
     //                id = :id";
 
-    public function editClient($idClient)
+    public function editClient($data, $idClient)
     {
         $db = Database::getInstance();
-        $db->query("UPDATE Client SET  WHERE idClient = ?", array($idClient));
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'nom' => $data->name,
+            'compagnie' => $data->compagny,
+            'courriel' => $data->email,
+            'condition_achat' => $data->buy_condition,
+            'adresseFacturation' => $data->rec_adress,
+            'adresseLivraison' => $data->ship_adress,
+            'logo' => $data->logo,
+            //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
+            'nb_commande' => $data->nb_commande,
+            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
+            'fkidSupplier' => this
+        );
+
+        $db->query("UPDATE Client SET $fields WHERE idClient = ?", array($idClient));
 
     }
 
@@ -190,10 +203,6 @@ class Supplier
         // penser au cas où un client a plusieurs fournisseurs
         $db = Database::getInstance();
         $db->query("DELETE FROM Client WHERE fkidSupplier = ? ", array(this));
-
-//        $req = $db->prepare('DELETE from Client WHERE fkidSupplier=?');
-//        $req ->execute(array(this));
-
 
     }
 

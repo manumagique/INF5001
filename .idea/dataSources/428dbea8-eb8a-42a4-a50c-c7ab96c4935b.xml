@@ -892,155 +892,213 @@
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
     <table id="223" parent="3" name="Client"/>
-    <table id="224" parent="3" name="Fournisseur"/>
-    <table id="225" parent="3" name="Produit"/>
-    <table id="226" parent="3" name="User"/>
-    <column id="227" parent="223" name="idClient">
+    <table id="224" parent="3" name="ClientOrder"/>
+    <table id="225" parent="3" name="Fournisseur"/>
+    <table id="226" parent="3" name="Product"/>
+    <table id="227" parent="3" name="User"/>
+    <column id="228" parent="223" name="idClient">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="228" parent="223" name="nom">
+    <column id="229" parent="223" name="nom">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="229" parent="223" name="courriel">
+    <column id="230" parent="223" name="courriel">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="230" parent="223" name="condition_achat">
+    <column id="231" parent="223" name="condition_achat">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="231" parent="223" name="adresseFacturation">
+    <column id="232" parent="223" name="adresseFacturation">
       <Position>5</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="232" parent="223" name="adresseLivraison">
+    <column id="233" parent="223" name="adresseLivraison">
       <Position>6</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="233" parent="223" name="fkidSupplier">
+    <column id="234" parent="223" name="fkidSupplier">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="234" parent="223" name="PRIMARY">
+    <column id="235" parent="223" name="logo">
+      <Position>8</Position>
+      <DataType>blob|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="236" parent="223" name="compagnie">
+      <Position>9</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="237" parent="223" name="nb_commande">
+      <Position>10</Position>
+      <DataType>int(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="238" parent="223" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idClient</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="235" parent="224" name="idFournisseur">
+    <column id="239" parent="224" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="236" parent="224" name="nom">
+    <column id="240" parent="224" name="date">
+      <Position>2</Position>
+      <DataType>date|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="241" parent="224" name="user">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="242" parent="224" name="commentaire">
+      <Position>4</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="243" parent="224" name="status">
+      <Position>5</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="244" parent="224" name="fkidClient">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="245" parent="224" name="fkidSupplier">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="246" parent="224" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="247" parent="225" name="idFournisseur">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="248" parent="225" name="nom">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="237" parent="224" name="PRIMARY">
+    <key id="249" parent="225" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idFournisseur</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="238" parent="225" name="idProduit">
+    <column id="250" parent="226" name="idProduct">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="225" name="nom">
+    <column id="251" parent="226" name="nom">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="225" name="prix">
+    <column id="252" parent="226" name="prix">
       <Position>3</Position>
       <DataType>decimal(2)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="241" parent="225" name="description">
+    <column id="253" parent="226" name="description">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="242" parent="225" name="origine">
+    <column id="254" parent="226" name="origine">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="243" parent="225" name="code">
+    <column id="255" parent="226" name="code">
       <Position>6</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="244" parent="225" name="format">
+    <column id="256" parent="226" name="format">
       <Position>7</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="225" name="fkidSupplier">
+    <column id="257" parent="226" name="fkidSupplier">
       <Position>8</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="246" parent="225" name="PRIMARY">
+    <key id="258" parent="226" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>idProduit</ColNames>
+      <ColNames>idProduct</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="247" parent="226" name="id">
+    <column id="259" parent="227" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="226" name="username">
+    <column id="260" parent="227" name="username">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="249" parent="226" name="password">
+    <column id="261" parent="227" name="password">
       <Position>3</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="226" name="salt">
+    <column id="262" parent="227" name="salt">
       <Position>4</Position>
       <DataType>varchar(2000)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="251" parent="226" name="userCat">
+    <column id="263" parent="227" name="userCat">
       <Position>5</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="252" parent="226" name="fkidClient">
+    <column id="264" parent="227" name="fkidClient">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="253" parent="226" name="fkidSupplier">
+    <column id="265" parent="227" name="fkidSupplier">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="254" parent="226" name="PRIMARY">
+    <key id="266" parent="227" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

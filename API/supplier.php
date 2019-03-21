@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Ajouter**/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    $data = json_decode(file_get_contents("php://input"));
 
     if($about == "client") {
 
@@ -99,8 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             echo "erreur";
         } else {
 
-//            $res = new Client();
-            $res->addClient();
+            $res->addClient($data);
 
         }
 
@@ -137,6 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 /**Fonction update de la database **/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
+    $data = json_decode(file_get_contents("php://input"));
 
     if($about == "client") {
 
@@ -151,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * d'un client
              */
         } else {
-            $res->editClient($idAbout);
+            $res->editClient($data, $idAbout);
 
         }
 
