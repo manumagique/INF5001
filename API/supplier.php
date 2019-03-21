@@ -52,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * produit 1 du fournisseur 1.
              */
         } else {
-            echo $res->loadFromDB($idAbout);
+            echo $res->getProduct($idAbout);
+//            echo $res->loadFromDB($idAbout);
         }
 
     } else if($about == "user") {

@@ -23,7 +23,7 @@ class Supplier
     public function getClientList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client WHERE fkidSupplier = ?", array(this));
+        $db->query("SELECT * FROM Client WHERE fkidSupplier = ?", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -32,7 +32,7 @@ class Supplier
     public function getClient($idClient)
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client WHERE fkidSupplier = ? AND idClient = ?", array(this,$idClient));
+        $db->query("SELECT * FROM Client WHERE fkidSupplier = ? AND idClient = ?", array($this->_id,$idClient));
         return $db->resultsToJson();
 
     }
@@ -41,7 +41,7 @@ class Supplier
     public function getProductList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Produit WHERE fkidSupplier = ?", array(this));
+        $db->query("SELECT * FROM Product WHERE fkidSupplier = ?", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -50,7 +50,7 @@ class Supplier
     public function getProduct($idProduct)
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Produit WHERE fkidSupplier = ? AND idProduit = ?", array(this, $idProduct));
+        $db->query("SELECT * FROM Product WHERE fkidSupplier = ? AND idProduct = ?", array($this->_id, $idProduct));
         return $db->resultsToJson();
 
     }
@@ -59,7 +59,7 @@ class Supplier
     public function getUserList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT username FROM User WHERE fkidSupplier = ?", array(this));
+        $db->query("SELECT username FROM User WHERE fkidSupplier = ?", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -68,7 +68,7 @@ class Supplier
     public function getUser($idUser)
     {
         $db = Database::getInstance();
-        $db->query("SELECT username FROM User WHERE fkidSupplier = ? AND id = ?", array(this, $idUser));
+        $db->query("SELECT username FROM User WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idUser));
         return $db->resultsToJson();
 
     }
@@ -78,7 +78,7 @@ class Supplier
     public function getOrderList()
     {
        $db = Database::getInstance();
-       $db->query("SELECT username FROM ClientOrder WHERE fkidSupplier = ? ", array(this));
+       $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -87,7 +87,7 @@ class Supplier
     public function getOrder($idOrder)
     {
         $db = Database::getInstance();
-       $db->query("SELECT username FROM ClientOrder WHERE fkidSupplier = ? AND id = ?", array(this, $idOrder));
+       $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idOrder));
         return $db->resultsToJson();
 
     }
@@ -223,7 +223,7 @@ class Supplier
         //supprimer tous les clients ayant le fournisseur X
         // penser au cas où un client a plusieurs fournisseurs
         $db = Database::getInstance();
-        $db->query("DELETE FROM Client WHERE fkidSupplier = ? ", array(this));
+        $db->query("DELETE FROM Client WHERE fkidSupplier = ? ", array($this->_id));
 
     }
 
@@ -232,10 +232,10 @@ class Supplier
     {
         $db = Database::getInstance();
         /**Supprimer le client**/
-        $db->query("DELETE FROM Client WHERE fkidSupplier = ? AND idClient=?", array(this,$idAbout));
+        $db->query("DELETE FROM Client WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
 
         /**Supprimer les commandes du client**/
-         $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND idClient=?", array(this,$idAbout));
+         $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
 
     }
 
@@ -249,7 +249,7 @@ class Supplier
     {
         //Supprimer le produit de la table produit
         $db = Database::getInstance();
-        $db->query("DELETE FROM Produit WHERE fkidSupplier = ? AND idProduit=?", array(this,$idAbout));
+        $db->query("DELETE FROM Produit WHERE fkidSupplier = ? AND idProduit=?", array($this->_id,$idAbout));
 
     }
 
@@ -263,7 +263,7 @@ class Supplier
     {
 
         $db = Database::getInstance();
-        $db->query("DELETE FROM User WHERE fkidSupplier = ? AND id=? ", array(this,$idAbout));
+        $db->query("DELETE FROM User WHERE fkidSupplier = ? AND id=? ", array($this->_id,$idAbout));
     }
 
 }
