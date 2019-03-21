@@ -109,8 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-//            $res = new Product();
-            $res->addProduct();
+            $res->addProduct($data);
         }
 
     } else if($about == "user") {
@@ -118,8 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-//            $res = new User();
-            $res->addUser();
+            $res->addUser($data);
         }
 
     }else if($about == "order") {
@@ -127,8 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur";
         } else {
-//            $res = new Order();
-            $res->addOrder();
+            $res->addOrder($data);
         }
     }
 
@@ -169,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * produit 1 du fournisseur 1.
              */
         } else {
-            $res->editProduct($idAbout);
+            $res->editProduct($data, $idAbout);
         }
 
     } else if($about == "user") {
@@ -185,7 +182,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              * l'utilisateur 1 du fournisseur 1.
              */
         } else {
-            $res->editUser($idAbout);
+            $res->editUser($data, $idAbout);
         }
 
     }else if($about == "order") {
@@ -193,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "erreur, impossible de modifier toutes les commandes en même temps";
         } else {
-            $res->editOrder($idAbout);
+            $res->editOrder($data, $idAbout);
         }
     }
 

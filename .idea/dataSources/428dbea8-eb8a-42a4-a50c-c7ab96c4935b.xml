@@ -1053,52 +1053,57 @@
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="258" parent="226" name="PRIMARY">
+    <column id="258" parent="226" name="logo">
+      <Position>9</Position>
+      <DataType>blob|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="259" parent="226" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idProduct</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="259" parent="227" name="id">
+    <column id="260" parent="227" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="260" parent="227" name="username">
+    <column id="261" parent="227" name="username">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="261" parent="227" name="password">
+    <column id="262" parent="227" name="password">
       <Position>3</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="262" parent="227" name="salt">
+    <column id="263" parent="227" name="salt">
       <Position>4</Position>
       <DataType>varchar(2000)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="263" parent="227" name="userCat">
+    <column id="264" parent="227" name="userCat">
       <Position>5</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="264" parent="227" name="fkidClient">
+    <column id="265" parent="227" name="fkidClient">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="265" parent="227" name="fkidSupplier">
+    <column id="266" parent="227" name="fkidSupplier">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="266" parent="227" name="PRIMARY">
+    <key id="267" parent="227" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

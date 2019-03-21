@@ -93,8 +93,7 @@ class Supplier
     }
 
     /**POST**/
-    // Comment on recoit l.info ?
-    //Possible d'indiquer fkidSupplier ?
+
     public function addClient($data)
     {
         $db = Database::getInstance();
@@ -117,24 +116,34 @@ class Supplier
 
     }
 
-    public function addProduct()
+    public function addProduct($data)
     {
         $db = Database::getInstance();
-        $data = json_decode(file_get_contents("php://input"));
-        $db->insert(Produit, array());
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'nom' => $data->name,
+            'logo' => $data ->logo,
+            'prix' => $data->price,
+            'description' => $data->description,
+            'orgine' => $data->origine,
+            'code' => $data->code,
+            'format' => $data->format,
+            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
+            'fkidSupplier' => this
+        );
+
+        $db->insert(Produit, $fields);
     }
 
-    public function addUser()
+    public function addUser($data)
     {
         $db = Database::getInstance();
-        $data = json_decode(file_get_contents("php://input"));
         $db->insert(User, array());
     }
 
-    public function addOrder()
+    public function addOrder($data)
     {
         $db = Database::getInstance();
-        $data = json_decode(file_get_contents("php://input"));
         $db->insert(Order, array());
     }
 
@@ -178,7 +187,19 @@ class Supplier
     public function editProduct($idProduct)
     {
         $db = Database::getInstance();
-        $db->query("UPDATE Produit SET WHERE idProduit = ?", array($idProduct));
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'nom' => $data->name,
+            'logo' => $data ->logo,
+            'prix' => $data->price,
+            'description' => $data->description,
+            'orgine' => $data->origine,
+            'code' => $data->code,
+            'format' => $data->format,
+            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
+            'fkidSupplier' => this
+        );
+        $db->query("UPDATE Produit SET $fields WHERE idProduit = ?", array($idProduct));
     }
 
     public function editUser($idUser)
@@ -210,15 +231,11 @@ class Supplier
     public function deleteClient($idAbout)
     {
         $db = Database::getInstance();
+        /**Supprimer le client**/
         $db->query("DELETE FROM Client WHERE fkidSupplier = ? AND idClient=?", array(this,$idAbout));
-        /**
-         * penser à supprimer aussi les commandes => ATTENDRE BASE DE DONNÉES POUR ORDER
-         * $db = Database::getInstance();
-         * $db->query("DELETE FROM Order WHERE fkidSupplier = ? AND idClient=?", array(this,$idAbout));
-         * penser à supprimer l'idClient dans la table supplier
-         * **/
-//        $req = $db->prepare('DELETE from Client WHERE fkidSupplier=? AND idClient=?');
-//        $req ->execute(array(this,$idAbout));
+
+        /**Supprimer les commandes du client**/
+         $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND idClient=?", array(this,$idAbout));
 
     }
 
@@ -234,10 +251,6 @@ class Supplier
         $db = Database::getInstance();
         $db->query("DELETE FROM Produit WHERE fkidSupplier = ? AND idProduit=?", array(this,$idAbout));
 
-//        $req = $db->prepare('DELETE from Produit WHERE fkidSupplier=? AND idProduit=?');
-//        $req ->execute(array(this,$idAbout));
-
-
     }
 
     //à voir si c'est pertinent ?
@@ -251,11 +264,6 @@ class Supplier
 
         $db = Database::getInstance();
         $db->query("DELETE FROM User WHERE fkidSupplier = ? AND id=? ", array(this,$idAbout));
-
-//        $req = $db->prepare('DELETE from User WHERE fkidSupplier=? AND id=?');
-//        $req ->execute(array(this,$idAbout));
-
-
     }
 
 }
