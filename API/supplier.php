@@ -1,3 +1,4 @@
+
 <?php
 /**Jade**/
 
@@ -9,15 +10,15 @@ header('Content-Type: application/json');
  *
  */
 
-$idSupplier = $_GET['idSupplier'];
-$about = $_GET['about'];
-$idAbout = $_GET['idAbout'];
-$res = new Supplier($idSupplier);
+
 
 /**GET pour aller chercher sur la base de données**/
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-
+    $idSupplier = $_GET['idSupplier'];
+    $about = $_GET['about'];
+    $idAbout = $_GET['idAbout'];
+    $res = new Supplier($idSupplier);
 
     /**L'URL est de type http....com/API/Fournisseur/1/about/idabout
      *
@@ -31,10 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)){
             echo $res->getClientList();
 
-        /**L'URL est de type http....com/API/Fournisseur/1/Client/idabout
-         * Si on a le idabout, cela veut dire qu'on veut avoir la liste du
-         *  client ayant l'id égale à la variable id about .
-         */
+            /**L'URL est de type http....com/API/Fournisseur/1/Client/idabout
+             * Si on a le idabout, cela veut dire qu'on veut avoir la liste du
+             *  client ayant l'id égale à la variable id about .
+             */
         } else {
             echo $res->getClient($idAbout);
         }
@@ -90,6 +91,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Ajouter**/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    $idSupplier = $_POST['idSupplier'];
+    $about = $_POST['about'];
+    $idAbout = $_POST['idAbout'];
+    $res = new Supplier($idSupplier);
+
     $data = json_decode(file_get_contents("php://input"));
 
     if($about == "client") {
@@ -131,9 +137,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 
 
-/**Modifier la base de données**/
-/**Fonction update de la database **/
+    /**Modifier la base de données**/
+    /**Fonction update de la database **/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+
+    $idSupplier = $_PUT['idSupplier'];
+    $about = $_PUT['about'];
+    $idAbout = $_PUT['idAbout'];
+    $res = new Supplier($idSupplier);
 
     $data = json_decode(file_get_contents("php://input"));
 
@@ -200,6 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Fonction 'delete' de la database**/
 }else  if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
 
+    $idSupplier = $_DELETE['idSupplier'];
+    $about = $_DELETE['about'];
+    $idAbout = $_DELETE['idAbout'];
+    $res = new Supplier($idSupplier);
 
     if($about == "client") {
 
@@ -231,14 +246,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $res->deleteUser();
         }
 
-        //ATTENDRE BASE DE DONNEES
     }else if($about == "order") {
 
         if(empty($idAbout)) {
-            //Supprimer toutes les commandes du fournisseur
+            $res->deleteAllOrder();
         } else {
-            //Supprimer la commande X du fournisseur
-        }
+            $res->deleteOrder();        }
     }
 }
 

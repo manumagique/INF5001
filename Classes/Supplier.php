@@ -64,7 +64,7 @@ class Supplier
 
     }
 
-    /**Retourne d'un utilisateur du fournisseur**/
+    /**Retourne un utilisateur du fournisseur**/
     public function getUser($idUser)
     {
         $db = Database::getInstance();
@@ -77,8 +77,8 @@ class Supplier
     /**Retourne la liste des commandes du fournisseur**/
     public function getOrderList()
     {
-       $db = Database::getInstance();
-       $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
+        $db = Database::getInstance();
+        $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -87,7 +87,7 @@ class Supplier
     public function getOrder($idOrder)
     {
         $db = Database::getInstance();
-       $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idOrder));
+        $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idOrder));
         return $db->resultsToJson();
 
     }
@@ -109,7 +109,7 @@ class Supplier
             //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
             'nb_commande' => $data->nb_commande,
             // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
-            'fkidSupplier' => this
+            'fkidSupplier' => $this->_id
         );
 
         $db->insert(Client, $fields);
@@ -129,7 +129,7 @@ class Supplier
             'code' => $data->code,
             'format' => $data->format,
             // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
-            'fkidSupplier' => this
+            'fkidSupplier' => $this->_id
         );
 
         $db->insert(Produit, $fields);
@@ -144,13 +144,12 @@ class Supplier
     public function addOrder($data)
     {
         $db = Database::getInstance();
-        $db->insert(Order, array());
+        $db->insert(ClientOrder, array());
     }
 
 
     /**PUT**/
-    // Comment on recoit l.info ?
-    //$array: key-value des nouvelle valeurs
+    //$data: key-value des nouvelle valeurs
     // ex :
     //          $query = "UPDATE
     //                " . $this->table_name . "
@@ -177,14 +176,14 @@ class Supplier
             //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
             'nb_commande' => $data->nb_commande,
             // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
-            'fkidSupplier' => this
+            'fkidSupplier' => $this->_id
         );
 
         $db->query("UPDATE Client SET $fields WHERE idClient = ?", array($idClient));
 
     }
 
-    public function editProduct($idProduct)
+    public function editProduct($data, $idProduct)
     {
         $db = Database::getInstance();
         $fields = array(
@@ -197,7 +196,7 @@ class Supplier
             'code' => $data->code,
             'format' => $data->format,
             // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
-            'fkidSupplier' => this
+            'fkidSupplier' => $this->_id
         );
         $db->query("UPDATE Produit SET $fields WHERE idProduit = ?", array($idProduct));
     }
@@ -211,19 +210,24 @@ class Supplier
     public function editOrder($idOrder)
     {
         $db = Database::getInstance();
-        $db->query("UPDATE Order SET WHERE idOrder = ?", array($idOrder));
+        $db->query("UPDATE ClientOrder SET WHERE idOrder = ?", array($idOrder));
     }
 
 
     /**DELETE**/
+
     /**Supprime tous les clients du fournisseur**/
-    //À voir si c'est pertinent ?
     public function deleteAllClient()
     {
         //supprimer tous les clients ayant le fournisseur X
-        // penser au cas où un client a plusieurs fournisseurs
         $db = Database::getInstance();
+        /**Supprimer les clients **/
         $db->query("DELETE FROM Client WHERE fkidSupplier = ? ", array($this->_id));
+        /**Supprimer les commandes des clients
+         *Est-ce qu'on voudrait les garder dans la BD quand même ? **/
+        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
+        /**Supprimer les users des clients **/
+        $db->query("DELETE FROM User WHERE fkidSupplier = ? ", array($this->_id));
 
     }
 
@@ -235,28 +239,33 @@ class Supplier
         $db->query("DELETE FROM Client WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
 
         /**Supprimer les commandes du client**/
-         $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
+        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
+
+        /**Supprimer les users du client**/
+        $db->query("DELETE FROM User WHERE fkidSupplier = ? AND fkidClient=?", array($this->_id,$idAbout));
+
 
     }
 
-    //à voir si c'est pertinent ?
     public function deleteAllProduct()
     {
+        $db = Database::getInstance();
+        $db->query("DELETE FROM Product WHERE fkidSupplier = ? ", array($this->_id));
 
     }
 
     public function deleteProduct($idAbout)
     {
-        //Supprimer le produit de la table produit
         $db = Database::getInstance();
         $db->query("DELETE FROM Produit WHERE fkidSupplier = ? AND idProduit=?", array($this->_id,$idAbout));
 
     }
 
-    //à voir si c'est pertinent ?
+
     public function deleteAllUser()
     {
-
+        $db = Database::getInstance();
+        $db->query("DELETE FROM User WHERE fkidSupplier = ? ", array($this->_id));
     }
 
     public function deleteUser($idAbout)
@@ -266,4 +275,16 @@ class Supplier
         $db->query("DELETE FROM User WHERE fkidSupplier = ? AND id=? ", array($this->_id,$idAbout));
     }
 
+    public function deleteAllOrder()
+    {
+        $db = Database::getInstance();
+        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
+    }
+
+    public function deleteOrder($idAbout)
+    {
+
+        $db = Database::getInstance();
+        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND id=? ", array($this->_id,$idAbout));
+    }
 }
