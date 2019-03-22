@@ -73,7 +73,6 @@ class Supplier
 
     }
 
-    /**ATTENDRE TABLE BASE DE DONNÉES COMMANDE **/
     /**Retourne la liste des commandes du fournisseur**/
     public function getOrderList()
     {
@@ -94,6 +93,7 @@ class Supplier
 
     /**POST**/
 
+    //TODO: calculer nb_commande
     public function addClient($data)
     {
         $db = Database::getInstance();
@@ -108,7 +108,6 @@ class Supplier
             'logo' => $data->logo,
             //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
             'nb_commande' => $data->nb_commande,
-            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
             'fkidSupplier' => $this->_id
         );
 
@@ -128,23 +127,54 @@ class Supplier
             'orgine' => $data->origine,
             'code' => $data->code,
             'format' => $data->format,
-            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
             'fkidSupplier' => $this->_id
         );
 
         $db->insert(Produit, $fields);
     }
 
+    /**Ici je fais comme s'il n'y avait pas de fkidClient puisque
+     * c'est un utilisateur du fournisseur
+     *
+     * Quel est le userCat ?
+     * Est-ce qu'on met le salt ?
+     */
+    //TODO: Vérifier userCat et salt
     public function addUser($data)
     {
+
         $db = Database::getInstance();
-        $db->insert(User, array());
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'username' => $data->username,
+            'password' => $data ->password,
+            'userCat' => "Fournisseur",
+            'fkidSupplier' => $this->_id
+        );
+        $db->insert(User, $fields);
     }
 
+    /**
+    *Comment récupérer le fkidClient ?
+     * Est-il donné par olivier ?
+     **/
+    //TODO:Modifier clé d'olivier dans fkidClient' => $data ->fkidClient
+    //TODO: id=numero_commade ? user=client?
+    //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
     public function addOrder($data)
     {
         $db = Database::getInstance();
-        $db->insert(ClientOrder, array());
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'date' => $data->date_commande,
+            'id' => $data->numero_commande,
+            'user' => $data ->client,
+            'commentaire' => $data ->commentaire,
+            'status' => $data ->done,
+            'fkidClient' => $data ->fkidClient,
+            'fkidSupplier' => $this->_id
+        );
+        $db->insert(ClientOrder, $fields);
     }
 
 
@@ -161,6 +191,7 @@ class Supplier
     //            WHERE
     //                id = :id";
 
+    //TODO: calculer nb_commande
     public function editClient($data, $idClient)
     {
         $db = Database::getInstance();
@@ -175,7 +206,6 @@ class Supplier
             'logo' => $data->logo,
             //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
             'nb_commande' => $data->nb_commande,
-            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
             'fkidSupplier' => $this->_id
         );
 
@@ -195,22 +225,42 @@ class Supplier
             'orgine' => $data->origine,
             'code' => $data->code,
             'format' => $data->format,
-            // n'est pas dans les champs envoyé par olivier J'ai donc fait ceci-ci: pas sur
             'fkidSupplier' => $this->_id
         );
         $db->query("UPDATE Produit SET $fields WHERE idProduit = ?", array($idProduct));
     }
 
-    public function editUser($idUser)
+    //TODO: Vérifier userCat et salt
+    public function editUser($data, $idUser)
     {
         $db = Database::getInstance();
-        $db->query("UPDATE User SET WHERE id = ?", array($idUser));
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'username' => $data->username,
+            'password' => $data ->password,
+            'userCat' => "Fournisseur",
+            'fkidSupplier' => $this->_id
+        );
+        $db->query("UPDATE User SET $fields WHERE id = ?", array($idUser));
     }
 
-    public function editOrder($idOrder)
+    //TODO:Modifier clé d'olivier dans fkidClient' => $data ->fkidClient
+    //TODO: id=numero_commade ? user=client?
+    //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
+    public function editOrder($data, $idOrder)
     {
         $db = Database::getInstance();
-        $db->query("UPDATE ClientOrder SET WHERE idOrder = ?", array($idOrder));
+        $fields = array(
+            // en premier nom ds la table et a la fin nom de olivier
+            'date' => $data->date_commande,
+            'id' => $data->numero_commande,
+            'user' => $data ->client,
+            'commentaire' => $data ->commentaire,
+            'status' => $data ->done,
+            'fkidClient' => $data ->fkidClient,
+            'fkidSupplier' => $this->_id
+        );
+        $db->query("UPDATE ClientOrder SET $fields WHERE idOrder = ?", array($idOrder));
     }
 
 
