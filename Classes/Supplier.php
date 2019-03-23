@@ -130,7 +130,7 @@ class Supplier
             'fkidSupplier' => $this->_id
         );
 
-        $db->insert(Produit, $fields);
+        $db->insert(Product, $fields);
     }
 
     /**Ici je fais comme s'il n'y avait pas de fkidClient puisque
@@ -227,7 +227,7 @@ class Supplier
             'format' => $data->format,
             'fkidSupplier' => $this->_id
         );
-        $db->query("UPDATE Produit SET $fields WHERE idProduit = ?", array($idProduct));
+        $db->query("UPDATE Product SET $fields WHERE idProduct = ?", array($idProduct));
     }
 
     //TODO: Vérifier userCat et salt
@@ -307,7 +307,7 @@ class Supplier
     public function deleteProduct($idAbout)
     {
         $db = Database::getInstance();
-        $db->query("DELETE FROM Produit WHERE fkidSupplier = ? AND idProduit=?", array($this->_id,$idAbout));
+        $db->query("DELETE FROM Product WHERE fkidSupplier = ? AND idProduct=?", array($this->_id,$idAbout));
 
     }
 
