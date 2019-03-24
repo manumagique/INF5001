@@ -28,8 +28,16 @@ class Client
     public function getProductsList() {
 
         $db = Database::getInstance();
-        $clientSupplier = $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+        $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+
+        $_data = $db->results();
+        foreach ($_data as $row)
+        {
+            $clientSupplier = $row->fkidSupplier;
+        }
+
         $db->query("SELECT * FROM Product WHERE fkidSupplier = ?", array($clientSupplier));
+
         return $db->resultsToJson();
 
     }
@@ -37,7 +45,14 @@ class Client
     public function getProductDetails($idAbout) {
 
         $db = Database::getInstance();
-        $clientSupplier = $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+        $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+
+        $_data = $db->results();
+        foreach ($_data as $row)
+        {
+            $clientSupplier = $row->fkidSupplier;
+        }
+
         $db->query("SELECT * FROM Product WHERE fkidSupplier = ? AND idProduct = ?", array($clientSupplier, $idAbout));
         return $db->resultsToJson();
 
