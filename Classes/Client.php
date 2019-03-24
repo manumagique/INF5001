@@ -8,185 +8,227 @@
 
 class Client
 {
-    private $_id; //3
-    private $data;
-
+    private $_id;
 
     public function __construct($id)
     {
         $this->_id = $id;
     }
 
-    /** Retourne l'information d'un client**/
-    public function loadFromDB()
-    {
-        //$db = Database::getInstance();
-        //$db->query("SELECT * FROM Client WHERE id = ?", ['id', $this->_id]);
-
-        $sql = "SELECT * FROM Client WHERE id = $this->_id";
-        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
-        $this->data = mysqli_fetch_array($req);
-
-        /*$this->_nom = $this->data['nom'];
-        $this->_courriel = $this->data['courriel'];
-        $this->_condition_achat = $this->data['condition_achat'];
-        $this->_adresseFacturation = $this->data['adresseFacturation'];
-        $this->_adresseLivraison = $this->data['adresseLivraison'];
-        $this->_fkidSupplier = $this->data['fkidSupplier'];*/
-
-        /*
-        Nom : <?php echo $data['nom'] ?>.<br />
-        Courriel : <?php echo $data['courriel'] ?>.<br />
-        Condition d'achat : <?php echo $data['condition_achat'] ?>.<br />
-        Adresse de facturation : <?php echo $data['adresseFacturation'] ?>.<br />
-        Adresse de livraison : <?php echo $data['adresseLivraison'] ?>.<br />
-
-        Nom : Exemple1
-        Courriel : exemple1@exemple.com
-        Condition d'achat : null
-        Adresse de facturation : 111 exemple
-        Adresse de livraison : 112 exemple
-        */
-
-    }
-
     /* méthodes pour GET */
 
     public function getClientDetails() {
-        $this->loadFromDB();
-        return json_encode($this->data);
 
-        /*$this->_nom = $this->data['nom'];
-        $this->_courriel = $this->data['courriel'];
-        $this->_condition_achat = $this->data['condition_achat'];
-        $this->_adresseFacturation = $this->data['adresseFacturation'];
-        $this->_adresseLivraison = $this->data['adresseLivraison'];
-        $this->_fkidSupplier = $this->data['fkidSupplier'];*/
+        $db = Database::getInstance();
+        $db->query("SELECT * FROM Client WHERE idClient = ?", array($this->_id));
+        return $db->resultsToJson();
 
-        /*
-        $this->_idProduit = $idProduit;
-        $this->_data = $this->_db->results()[0];
-
-        $this->_nom = $this->_data->nom ;
-        $this->_prix = $this->_data->prix ;
-        $this->_description = $this->_data->description ;
-        $this->_origine = $this->_data->origine ;
-        $this->_code = $this->_data->code ;
-        $this->_format = $this->_data->format ;
-        $this->_fkidSupplier = $this->_data->fkidSupplier ;
-        */
-
-        //$proprietesProduit = array(
-        // *              "id" => $_id,
-        // *              "name" => $_nomProduit,
-        // *              "prix" => $_prix,
-        // *              "description" => $_description,
-        // *              "origine" => $_origine,
-        // *              "code" => $_code,
-        // *              "format" => $_format,
-        // *              "logo" => $_logo
-        // *          );
     }
 
     public function getProductsList() {
-        $this->loadFromDB();
-        $sql = "SELECT * FROM Produit WHERE id = $this->data['fkidSupplier']";
-        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
-        $donnee = mysqli_fetch_array($req);
-        return json_encode($donnee);
 
-        //$db = Database::getInstance();
-        //$var = "SELECT fkidSupplier FROM Client WHERE id = $this->_id";
-        //$sql = "SELECT * FROM Produit WHERE id = $var";
+        $db = Database::getInstance();
+        $clientSupplier = $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+        $db->query("SELECT * FROM Product WHERE fkidSupplier = ?", array($clientSupplier));
+        return $db->resultsToJson();
+
     }
 
     public function getProductDetails($idAbout) {
-        $this->loadFromDB();
-        $sql = "SELECT $idAbout FROM Produit WHERE id = $this->data['fkidSupplier']";
-        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
-        $donnee = mysqli_fetch_array($req);
-        return json_encode($donnee);
+
+        $db = Database::getInstance();
+        $clientSupplier = $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+        $db->query("SELECT * FROM Product WHERE fkidSupplier = ? AND idProduct = ?", array($clientSupplier, $idAbout));
+        return $db->resultsToJson();
+
     }
 
-    public function getUsersList() {    //?
-        $sql = "SELECT * FROM User WHERE id = $this->_id";
-        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
-        $donnee = mysqli_fetch_array($req);
-        return json_encode($donnee);
+    public function getUsersList() {
+
+        $db = Database::getInstance();
+        $db->query("SELECT username FROM User WHERE fkidClient = ?", array($this->_id));
+        return $db->resultsToJson();
+
     }
 
-    public function getUser($idAbout) {     //?
-        $sql = "SELECT $idAbout FROM User WHERE id = $this->_id";
-        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
-        $donnee = mysqli_fetch_array($req);
-        return json_encode($donnee);
+    public function getUser($idAbout) {
+
+        $db = Database::getInstance();
+        $db->query("SELECT username FROM User WHERE fkidClient = ? AND id = ?", array($this->_id, $idAbout));
+        return $db->resultsToJson();
+
     }
 
-    public function getOrdersList() {   //Order datatable manque
-        $sql = "SELECT * FROM Order WHERE id = $this->_id";
-        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
-        $donnee = mysqli_fetch_array($req);
-        return json_encode($donnee);
+    public function getOrdersList() {
+
+        $db = Database::getInstance();
+        $db->query("SELECT * FROM ClientOrder WHERE fkidClient = ? ", array($this->_id));
+        return $db->resultsToJson();
+
     }
 
-    public function getOrder($idAbout) {   //Order datatable manque
-        $sql = "SELECT $idAbout FROM Order WHERE id = $this->_id";
-        $req = mysqli_query($sql) or die('Erreur.'.mysqli_error());
-        $donnee = mysqli_fetch_array($req);
-        return json_encode($donnee);
+    public function getOrder($idAbout) {
+
+        $db = Database::getInstance();
+        $db->query("SELECT * FROM ClientOrder WHERE fkidClient = ? AND id = ?", array($this->_id, $idAbout));
+        return $db->resultsToJson();
+
     }
 
     /* méthodes pour POST */
 
-    public function addProduct($donnees) {     //?
+    public function addProduct($data) {     //pertinence
 
         $db = Database::getInstance();
-        $db->insert(Produit, $donnees);
+
+        $fields = array(
+            'nom' => $data->name,
+            'prix' => $data->price,
+            'description' => $data->description,
+            'origine' => $data->origine,
+            'code' => $data->code,
+            'format' => $data->format,
+            'fkidSupplier' => $data->fkidSuppier,
+            'logo' => $data ->logo
+        );
+
+        $db->insert(Product, $fields);
+
     }
 
-    public function addUser($donnees) {     //?
+    public function addUser($data) {
+
         $db = Database::getInstance();
-        $db->insert(User, $donnees);
+
+        $fields = array(
+            'username' => $data->username,
+            'password' => $data ->password,
+            'userCat' => $data->userCat,
+            'fkidClient' => $this->_id,
+            'fkidSupplier' => $data->fkidSupplier
+        );
+
+        $db->insert(User, $fields);
+
     }
 
-    public function addOrder($donnees) {     //?
+    public function addOrder($data) {
+
         $db = Database::getInstance();
-        $db->insert(Order, $donnees);
+
+        $fields = array(
+            'date' => $data->date,
+            'user' => $data ->user,
+            'commentaire' => $data ->commentaire,
+            'status' => $data ->status,
+            'fkidClient' => $this->_id,
+            'fkidSupplier' => $data ->fkidSupplier
+        );
+
+        $db->insert(ClientOrder, $fields);
+
+    }
+
+    /* méthodes pour PUT */
+
+    public function updateProduct($data, $idAbout) {    //pertinence
+
+        $db = Database::getInstance();
+
+        $fields = array(
+            'nom' => $data->name,
+            'prix' => $data->price,
+            'description' => $data->description,
+            'origine' => $data->origine,
+            'code' => $data->code,
+            'format' => $data->format,
+            'fkidSupplier' => $data->fkidSuppier,
+            'logo' => $data ->logo
+        );
+
+        $db->query("UPDATE Product SET $fields WHERE idProduct = ?", array($idAbout));
+
+    }
+
+    public function updateUser($data, $idAbout) {
+
+        $db = Database::getInstance();
+
+        $fields = array(
+            'username' => $data->username,
+            'password' => $data ->password,
+            'userCat' => $data->userCat,
+            'fkidClient' => $this->_id,
+            'fkidSupplier' => $data->fkidSupplier
+        );
+
+        $db->query("UPDATE User SET $fields WHERE id = ?", array($idAbout));
+
+    }
+
+    public function updateOrder($data, $idAbout) {
+
+        $db = Database::getInstance();
+
+        $fields = array(
+            'date' => $data->date,
+            'user' => $data ->user,
+            'commentaire' => $data ->commentaire,
+            'status' => $data ->status,
+            'fkidClient' => $this->_id,
+            'fkidSupplier' => $data ->fkidSupplier
+        );
+
+        $db->query("UPDATE ClientOrder SET $fields WHERE id = ?", array($idAbout));
+
     }
 
 
     /* méthodes pour DELETE */
 
     public function deleteAllProducts() {
-        $this->loadFromDB();
+
         $db = Database::getInstance();
-        $db->delete(Produit, $this->data['fkidSupplier']);
+
+        $clientSupplier = $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+        $db->query("DELETE FROM Product WHERE fkidSupplier = ? ", array($clientSupplier));
+
     }
 
     public function deleteProduct($idAbout) {
-        $this->loadFromDB();
+
         $db = Database::getInstance();
-        $db->delete(Produit, $idAbout);
+        $clientSupplier = $db->query("SELECT fkidSupplier FROM Client WHERE idClient = ?", array($this->_id));
+        $db->query("DELETE FROM Product WHERE fkidSupplier = ? AND idProduct = ?", array($clientSupplier, $idAbout));
+
     }
 
     public function deleteAllUsers() {
+
         $db = Database::getInstance();
-        $db->delete(User, $this->_id);
+        $db->query("DELETE FROM User WHERE fkidClient = ? ", array($this->_id));
+
     }
 
     public function deleteUser($idAbout) {
+
         $db = Database::getInstance();
-        $db->delete(User, $idAbout);
+        $db->query("DELETE FROM User WHERE fkidClient = ? AND id = ? ", array($this->_id, $idAbout));
+
     }
 
     public function deleteAllOrders() {
+
         $db = Database::getInstance();
-        $db->delete(Order, $this->_id);
+        $db->query("DELETE FROM ClientOrder WHERE fkidClient = ? ", array($this->_id));
+
     }
 
     public function deleteOrder($idAbout) {
+
         $db = Database::getInstance();
-        $db->delete(Order, $idAbout);
+        $db->query("DELETE FROM ClientOrder WHERE fkidClient = ? AND id = ? ", array($this->_id, $idAbout));
+
     }
 
 
