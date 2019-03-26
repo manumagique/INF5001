@@ -59,7 +59,7 @@ class Supplier
     public function getUserList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT username FROM User WHERE fkidSupplier = ?", array($this->_id));
+        $db->query("SELECT id, username FROM User WHERE fkidSupplier = ?", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -68,7 +68,7 @@ class Supplier
     public function getUser($idUser)
     {
         $db = Database::getInstance();
-        $db->query("SELECT username FROM User WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idUser));
+        $db->query("SELECT id, username FROM User WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idUser));
         return $db->resultsToJson();
 
     }
