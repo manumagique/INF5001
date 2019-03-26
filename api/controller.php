@@ -17,11 +17,8 @@ $_GET['idSupplier']     = "";
 $_GET['idClient']       = "";
 $_GET['idProduit']      = "";
 $_GET['idAdmin']        = "";
-$_GET['about']          = "a";
-$_GET['idAbout']        = "b";
-
-
-
+$_GET['about']          = "";
+$_GET['idAbout']        = "";
 
 
 
@@ -48,28 +45,6 @@ if (strcasecmp($url[1], "supplier") == 0) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Si la requete est faite en methode GET
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
-}
-
-// Si la requete est faite en methode POST
-else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-}
 
 function redirect($url, $statusCode = 303)
 {
