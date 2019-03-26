@@ -61,7 +61,7 @@ class Client
     public function getUsersList() {
 
         $db = Database::getInstance();
-        $db->query("SELECT username FROM User WHERE fkidClient = ?", array($this->_id));
+        $db->query("SELECT id, username FROM User WHERE fkidClient = ?", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -69,7 +69,7 @@ class Client
     public function getUser($idAbout) {
 
         $db = Database::getInstance();
-        $db->query("SELECT username FROM User WHERE fkidClient = ? AND id = ?", array($this->_id, $idAbout));
+        $db->query("SELECT id, username FROM User WHERE fkidClient = ? AND id = ?", array($this->_id, $idAbout));
         return $db->resultsToJson();
 
     }
