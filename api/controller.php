@@ -8,7 +8,7 @@
 
 #echo '<hr/>';
 #echo $_GET['url'] . "<br>";
-
+header('Access-Control-Allow-Origin: *');
 $url = explode('/', $_GET['url']);
 $sizeUrl = sizeof($url);
 
