@@ -77,7 +77,9 @@ class Supplier
     public function getOrderList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
+        $db->query("SELECT id.ClientOrder, date.ClientOrder, user.ClientOrder, commentaire.ClientOrder, 
+                  status.ClientOrder, fkidClient.ClientOrder, fkidSupplier.ClientOrder, nom.Client  
+                  FROM ClientOrder INNER JOIN Client ON id.ClientOrder=idClient.Client WHERE fkidSupplier.ClientOrder = ? ", array($this->_id));
         return $db->resultsToJson();
 
     }
@@ -86,17 +88,19 @@ class Supplier
     public function getOrder($idOrder)
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM ClientOrder WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idOrder));
+        $db->query("SELECT id.ClientOrder, date.ClientOrder, user.ClientOrder, commentaire.ClientOrder, 
+                  status.ClientOrder, fkidClient.ClientOrder, fkidSupplier.ClientOrder, nom.Client  
+                  FROM ClientOrder INNER JOIN Client ON id.ClientOrder=idClient.Client WHERE fkidSupplier.ClientOrder = ? AND id.ClientOrder = ?", array($this->_id, $idOrder));
         return $db->resultsToJson();
 
     }
 
     /**POST**/
 
-    //TODO: calculer nb_commande
     public function addClient($data)
     {
         $db = Database::getInstance();
+        //select count no de l'attribut id dans une variable
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
             'nom' => $data->name,
@@ -106,8 +110,7 @@ class Supplier
             'adresseFacturation' => $data->rec_adress,
             'adresseLivraison' => $data->ship_adress,
             'logo' => $data->logo,
-            //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
-            'nb_commande' => $data->nb_commande,
+            'nb_commande' => 0,
             'fkidSupplier' => $this->_id
         );
 
@@ -135,15 +138,13 @@ class Supplier
 
     /**Ici je fais comme s'il n'y avait pas de fkidClient puisque
      * c'est un utilisateur du fournisseur
-     *
-     * Quel est le userCat ?
-     * Est-ce qu'on met le salt ?
      */
-    //TODO: Vérifier userCat et salt
+    //TODO: Vérifier userCat et salt => Emmanuel
     public function addUser($data)
     {
 
         $db = Database::getInstance();
+        //$hash =
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
             'username' => $data->username,
@@ -158,8 +159,7 @@ class Supplier
     *Comment récupérer le fkidClient ?
      * Est-il donné par olivier ?
      **/
-    //TODO:Modifier clé d'olivier dans fkidClient' => $data ->fkidClient
-    //TODO: id=numero_commade ? user=client?
+    //TODO: id=numero_commade ? oui,  user=client? oui
     //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
     public function addOrder($data)
     {
@@ -191,10 +191,10 @@ class Supplier
     //            WHERE
     //                id = :id";
 
-    //TODO: calculer nb_commande
     public function editClient($data, $idClient)
     {
         $db = Database::getInstance();
+        $nb_commande = $db -> query("SELECT COUNT(id) FROM ClientOrder WHERE fkidSupplier = ? AND idClient = ?", array($this->_id,$idClient));
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
             'nom' => $data->name,
@@ -204,8 +204,7 @@ class Supplier
             'adresseFacturation' => $data->rec_adress,
             'adresseLivraison' => $data->ship_adress,
             'logo' => $data->logo,
-            //nb_commande ?! Le calculer -> Ne sais pas si ca doit etre un champs dans la base de données
-            'nb_commande' => $data->nb_commande,
+            'nb_commande' => $nb_commande,
             'fkidSupplier' => $this->_id
         );
 
@@ -230,7 +229,7 @@ class Supplier
         $db->query("UPDATE Product SET $fields WHERE idProduct = ?", array($idProduct));
     }
 
-    //TODO: Vérifier userCat et salt
+    //TODO: Vérifier userCat et salt => Emmanuel
     public function editUser($data, $idUser)
     {
         $db = Database::getInstance();
@@ -244,8 +243,7 @@ class Supplier
         $db->query("UPDATE User SET $fields WHERE id = ?", array($idUser));
     }
 
-    //TODO:Modifier clé d'olivier dans fkidClient' => $data ->fkidClient
-    //TODO: id=numero_commade ? user=client?
+    //TODO: id=numero_commade ? oui user=client? oui
     //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
     public function editOrder($data, $idOrder)
     {
@@ -267,33 +265,22 @@ class Supplier
     /**DELETE**/
 
     /**Supprime tous les clients du fournisseur**/
+    // deletera en cascade => Emmanuel
     public function deleteAllClient()
     {
         //supprimer tous les clients ayant le fournisseur X
         $db = Database::getInstance();
         /**Supprimer les clients **/
         $db->query("DELETE FROM Client WHERE fkidSupplier = ? ", array($this->_id));
-        /**Supprimer les commandes des clients
-         *Est-ce qu'on voudrait les garder dans la BD quand même ? **/
-        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
-        /**Supprimer les users des clients **/
-        $db->query("DELETE FROM User WHERE fkidSupplier = ? ", array($this->_id));
-
     }
 
     /**Supprime un client du fournisseur**/
+    // deletera en cascade => Emmanuel
     public function deleteClient($idAbout)
     {
         $db = Database::getInstance();
         /**Supprimer le client**/
         $db->query("DELETE FROM Client WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
-
-        /**Supprimer les commandes du client**/
-        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
-
-        /**Supprimer les users du client**/
-        $db->query("DELETE FROM User WHERE fkidSupplier = ? AND fkidClient=?", array($this->_id,$idAbout));
-
 
     }
 
