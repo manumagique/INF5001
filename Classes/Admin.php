@@ -58,7 +58,7 @@ class Supplier
     public function getUserList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT id, username FROM User");
+        $db->query("SELECT id, username FROM oauth_users");
         return $db->resultsToJson();
 
     }
@@ -67,7 +67,7 @@ class Supplier
     public function getUser($idUser)
     {
         $db = Database::getInstance();
-        $db->query("SELECT id, username FROM User WHERE id = ?", array($idUser));
+        $db->query("SELECT id, username FROM oauth_users WHERE id = ?", array($idUser));
         return $db->resultsToJson();
 
     }
@@ -240,7 +240,7 @@ class Supplier
             'userCat' => "Fournisseur",
             'fkidSupplier' => $this->_id
         );
-        $db->query("UPDATE User SET $fields WHERE id = ?", array($idUser));
+        $db->query("UPDATE oauth_users SET $fields WHERE id = ?", array($idUser));
     }
 
     //TODO: id=numero_commade ? oui user=client? oui
@@ -302,14 +302,14 @@ class Supplier
     public function deleteAllUser()
     {
         $db = Database::getInstance();
-        $db->query("DELETE FROM User WHERE fkidSupplier = ? ", array($this->_id));
+        $db->query("DELETE FROM oauth_users WHERE fkidSupplier = ? ", array($this->_id));
     }
 
     public function deleteUser($idAbout)
     {
 
         $db = Database::getInstance();
-        $db->query("DELETE FROM User WHERE fkidSupplier = ? AND id=? ", array($this->_id,$idAbout));
+        $db->query("DELETE FROM oauth_users WHERE fkidSupplier = ? AND id=? ", array($this->_id,$idAbout));
     }
 
     public function deleteAllOrder()

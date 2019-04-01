@@ -102,7 +102,7 @@ class User
     public function loadFromDB ()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM User WHERE id = ?", ['id', $this->_id]);
+        $db->query("SELECT * FROM oauth_users WHERE id = ?", ['id', $this->_id]);
     }
 
     /**Ajouter un utilisateur à un fournisseur**/

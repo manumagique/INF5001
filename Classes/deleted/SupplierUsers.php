@@ -19,7 +19,7 @@ class SupplierUsers
         $this->_sessionName = Config::get('session/session_name');
         $this->_supplierId = $supplierId;
 
-        $this->_db->query('Select id, username, userCat FROM User WHERE fkidSupplier = ?', array($supplierId));
+        $this->_db->query('Select id, username, userCat FROM oauth_users WHERE fkidSupplier = ?', array($supplierId));
         $this->_data = $this->_db->resultsToJson();
     }
 
