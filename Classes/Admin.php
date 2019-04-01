@@ -1,96 +1,95 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: emmanuelboyer
+ * User: jade
  * Date: 2019-02-18
  * Time: 00:27
  */
-/**Jade**/
 class Supplier
 {
     private $_id;
 
 
-    public function __construct($id)
+    public function __construct()
     {
-        $this->_id = $id;
+
     }
 
 
     /** GET **/
 
-    /**Retourne la liste des clients du fournisseur**/
+    /**Retourne la liste des clients **/
     public function getClientList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client WHERE fkidSupplier = ?", array($this->_id));
+        $db->query("SELECT * FROM Client");
         return $db->resultsToJson();
 
     }
 
-    /**Retourne la fiche détaillée d'un client  du fournisseur**/
+    /**Retourne la fiche détaillée d'un client **/
     public function getClient($idClient)
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Client WHERE fkidSupplier = ? AND idClient = ?", array($this->_id,$idClient));
+        $db->query("SELECT * FROM Client WHERE idClient = ?", array($idClient));
         return $db->resultsToJson();
 
     }
 
-    /**Retourne la liste des produits du fournisseur**/
+    /**Retourne la liste des produits**/
     public function getProductList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Product WHERE fkidSupplier = ?", array($this->_id));
+        $db->query("SELECT * FROM Product");
         return $db->resultsToJson();
 
     }
 
-    /**Retourne le détail d'un produit du fournisseur**/
+    /**Retourne le détail d'un produit**/
     public function getProduct($idProduct)
     {
         $db = Database::getInstance();
-        $db->query("SELECT * FROM Product WHERE fkidSupplier = ? AND idProduct = ?", array($this->_id, $idProduct));
+        $db->query("SELECT * FROM Product WHERE idProduct = ?", array($idProduct));
         return $db->resultsToJson();
 
     }
 
-    /**Retourne la liste des utilisateurs du fournisseur**/
+    /**Retourne la liste des utilisateurs **/
     public function getUserList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT id, username FROM oauth_users WHERE fkidSupplier = ?", array($this->_id));
+        $db->query("SELECT id, username FROM oauth_users");
         return $db->resultsToJson();
 
     }
 
-    /**Retourne un utilisateur du fournisseur**/
+    /**Retourne un utilisateur **/
     public function getUser($idUser)
     {
         $db = Database::getInstance();
-        $db->query("SELECT id, username FROM oauth_users WHERE fkidSupplier = ? AND id = ?", array($this->_id, $idUser));
+        $db->query("SELECT id, username FROM oauth_users WHERE id = ?", array($idUser));
         return $db->resultsToJson();
 
     }
 
-    /**Retourne la liste des commandes du fournisseur**/
+    /**Retourne la liste des commandes**/
     public function getOrderList()
     {
         $db = Database::getInstance();
         $db->query("SELECT id.ClientOrder, date.ClientOrder, user.ClientOrder, commentaire.ClientOrder, 
                   status.ClientOrder, fkidClient.ClientOrder, fkidSupplier.ClientOrder, nom.Client  
-                  FROM ClientOrder INNER JOIN Client ON id.ClientOrder=idClient.Client WHERE fkidSupplier.ClientOrder = ? ", array($this->_id));
+                  FROM ClientOrder INNER JOIN Client ON id.ClientOrder=idClient.Client ");
         return $db->resultsToJson();
 
     }
 
-    /**Retourne une commande du fournisseur**/
+    /**Retourne une commande**/
     public function getOrder($idOrder)
     {
         $db = Database::getInstance();
         $db->query("SELECT id.ClientOrder, date.ClientOrder, user.ClientOrder, commentaire.ClientOrder, 
                   status.ClientOrder, fkidClient.ClientOrder, fkidSupplier.ClientOrder, nom.Client  
-                  FROM ClientOrder INNER JOIN Client ON id.ClientOrder=idClient.Client WHERE fkidSupplier.ClientOrder = ? AND id.ClientOrder = ?", array($this->_id, $idOrder));
+                  FROM ClientOrder INNER JOIN Client ON id.ClientOrder=idClient.Client WHERE id.ClientOrder = ?", array( $idOrder));
         return $db->resultsToJson();
 
     }
@@ -136,9 +135,9 @@ class Supplier
         $db->insert(Product, $fields);
     }
 
-    /**Ici je fais comme s'il n'y avait pas de fkidClient puisque
-     * c'est un utilisateur du fournisseur
+    /**
      */
+    //TODO: UserCat ???
     //TODO: Vérifier userCat et salt => Emmanuel
     public function addUser($data)
     {
@@ -150,13 +149,14 @@ class Supplier
             'username' => $data->username,
             'password' => $data ->password,
             'userCat' => "Fournisseur",
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $data ->fkidSupplier,
+            'fkidClient' => $data ->fkidClient,
         );
         $db->insert(User, $fields);
     }
 
     /**
-    *Comment récupérer le fkidClient ?
+     *Comment récupérer le fkidClient ?
      * Est-il donné par olivier ?
      **/
     //TODO: id=numero_commade ? oui,  user=client? oui
@@ -172,7 +172,7 @@ class Supplier
             'commentaire' => $data ->commentaire,
             'status' => $data ->done,
             'fkidClient' => $data ->fkidClient,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $data ->fkidSupplier
         );
         $db->insert(ClientOrder, $fields);
     }
@@ -205,7 +205,7 @@ class Supplier
             'adresseLivraison' => $data->ship_adress,
             'logo' => $data->logo,
             'nb_commande' => $nb_commande,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $data->fkidSupplier
         );
 
         $db->query("UPDATE Client SET $fields WHERE idClient = ?", array($idClient));
@@ -264,17 +264,17 @@ class Supplier
 
     /**DELETE**/
 
-    /**Supprime tous les clients du fournisseur**/
+    /**Supprime tous les clients **/
     // deletera en cascade => Emmanuel
     public function deleteAllClient()
     {
         //supprimer tous les clients ayant le fournisseur X
         $db = Database::getInstance();
         /**Supprimer les clients **/
-        $db->query("DELETE FROM Client WHERE fkidSupplier = ? ", array($this->_id));
+        $db->query("DELETE FROM Client ");
     }
 
-    /**Supprime un client du fournisseur**/
+    /**Supprime un client **/
     // deletera en cascade => Emmanuel
     public function deleteClient($idAbout)
     {

@@ -19,7 +19,7 @@ class ClientUsers
         $this->_sessionName = Config::get('session/session_name');
         $this->_clientId = $clientId;
 
-        $this->_db->query('Select id, username, userCat FROM User WHERE fkidClient = ?', array($clientId));
+        $this->_db->query('Select id, username, userCat FROM oauth_users WHERE fkidClient = ?', array($clientId));
         $this->_data = $this->_db->resultsToJson();
     }
 
