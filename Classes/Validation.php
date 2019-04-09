@@ -12,6 +12,8 @@ class Validation
             $_errors = array(),
             $_db = null;
 
+    private $validationResults = array();
+
     public function __construct()
     {
         $this->_db =Database::getInstance();
@@ -90,4 +92,64 @@ class Validation
     {
         return $this->_passed;
     }
+
+
+
+
+
+    public function getValidationResults()  {
+        return $this->validationResults;
+    }
+
+    public function isValidName($name)  {
+        $result = true;
+
+        if (!preg_match('/^[a-zA-Z\s]+$/', $name)) {
+            array_push($validationResults,"Field Name can only contain letters and white spaces.");
+            $result = false;
+        }
+        if (empty($name)) {
+            array_push($validationResults, "The field Client Name can't be empty.");
+            $result = false;
+        }
+        return $result;
+    }
+
+    public function isValidCompany($company)  {
+        $result = true;
+
+        if (empty($company)) {
+            array_push($validationResults, "The field Client Name can't be empty.");
+            $result = false;
+        }
+        return $result;
+    }
+
+    public function isValidEmail($email)  {
+        $result = true;
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailError = 'Invalid Email';
+            array_push($validationResults,"Invalid Email");
+            $result = false;
+        }
+        if (empty($email)) {
+            array_push($validationResults, "The field Client Email can't be empty.");
+            $result = false;
+        }
+        return $result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
