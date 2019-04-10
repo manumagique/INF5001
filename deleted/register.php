@@ -33,7 +33,7 @@ if (Input::exists())
                 )
             ));
             if ($validation->passed()) {
-               $user = new User();
+               $user = new oauth_users();
                $salt = Hash::salt(32);
                try
                {

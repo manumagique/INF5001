@@ -21,7 +21,7 @@ Hello world
     echo '<p>' . Session::flash('home') . '</p>';
 }
 
-    $user = new User();
+    $user = new oauth_users();
     if ($user->isLoggedIn())
     {
         echo

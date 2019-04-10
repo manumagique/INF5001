@@ -6,7 +6,7 @@
  * Time: 3:20 PM
  */
 
-class User
+class oauth_users
 {
     private $_db;
     private $_data;
@@ -43,7 +43,7 @@ class User
 
     public function create($fields = array())
     {
-        if (!$this->_db->insert('User', $fields))
+        if (!$this->_db->insert('oauth_users', $fields))
         {
             throw new Exception("Il y a eu un probleme empêchant de créer l''utilisateur");
         }
@@ -54,7 +54,7 @@ class User
         if ($user)
         {
             $field = (is_numeric($user)) ? 'id' : 'username';
-            $data = $this->_db->get('User', array($field, '=', $user));
+            $data = $this->_db->get('oauth_users', array($field, '=', $user));
 //            $data = $this->_db->query();
 
             if ($data->count())

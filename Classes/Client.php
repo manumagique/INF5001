@@ -133,7 +133,7 @@ class Client
 
         $fields = array(
             'date' => $data->date,
-            'user' => $data ->user,
+            'oauth_users' => $data ->user,
             'commentaire' => $data ->commentaire,
             'status' => $data ->status,
             'fkidClient' => $this->_id,
@@ -187,7 +187,7 @@ class Client
 
         $fields = array(
             'date' => $data->date,
-            'user' => $data ->user,
+            'oauth_users' => $data ->user,
             'commentaire' => $data ->commentaire,
             'status' => $data ->status,
             'fkidClient' => $this->_id,

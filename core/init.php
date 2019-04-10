@@ -10,7 +10,7 @@ session_start();
 $GLOBALS['config'] = array(
     'mysql' => array(
         'host' => '69.28.199.20',
-        'user' => 'lango721_inm5001',
+        'oauth_users' => 'lango721_inm5001',
         'passsword' => '?h17b+gplF;H',
         'db' => 'lango721_gestiondecommandes'
     ),
@@ -19,7 +19,7 @@ $GLOBALS['config'] = array(
         'cookie_expiry' => 604800
     ),
     'session' => array(
-        'session_name' => 'user',
+        'session_name' => 'oauth_users',
         'token_name' => 'token'
     ),
 

@@ -168,7 +168,7 @@ class Supplier
             // en premier nom ds la table et a la fin nom de olivier
             'date' => $data->date_commande,
             'id' => $data->numero_commande,
-            'user' => $data ->client,
+            'oauth_users' => $data ->client,
             'commentaire' => $data ->commentaire,
             'status' => $data ->done,
             'fkidClient' => $data ->fkidClient,
@@ -252,7 +252,7 @@ class Supplier
             // en premier nom ds la table et a la fin nom de olivier
             'date' => $data->date_commande,
             'id' => $data->numero_commande,
-            'user' => $data ->client,
+            'oauth_users' => $data ->client,
             'commentaire' => $data ->commentaire,
             'status' => $data ->done,
             'fkidClient' => $data ->fkidClient,

@@ -7,7 +7,7 @@
  */
 require_once './../core/init.php';
 
-$user = new User();
+$user = new oauth_users();
 $user->logout();
 
 Redirect::to('index.php');

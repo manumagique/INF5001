@@ -18,7 +18,7 @@ if (Input::exists())
 
         if ($validation->passed())
         {
-            $user = new User();
+            $user = new oauth_users();
             $login = $user->login(Input::get('username'), Input::get('password'));
 
             if ($login)

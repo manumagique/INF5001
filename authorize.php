@@ -23,6 +23,7 @@ if (empty($_POST)) {
 // print the authorization code if the user has authorized your client
 $is_authorized = ($_POST['authorized'] === 'yes');
 $server->handleAuthorizeRequest($request, $response, $is_authorized);
+//$server->handleAuthorizeRequest(OAuth2\Request::createFromGlobals())->send();
 if ($is_authorized) {
     // this is only here so that you get to see your code in the cURL request. Otherwise, we'd redirect back to the client
     $code = substr($response->getHttpHeader('Location'), strpos($response->getHttpHeader('Location'), 'code=')+5, 40);

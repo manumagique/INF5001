@@ -6,6 +6,8 @@
  * Time: 11:02
  */
 
+use OAuth2\GrantType\UserCredentials;
+
 $dsn      = 'mysql:dbname=lango721_gestiondecommandes;host=69.28.199.20';
 $username = 'lango721_inm5001';
 $password = '?h17b+gplF;H';
@@ -20,6 +22,7 @@ OAuth2\Autoloader::register();
 // $dsn is the Data Source Name for your database, for exmaple "mysql:dbname=my_oauth2_db;host=localhost"
 $storage = new OAuth2\Storage\Pdo(array('dsn' => $dsn, 'username' => $username, 'password' => $password));
 
+//$server = new OAuth2\Server($storage, array('allow_implicit' => true));
 // Pass a storage object or array of storage objects to the OAuth2 server class
 $server = new OAuth2\Server($storage);
 
@@ -28,3 +31,6 @@ $server->addGrantType(new OAuth2\GrantType\ClientCredentials($storage));
 
 // Add the "Authorization Code" grant type (this is where the oauth magic happens)
 $server->addGrantType(new OAuth2\GrantType\AuthorizationCode($storage));
+
+// create the grant type
+$server->addGrantType(new OAuth2\GrantType\UserCredentials($storage));

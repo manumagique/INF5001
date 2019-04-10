@@ -13,7 +13,7 @@ if (isset($_POST))
 {
     $data = json_decode(file_get_contents("php://input"));
 
-    $user = new User();
+    $user = new oauth_users();
     $salt = Hash::salt(32);
     $username = $data->username;
     try
