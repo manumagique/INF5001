@@ -163,6 +163,7 @@ class Supplier
     //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
     public function addOrder($data)
     {
+        $Produits=array();
         $db = Database::getInstance();
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
@@ -172,8 +173,14 @@ class Supplier
             'commentaire' => $data ->commentaire,
             'status' => $data ->done,
             'fkidClient' => $data ->fkidClient,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $this->_id,
+            $Produits => $data->produit
         );
+
+        foreach( $Produits as $champ){
+            $donnees = $Produits -> name
+            $qt = $Produits -> quantité
+        }
         $db->insert(ClientOrder, $fields);
     }
 
