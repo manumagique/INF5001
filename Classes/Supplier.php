@@ -168,18 +168,17 @@ class Supplier
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
             'date' => $data->date_commande,
-            'id' => $data->numero_commande,
             'user' => $data ->client,
             'commentaire' => $data ->commentaire,
-            'status' => $data ->done,
+            'status' => "0",
             'fkidClient' => $data ->fkidClient,
             'fkidSupplier' => $this->_id,
             $Produits => $data->produit
         );
 
         foreach( $Produits as $champ){
-            $donnees = $Produits -> name
-            $qt = $Produits -> quantité
+            $donnees = $Produits -> id;
+            $qt = $Produits -> quantité;
         }
         $db->insert(ClientOrder, $fields);
     }
