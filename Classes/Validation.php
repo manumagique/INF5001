@@ -103,75 +103,127 @@ class Validation
 
     public function isValidName($name)  {
         $result = true;
+        $length = 45;
 
-        if (!preg_match('/^[a-zA-Z\s]+$/', $name)) {
-            array_push($validationResults,"Field Name can only contain letters and white spaces.");
-            $result = false;
-        }
         if (empty($name)) {
             array_push($validationResults, "The field Client Name can't be empty.");
             $result = false;
-        }
-        if (strlen($name) > 45) {
-            array_push($validationResults, "The field Client Name can't be longer than 45 characters.");
-            $result = false;
+        } else {
+            if (!preg_match('/^[a-zA-Z\s]+$/', $name)) {
+                array_push($validationResults, "Field Name can only contain letters and white spaces.");
+                $result = false;
+            }
+            if (strlen($name) > $length) {
+                array_push($validationResults, "The field Client Name can't be longer than " . $length . " characters.");
+                $result = false;
+            }
         }
         return $result;
     }
 
     public function isValidCompany($company)  {
         $result = true;
+        $length = 45;
 
         if (empty($company)) {
-            array_push($validationResults, "The field Client Compagnie can't be empty.");
+            array_push($validationResults, "The field Client Company can't be empty.");
             $result = false;
-        }
-        if (strlen($company) > 45) {
-            array_push($validationResults, "The field Client Compagnie can't be longer than 45 characters.");
-            $result = false;
+        } else {
+            if (strlen($company) > $length) {
+                array_push($validationResults, "The field Client Company can't be longer than " . $length . " characters.");
+                $result = false;
+            }
         }
         return $result;
     }
 
     public function isValidEmail($email)  {
         $result = true;
+        $length = 45;
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailError = 'Invalid Email';
-            array_push($validationResults,"Invalid Email");
-            $result = false;
-        }
         if (empty($email)) {
             array_push($validationResults, "The field Client Email can't be empty.");
             $result = false;
-        }
-        if (strlen($email) > 45) {
-            array_push($validationResults, "The field Client Email can't be longer than 45 characters.");
-            $result = false;
+        } else {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                array_push($validationResults, "Invalid Email");
+                $result = false;
+            }
+            if (strlen($email) > $length) {
+                array_push($validationResults, "The field Client Email can't be longer than " . $length . " characters.");
+                $result = false;
+            }
         }
         return $result;
     }
 
     public function isValidBuyCondition($buyCondition)  {
         $result = true;
+        $length = 45;
 
-        if (!preg_match('/^[a-zA-Z\s]+$/', $buyCondition)) {
-            $emailError = 'Invalid Email';
-            array_push($validationResults,"Invalid Email");
-            $result = false;
-
-        }
         if (empty($buyCondition)) {
             array_push($validationResults, "The field Client Buy Condition can't be empty.");
             $result = false;
-        }
-        if (strlen($buyCondition) > 45) {
-            array_push($validationResults, "The field Client Buy Condition can't be longer than 45 characters.");
-            $result = false;
+        } else {
+            if (strlen($buyCondition) > $length) {
+                array_push($validationResults, "The field Client Buy Condition can't be longer than " . $length . " characters.");
+                $result = false;
+            }
         }
         return $result;
     }
 
+    public function isValidRecipientAddress($address)  {
+        $result = true;
+        $length = 200;
+
+        if (empty($address)) {
+            array_push($validationResults, "The field Client Recipient Address can't be empty.");
+            $result = false;
+        } else {
+            if (strlen($address) > $length) {
+                array_push($validationResults, "The field Client Recipient Address can't be longer than " . $length . " characters.");
+                $result = false;
+            }
+        }
+        return $result;
+    }
+
+    public function isValidShippingAddress($address)  {
+        $result = true;
+        $length = 200;
+
+        if (empty($address)) {
+            array_push($validationResults, "The field Client Shipping Address can't be empty.");
+            $result = false;
+        } else {
+            if (strlen($address) > $length) {
+                array_push($validationResults, "The field Client Shipping Address can't be longer than " . $length . " characters.");
+                $result = false;
+            }
+        }
+        return $result;
+    }
+
+    public function isValidURL($url)  {
+        $result = true;
+        $length = 16535;
+
+        if (empty($url)) {
+            array_push($validationResults, "The field Client Shipping Address Condition can't be empty.");
+            $result = false;
+        } else {
+            if (!filter_var($url, FILTER_VALIDATE_URL)) {
+                array_push($validationResults, "The field Client Logo URL Condition can't be empty.");
+                $result = false;
+            }
+            if (strlen($url) > $length) {
+                array_push($validationResults, "The field Client Shipping Address can't be longer than " . $length . " characters.");
+                $result = false;
+            }
+        }
+        return $result;
+    }
 
 
 
