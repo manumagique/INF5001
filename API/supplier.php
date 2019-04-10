@@ -103,37 +103,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         /**L'URL est de type http....com/API/Fournisseur/1/Client/
          * Si on n'a pas le idabout, erreur
          */
-        if(empty($idAbout)){
-            echo "erreur";
-        } else {
+        
 
             $res->addClient($data);
 
-        }
+
 
     } else if($about == "product") {
 
-        if(empty($idAbout)) {
-            echo "erreur";
-        } else {
+
             $res->addProduct($data);
-        }
+
 
     } else if($about == "user") {
 
-        if(empty($idAbout)) {
-            echo "erreur";
-        } else {
+
             $res->addUser($data);
-        }
+
 
     }else if($about == "order") {
 
-        if(empty($idAbout)) {
-            echo "erreur";
-        } else {
             $res->addOrder($data);
-        }
+
     }
 
 
