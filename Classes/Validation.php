@@ -95,7 +95,7 @@ class Validation
 
 
 
-
+// Validation for Client's form fields
 
     public function getValidationResults()  {
         return $this->validationResults;
@@ -112,6 +112,10 @@ class Validation
             array_push($validationResults, "The field Client Name can't be empty.");
             $result = false;
         }
+        if (strlen($name) > 45) {
+            array_push($validationResults, "The field Client Name can't be longer than 45 characters.");
+            $result = false;
+        }
         return $result;
     }
 
@@ -119,7 +123,11 @@ class Validation
         $result = true;
 
         if (empty($company)) {
-            array_push($validationResults, "The field Client Name can't be empty.");
+            array_push($validationResults, "The field Client Compagnie can't be empty.");
+            $result = false;
+        }
+        if (strlen($company) > 45) {
+            array_push($validationResults, "The field Client Compagnie can't be longer than 45 characters.");
             $result = false;
         }
         return $result;
@@ -137,9 +145,32 @@ class Validation
             array_push($validationResults, "The field Client Email can't be empty.");
             $result = false;
         }
+        if (strlen($email) > 45) {
+            array_push($validationResults, "The field Client Email can't be longer than 45 characters.");
+            $result = false;
+        }
         return $result;
     }
 
+    public function isValidBuyCondition($buyCondition)  {
+        $result = true;
+
+        if (!preg_match('/^[a-zA-Z\s]+$/', $buyCondition)) {
+            $emailError = 'Invalid Email';
+            array_push($validationResults,"Invalid Email");
+            $result = false;
+
+        }
+        if (empty($buyCondition)) {
+            array_push($validationResults, "The field Client Buy Condition can't be empty.");
+            $result = false;
+        }
+        if (strlen($buyCondition) > 45) {
+            array_push($validationResults, "The field Client Buy Condition can't be longer than 45 characters.");
+            $result = false;
+        }
+        return $result;
+    }
 
 
 
