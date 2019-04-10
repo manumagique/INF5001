@@ -210,15 +210,15 @@ class Validation
         $length = 16535;
 
         if (empty($url)) {
-            array_push($validationResults, "The field Client Shipping Address Condition can't be empty.");
+            array_push($validationResults, "The field Client Logo URL can't be empty.");
             $result = false;
         } else {
             if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                array_push($validationResults, "The field Client Logo URL Condition can't be empty.");
+                array_push($validationResults, "The field Client Logo URL can't be empty.");
                 $result = false;
             }
             if (strlen($url) > $length) {
-                array_push($validationResults, "The field Client Shipping Address can't be longer than " . $length . " characters.");
+                array_push($validationResults, "The field Client Logo URL can't be longer than " . $length . " characters.");
                 $result = false;
             }
         }
