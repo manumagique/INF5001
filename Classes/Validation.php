@@ -8,97 +8,34 @@
 
 class Validation
 {
-    private $_passed = false,
-            $_errors = array(),
-            $_db = null;
 
-    private $validationResults = array();
+    private $validationResult = null;
 
-    public function __construct()
-    {
-        $this->_db =Database::getInstance();
+    public function __construct(){}
+
+    public function getValidationResults()  {
+        return $this->validationResult;
     }
-
-    public function check($source, $items = array())
-    {
-        foreach ($items as $item => $rules)
-        {
-            foreach ($rules as $rule => $ruleValue)
-            {
-                $value = trim($source[$item]);
-                $item = escape($item);
-                if ($rule === 'required' && empty($value))
-                {
-                    $this->addError("{$item} is required");
-                }
-                else if (!empty($value))
-                {
-                    switch ($rule)
-                    {
-                        case 'min' :
-                            if (strlen($value) < $ruleValue)
-                            {
-                                $this->addError("{$item} doit être un minimum de  {$ruleValue} caratères");
-                            }
-                            break;
-                        case 'max' :
-                            if (strlen($value) > $ruleValue)
-                            {
-                                $this->addError("{$item} doit être un maximum de  {$ruleValue} caratères");
-                            }
-                            break;
-                        case 'matches' :
-                                if ($value != $source[$ruleValue])
-                                {
-                                    $this->addError("{$ruleValue} doit être égale à {$item}");
-                                }
-                            break;
-                        case 'unique' :
-                                //$check = $this->_db->query();
-                                $check = $this->_db->get($ruleValue, array($item, '=', $value) );
-                                if ($check->count())
-                                {
-                                    $this->addError("{$item} est déjà utilisé.");
-                                }
-                            break;
-                        case 'numeric' :
-                            //$check = $this->_db->query();
-                            $check = $this->_db->get($ruleValue, array($item, '=', $value) );
-                            if ($check->count())
-                            {
-                                $this->addError("{$item} est déjà utilisé.");
-                            }
-                            break;
-                    }
-                }
-            }
-            if (empty($this->_errors))
-            {
-                $this->_passed = true;
-            }
-            return $this;
-        }
+    public function setValidationResults($result)  {
+        return $this->validationResult = $result;
     }
-
-    private function addError($error)
-    {
-        $this->_errors[] = $error;
-    }
-    public function errors()
-    {
-        return $this->_errors;
-    }
-    public function passed()
-    {
-        return $this->_passed;
-    }
-
-
 
 // Validation for Client's form fields
 
-    public function getValidationResults()  {
-        return $this->validationResults;
+
+    public function isValidTextField($txt, $fieldName)  {
+        $result = true;
+        $length = 45;
+
+        if (empty($txt)) {
+            $this->setValidationResults("The field " . $fieldName . " can't be empty.");
+            $result = false;
+        } elseif (strlen($txt) > $length) {
+            $this->setValidationResults("The field " . $fieldName . " can't be longer than " . $length . " characters.");
+            $result = false;
+        }
+
+        return $result;
     }
 
     public function isValidName($name)  {
@@ -106,34 +43,16 @@ class Validation
         $length = 45;
 
         if (empty($name)) {
-            array_push($validationResults, "The field Client Name can't be empty.");
+            $this->setValidationResults("The field Name can't be empty.");
             $result = false;
-        } else {
-            if (!preg_match('/^[a-zA-Z\s]+$/', $name)) {
-                array_push($validationResults, "Field Name can only contain letters and white spaces.");
-                $result = false;
-            }
-            if (strlen($name) > $length) {
-                array_push($validationResults, "The field Client Name can't be longer than " . $length . " characters.");
-                $result = false;
-            }
-        }
-        return $result;
-    }
-
-    public function isValidCompany($company)  {
-        $result = true;
-        $length = 45;
-
-        if (empty($company)) {
-            array_push($validationResults, "The field Client Company can't be empty.");
+        } elseif (!preg_match('/^[a-zA-Z\s]+$/', $name)) {
+            $this->setValidationResults("Field Name can only contain letters and white spaces.");
             $result = false;
-        } else {
-            if (strlen($company) > $length) {
-                array_push($validationResults, "The field Client Company can't be longer than " . $length . " characters.");
-                $result = false;
-            }
+        } elseif (strlen($name) > $length) {
+            $this->setValidationResults("The field Name can't be longer than " . $length . " characters.");
+            $result = false;
         }
+
         return $result;
     }
 
@@ -142,18 +61,16 @@ class Validation
         $length = 45;
 
         if (empty($email)) {
-            array_push($validationResults, "The field Client Email can't be empty.");
+            $this->setValidationResults("The field Email can't be empty.");
             $result = false;
-        } else {
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                array_push($validationResults, "Invalid Email");
-                $result = false;
-            }
-            if (strlen($email) > $length) {
-                array_push($validationResults, "The field Client Email can't be longer than " . $length . " characters.");
-                $result = false;
-            }
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->setValidationResults("Invalid Email");
+            $result = false;
+        } elseif (strlen($email) > $length) {
+            $this->setValidationResults("The field Email can't be longer than " . $length . " characters.");
+            $result = false;
         }
+
         return $result;
     }
 
@@ -162,14 +79,13 @@ class Validation
         $length = 45;
 
         if (empty($buyCondition)) {
-            array_push($validationResults, "The field Client Buy Condition can't be empty.");
+            $this->setValidationResults("The field Buy Condition can't be empty.");
             $result = false;
-        } else {
-            if (strlen($buyCondition) > $length) {
-                array_push($validationResults, "The field Client Buy Condition can't be longer than " . $length . " characters.");
-                $result = false;
-            }
+        } elseif (strlen($buyCondition) > $length) {
+            $this->setValidationResults("The field Buy Condition can't be longer than " . $length . " characters.");
+            $result = false;
         }
+
         return $result;
     }
 
@@ -178,14 +94,13 @@ class Validation
         $length = 200;
 
         if (empty($address)) {
-            array_push($validationResults, "The field Client Recipient Address can't be empty.");
+            $this->setValidationResults("The field Recipient Address can't be empty.");
             $result = false;
-        } else {
-            if (strlen($address) > $length) {
-                array_push($validationResults, "The field Client Recipient Address can't be longer than " . $length . " characters.");
-                $result = false;
-            }
+        } elseif (strlen($address) > $length) {
+            $this->setValidationResults("The field Recipient Address can't be longer than " . $length . " characters.");
+            $result = false;
         }
+
         return $result;
     }
 
@@ -194,14 +109,13 @@ class Validation
         $length = 200;
 
         if (empty($address)) {
-            array_push($validationResults, "The field Client Shipping Address can't be empty.");
+            $this->setValidationResults("The field Shipping Address can't be empty.");
             $result = false;
-        } else {
-            if (strlen($address) > $length) {
-                array_push($validationResults, "The field Client Shipping Address can't be longer than " . $length . " characters.");
-                $result = false;
-            }
+        } elseif (strlen($address) > $length) {
+            $this->setValidationResults("The field Shipping Address can't be longer than " . $length . " characters.");
+            $result = false;
         }
+
         return $result;
     }
 
@@ -210,18 +124,118 @@ class Validation
         $length = 16535;
 
         if (empty($url)) {
-            array_push($validationResults, "The field Client Logo URL can't be empty.");
+            $this->setValidationResults("The field Logo URL can't be empty.");
             $result = false;
-        } else {
-            if (!filter_var($url, FILTER_VALIDATE_URL)) {
-                array_push($validationResults, "The field Client Logo URL can't be empty.");
-                $result = false;
-            }
-            if (strlen($url) > $length) {
-                array_push($validationResults, "The field Client Logo URL can't be longer than " . $length . " characters.");
-                $result = false;
-            }
+        } elseif (!filter_var($url, FILTER_VALIDATE_URL)) {
+            $this->setValidationResults("The RUL is not valid.");
+            $result = false;
+        } elseif (strlen($url) > $length) {
+            $this->setValidationResults("The field Logo URL can't be longer than " . $length . " characters.");
+            $result = false;
         }
+
+        return $result;
+    }
+
+
+
+    // Validation for Product's form fields
+
+    public function isValidPrice($price)  {
+        $result = true;
+        $length = 8;
+
+        if (empty($price)) {
+            $this->setValidationResults("The field Price can't be empty.");
+            $result = false;
+        } elseif (!filter_var($price, FILTER_VALIDATE_FLOAT)) {
+            $this->setValidationResults("Field Price can only contain numbers and '.' .");
+            $result = false;
+        } elseif (strlen($price) > $length) {
+            $this->setValidationResults("The field Price can't be longer than " . $length . " characters.");
+            $result = false;
+        }
+
+        return $result;
+    }
+
+
+    // Validation for Product's Order form fields
+
+    function isValidDate($date) {
+
+        $result = true;
+
+        if(!(date('Y-m-d H:i:s', strtotime($date)) == $date)) {
+            $this->setValidationResults("The field Date isn't valid.");
+            $result = false;
+        }
+
+        return $result;
+    }
+
+
+    function isValidID($id) {
+
+        $result = true;
+        $length = 11;
+
+        if (empty($id)) {
+            $this->setValidationResults("The field User can't be empty.");
+            $result = false;
+        } elseif (!preg_match('/^[0-9.\s]+$/', $id)) {
+            $this->setValidationResults("Field User can only contain numbers and '.' .");
+            $result = false;
+        } elseif (strlen($id) > $length) {
+            $this->setValidationResults("The field User can't be longer than " . $length . " characters.");
+            $result = false;
+        }
+
+        return $result;
+    }
+
+
+    public function isValidComment($comment)  {
+        $result = true;
+        $length = 200;
+
+        if (empty($comment)) {
+            $this->setValidationResults("The field Comment can't be empty.");
+            $result = false;
+        } elseif (!preg_match('/^[a-zA-Z\s]+$/', $comment)) {
+            $this->setValidationResults("Field Comment can only contain letters and white spaces.");
+            $result = false;
+        } elseif (strlen($comment) > $length) {
+            $this->setValidationResults("The field Comment can't be longer than " . $length . " characters.");
+            $result = false;
+        }
+
+        return $result;
+    }
+
+
+    public function isValidStatus($status)  {
+        $result = true;
+
+        if (!($status >= 0 && $status <= 1)) {
+                $this->setValidationResults("Field Status can only contain 0 or 1.");
+                $result = false;
+        }
+
+        return $result;
+    }
+
+    public function isValidQuantity($quantity)  {
+        $result = true;
+
+        if (empty($quantity)) {
+            $this->setValidationResults("The field Quantity can't be empty.");
+            $result = false;
+        } elseif ( !$quantity == 0) {
+            $this->setValidationResults("Field Quantity can only contain 0 or 1.");
+            $result = false;
+        }
+
         return $result;
     }
 
@@ -235,4 +249,22 @@ class Validation
 
 
 
+
+
+
+
+}
+
+
+
+
+
+
+$teste = new Validation();
+$value = 5;
+
+if( $teste->isValidStatus($value) ) {
+    echo "TRUE " . $teste->getValidationResults() . $teste->isValidStatus($value);
+} else {
+    echo "FALSE " . $teste->getValidationResults() . $teste->isValidStatus($value);
 }
