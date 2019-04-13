@@ -64,81 +64,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 } else  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $idClient = $_POST['idClient'];
-    $about = $_POST['about'];
-    $idAbout = $_POST['idAbout'];
+    $idClient = $_GET['idClient'];
+    $about = $_GET['about'];
+    //$idAbout = $_GET['idAbout'];
     $res = new Client($idClient);
     $data = json_decode(file_get_contents("php://input"));
 
-    if($about == "product") {
+    if($about == "user") {
+        $res->addUser($data);
 
-            /* erreur si produit non spécifié */
-        if(empty($idAbout)) {
-            echo "Erreur";
-        } else {
-            //$url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
-            //$donnees = json_decode($url, true);     //associative array
-            $res->addProduct($data);
-            echo "Succès";
-        }
-
-    } else if($about == "user") {
-
-            /* erreur si utilisateur non spécifié */
-        if(empty($idAbout)) {
-            echo "Erreur";
-        } else {
-            //$url = file_get_contents("http://.../api/Client/".$idClient."/user/.".$idAbout);
-            //$donnees = json_decode($url, true);     //associative array
-            $res->addUser($data);
-            echo "Succès";
-        }
-
-    }else if($about == "order") {
-
-            /* erreur si commande non spécifiée */
-        if(empty($idAbout)) {
-            echo "Erreur";
-        } else {
-            //$url = file_get_contents("http://.../api/Client/".$idClient."/user/.".$idAbout);
-            //$donnees = json_decode($url, true);     //associative array
-            $res->addOrder($data);
-            echo "Succès";
-        }
+    } else if($about == "order") {
+        $res->addOrder($data);
     }
 
 /* PUT : mettre à jour info dans la BD */
 
 } else  if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
-    $idClient = $_PUT['idClient'];
-    $about = $_PUT['about'];
-    $idAbout = $_PUT['idAbout'];
+    $idClient = $_GET['idClient'];
+    $about = $_GET['about'];
+    $idAbout = $_GET['idAbout'];
     $res = new Client($idClient);
-    $data = json_decode(file_get_contents("php://input"));
+    $json = file_get_contents("php://input");
+    $data = json_decode($json);
 
-    if($about == "product") {
-
-            /* erreur si produit non spécifié */
-        if(empty($idAbout)) {
-            echo "Erreur";
-        } else {
-            //$url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
-            //$donnees = json_decode($url, true);     //associative array
-            $res->updateProduct($data, $idAbout);
-            echo "Succès";
-        }
-
-    } else if($about == "user") {
+    if($about == "user") {
 
             /* erreur si utilisateur non spécifié */
         if(empty($idAbout)) {
             echo "Erreur";
+
         } else {
-            //$url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
-            //$donnees = json_decode($url, true);     //associative array
             $res->updateUser($data, $idAbout);
-            echo "Succès";
         }
 
     }else if($about == "order") {
@@ -146,11 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             /* erreur si commande non spécifiée */
         if(empty($idAbout)) {
             echo "Erreur";
+
         } else {
-            //$url = file_get_contents("http://.../api/Client/".$idClient."/product/.".$idAbout);
-            //$donnees = json_decode($url, true);     //associative array
             $res->updateOrder($data, $idAbout);
-            echo "Succès";
         }
     }
 
@@ -158,39 +113,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 } else  if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
 
-    $idClient = $_DELETE['idClient'];
-    $about = $_DELETE['about'];
-    $idAbout = $_DELETE['idAbout'];
+    $idClient = $_GET['idClient'];
+    $about = $_GET['about'];
+    $idAbout = $_GET['idAbout'];
     $res = new Client($idClient);
 
     if($about == "product") {
 
         if(empty($idAbout)) {
             $res->deleteAllProducts();
-            echo "Succès";
+
         } else {
             $res->deleteProduct($idAbout);
-            echo "Succès";
+
         }
 
     } else if($about == "user") {
 
         if(empty($idAbout)) {
             $res->deleteAllUsers();
-            echo "Succès";
+
         } else {
             $res->deleteUser($idAbout);
-            echo "Succès";
+
         }
 
     }else if($about == "order") {
 
         if(empty($idAbout)) {
             $res->deleteAllOrders();
-            echo "Succès";
+
         } else {
             $res->deleteOrder($idAbout);
-            echo "Succès";
+
         }
     }
 }
