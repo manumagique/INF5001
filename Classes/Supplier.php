@@ -164,11 +164,12 @@ class Supplier
     public function addOrder($data)
     {
         $Produits=array();
+        $ProduitsList=array();
         $db = Database::getInstance();
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
-            'date' => $data->date_commande,
-            'user' => $data ->client,
+            'date' => date_default_timezone_set('UTC'),
+            'user' => $db -> query("SELECT nom FROM Client WHERE fkidSupplier = ? AND idClient = ?", array($this->_id,$data ->fkidClient)),
             'commentaire' => $data ->commentaire,
             'status' => "0",
             'fkidClient' => $data ->fkidClient,
@@ -177,10 +178,17 @@ class Supplier
         );
 
         foreach( $Produits as $champ){
-            $donnees = $Produits -> id;
-            $qt = $Produits -> quantité;
+            $fieldsProd = array(
+                'fkidProduct' => $Produits -> fkidProduct,
+                'Qty' => $Produits -> quantite,
+                'fkid_ClientOrder' => $data ->fkidClient,
+                'name' => $db -> query("SELECT nom FROM Product WHERE fkidSupplier = ? AND idProduct = ?", array($this->_id,$Produits -> fkidProduct))
+
+        );
+            array_push($ProduitsList, $fieldsProd);
         }
         $db->insert(ClientOrder, $fields);
+        $db->insert(clientOrderDetail, $ProduitsList);
     }
 
 
@@ -253,18 +261,33 @@ class Supplier
     //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
     public function editOrder($data, $idOrder)
     {
+        $Produits=array();
+        $ProduitsList=array();
         $db = Database::getInstance();
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
-            'date' => $data->date_commande,
+            'date' => date_default_timezone_set('UTC'),
             'id' => $data->numero_commande,
-            'user' => $data ->client,
+            'user' => $db -> query("SELECT nom FROM Client WHERE fkidSupplier = ? AND idClient = ?", array($this->_id,$data ->fkidClient)),
             'commentaire' => $data ->commentaire,
             'status' => $data ->done,
             'fkidClient' => $data ->fkidClient,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $this->_id,
+            $Produits => $data->produit
         );
+
+        foreach( $Produits as $champ){
+            $fieldsProd = array(
+                'fkidProduct' => $Produits -> fkidProduct,
+                'Qty' => $Produits -> quantite,
+                'fkid_ClientOrder' => $data ->fkidClient,
+                'name' => $db -> query("SELECT nom FROM Product WHERE fkidSupplier = ? AND idProduct = ?", array($this->_id,$Produits -> fkidProduct))
+
+            );
+            array_push($ProduitsList, $fieldsProd);
+        }
         $db->query("UPDATE ClientOrder SET $fields WHERE idOrder = ?", array($idOrder));
+        $db->query("UPDATE clientOrderDetail SET $ProduitsList WHERE idOrder = ?", array($idOrder));
     }
 
 

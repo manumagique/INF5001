@@ -257,46 +257,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     if($about == "client") {
 
-        /**L'URL est de type http....com/API/admin/1/Client/
-         * Si on n'a pas le idabout, on veut supprimer tous les clients
-         */
-        if(empty($idAbout)){
-            $res->deleteAllClient();
-        } else {
-            $res->deleteClient($idAbout);
-            //Supprimer le client $idabout
 
+        if(!empty($idAbout)){
+            $res->deleteClient($idAbout);
         }
 
     } else if($about == "supplier") {
 
-        if(empty($idAbout)) {
-            $res->deleteAllSupplier();
-        } else {
-            $res->deleteSupplier();
+        if(!empty($idAbout)) {
+           $res->deleteSupplier();
         }
 
     } else if($about == "product") {
 
-        if(empty($idAbout)) {
-            $res->deleteAllProduct();
-        } else {
+        if(!empty($idAbout)) {
             $res->deleteProduct();
         }
 
     } else if($about == "user") {
 
-        if(empty($idAbout)) {
-            $res->deleteAllUser();
-        } else {
-            $res->deleteUser();
+        if(!empty($idAbout)) {
+           $res->deleteUser();
         }
 
     }else if($about == "order") {
 
-        if(empty($idAbout)) {
-            $res->deleteAllOrder();
-        } else {
+        if(!empty($idAbout)) {
             $res->deleteOrder();
         }
     }

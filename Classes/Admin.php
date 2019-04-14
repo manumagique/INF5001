@@ -5,7 +5,7 @@
  * Date: 2019-02-18
  * Time: 00:27
  */
-class Supplier
+class Admin
 {
     private $_id;
 
@@ -94,8 +94,6 @@ class Supplier
 
     }
 
-    /**POST**/
-
     public function addClient($data)
     {
         $db = Database::getInstance();
@@ -110,7 +108,7 @@ class Supplier
             'adresseLivraison' => $data->ship_adress,
             'logo' => $data->logo,
             'nb_commande' => 0,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $this->fkidSupplier
         );
 
         $db->insert(Client, $fields);
@@ -129,15 +127,13 @@ class Supplier
             'orgine' => $data->origine,
             'code' => $data->code,
             'format' => $data->format,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $this->fkidSupplier
         );
 
         $db->insert(Product, $fields);
     }
 
-    /**
-     */
-    //TODO: UserCat ???
+
     //TODO: Vérifier userCat et salt => Emmanuel
     public function addUser($data)
     {
@@ -148,9 +144,9 @@ class Supplier
             // en premier nom ds la table et a la fin nom de olivier
             'username' => $data->username,
             'password' => $data ->password,
-            'userCat' => "Fournisseur",
-            'fkidSupplier' => $data ->fkidSupplier,
-            'fkidClient' => $data ->fkidClient,
+            'userCat' => $data ->usercat,
+            'fkidSupplier' => $this->fkidSupplier,
+            'fkidClient' => $this->fkidClient
         );
         $db->insert(User, $fields);
     }
@@ -163,18 +159,32 @@ class Supplier
     //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
     public function addOrder($data)
     {
+        $Produits=array();
+        $ProduitsList=array();
         $db = Database::getInstance();
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
-            'date' => $data->date_commande,
-            'id' => $data->numero_commande,
-            'user' => $data ->client,
+            'date' => date_default_timezone_set('UTC'),
+            'user' => $db -> query("SELECT nom FROM Client WHERE fkidSupplier = ? AND idClient = ?", array($this->_id,$data ->fkidClient)),
             'commentaire' => $data ->commentaire,
-            'status' => $data ->done,
+            'status' => "0",
             'fkidClient' => $data ->fkidClient,
-            'fkidSupplier' => $data ->fkidSupplier
+            'fkidSupplier' => $this->_id,
+            $Produits => $data->produit
         );
+
+        foreach( $Produits as $champ){
+            $fieldsProd = array(
+                'fkidProduct' => $Produits -> fkidProduct,
+                'Qty' => $Produits -> quantite,
+                'fkid_ClientOrder' => $data ->fkidClient,
+                'name' => $db -> query("SELECT nom FROM Product WHERE idProduct = ?", array($Produits -> fkidProduct))
+
+            );
+            array_push($ProduitsList, $fieldsProd);
+        }
         $db->insert(ClientOrder, $fields);
+        $db->insert(clientOrderDetail, $ProduitsList);
     }
 
 
@@ -205,7 +215,7 @@ class Supplier
             'adresseLivraison' => $data->ship_adress,
             'logo' => $data->logo,
             'nb_commande' => $nb_commande,
-            'fkidSupplier' => $data->fkidSupplier
+            'fkidSupplier' => $this->fkidSupplier
         );
 
         $db->query("UPDATE Client SET $fields WHERE idClient = ?", array($idClient));
@@ -224,7 +234,7 @@ class Supplier
             'orgine' => $data->origine,
             'code' => $data->code,
             'format' => $data->format,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $this->fkidSupplier
         );
         $db->query("UPDATE Product SET $fields WHERE idProduct = ?", array($idProduct));
     }
@@ -237,8 +247,8 @@ class Supplier
             // en premier nom ds la table et a la fin nom de olivier
             'username' => $data->username,
             'password' => $data ->password,
-            'userCat' => "Fournisseur",
-            'fkidSupplier' => $this->_id
+            'userCat' =>  $data ->userCat,
+            'fkidSupplier' => $this->fkidSupplier
         );
         $db->query("UPDATE oauth_users SET $fields WHERE id = ?", array($idUser));
     }
@@ -247,81 +257,70 @@ class Supplier
     //TODO: Lire les nom  quantité dans une boucle ? pour produit commandé
     public function editOrder($data, $idOrder)
     {
+        $Produits=array();
+        $ProduitsList=array();
         $db = Database::getInstance();
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
-            'date' => $data->date_commande,
+            'date' => date_default_timezone_set('UTC'),
             'id' => $data->numero_commande,
-            'user' => $data ->client,
+            'user' => $db -> query("SELECT nom FROM Client WHERE idClient = ?", array($data ->fkidClient)),
             'commentaire' => $data ->commentaire,
             'status' => $data ->done,
             'fkidClient' => $data ->fkidClient,
-            'fkidSupplier' => $this->_id
+            'fkidSupplier' => $this->_id,
+            $Produits => $data->produit
         );
+
+        foreach( $Produits as $champ){
+            $fieldsProd = array(
+                'fkidProduct' => $Produits -> fkidProduct,
+                'Qty' => $Produits -> quantite,
+                'fkid_ClientOrder' => $data ->fkidClient,
+                'name' => $db -> query("SELECT nom FROM Product WHERE idProduct = ?", array($Produits -> fkidProduct))
+
+            );
+            array_push($ProduitsList, $fieldsProd);
+        }
         $db->query("UPDATE ClientOrder SET $fields WHERE idOrder = ?", array($idOrder));
+        $db->query("UPDATE clientOrderDetail SET $ProduitsList WHERE idOrder = ?", array($idOrder));
     }
 
 
     /**DELETE**/
 
-    /**Supprime tous les clients **/
-    // deletera en cascade => Emmanuel
-    public function deleteAllClient()
-    {
-        //supprimer tous les clients ayant le fournisseur X
-        $db = Database::getInstance();
-        /**Supprimer les clients **/
-        $db->query("DELETE FROM Client ");
-    }
-
-    /**Supprime un client **/
     // deletera en cascade => Emmanuel
     public function deleteClient($idAbout)
     {
         $db = Database::getInstance();
         /**Supprimer le client**/
-        $db->query("DELETE FROM Client WHERE fkidSupplier = ? AND idClient=?", array($this->_id,$idAbout));
+        $db->query("DELETE FROM Client WHERE idClient=?", array($idAbout));
 
     }
 
-    public function deleteAllProduct()
-    {
-        $db = Database::getInstance();
-        $db->query("DELETE FROM Product WHERE fkidSupplier = ? ", array($this->_id));
 
-    }
 
     public function deleteProduct($idAbout)
     {
         $db = Database::getInstance();
-        $db->query("DELETE FROM Product WHERE fkidSupplier = ? AND idProduct=?", array($this->_id,$idAbout));
+        $db->query("DELETE FROM Product WHERE idProduct=?", array($idAbout));
 
     }
 
 
-    public function deleteAllUser()
-    {
-        $db = Database::getInstance();
-        $db->query("DELETE FROM oauth_users WHERE fkidSupplier = ? ", array($this->_id));
-    }
 
     public function deleteUser($idAbout)
     {
 
         $db = Database::getInstance();
-        $db->query("DELETE FROM oauth_users WHERE fkidSupplier = ? AND id=? ", array($this->_id,$idAbout));
+        $db->query("DELETE FROM oauth_users WHERE  id=? ", array($idAbout));
     }
 
-    public function deleteAllOrder()
-    {
-        $db = Database::getInstance();
-        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? ", array($this->_id));
-    }
 
     public function deleteOrder($idAbout)
     {
 
         $db = Database::getInstance();
-        $db->query("DELETE FROM ClientOrder WHERE fkidSupplier = ? AND id=? ", array($this->_id,$idAbout));
+        $db->query("DELETE FROM ClientOrder WHERE  id=? ", array($idAbout));
     }
 }

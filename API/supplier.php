@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         /**L'URL est de type http....com/API/Fournisseur/1/Client/
          * Si on n'a pas le idabout, erreur
          */
-        
+
 
             $res->addClient($data);
 
