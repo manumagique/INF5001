@@ -396,7 +396,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // CONDITIONS FOR PUT
 
-} elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+} elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
 
     $_GET['idSupplier'] = $url[2];
     $_GET['about'] = $url[3];
