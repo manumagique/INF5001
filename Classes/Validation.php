@@ -270,16 +270,16 @@ class Validation
 
 // test section
 $teste = new Validation();
-$value = "15k";
+$value = 3;
 
-if($teste->isValidQuantity($value))
+if($teste->isValidStatus($value))
     echo "TRUE";
 
 else
     echo "FALSE";
+
+
+
 */
-
-
-
 
 
