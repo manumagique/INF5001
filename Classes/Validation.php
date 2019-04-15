@@ -38,6 +38,7 @@ class Validation
         return $result;
     }
 
+
     public function isValidName($name)  {
         $result = true;
         $length = 45;
@@ -55,6 +56,7 @@ class Validation
 
         return $result;
     }
+
 
     public function isValidEmail($email)  {
         $result = true;
@@ -74,6 +76,7 @@ class Validation
         return $result;
     }
 
+
     public function isValidBuyCondition($buyCondition)  {
         $result = true;
         $length = 45;
@@ -88,6 +91,7 @@ class Validation
 
         return $result;
     }
+
 
     public function isValidRecipientAddress($address)  {
         $result = true;
@@ -104,6 +108,7 @@ class Validation
         return $result;
     }
 
+
     public function isValidShippingAddress($address)  {
         $result = true;
         $length = 200;
@@ -118,6 +123,7 @@ class Validation
 
         return $result;
     }
+
 
     public function isValidURL($url)  {
         $result = true;
@@ -162,7 +168,7 @@ class Validation
 
     // Validation for Product's Order form fields
 
-    function isValidDate($date) {
+    public function isValidDate($date) {
 
         $result = true;
 
@@ -175,7 +181,7 @@ class Validation
     }
 
 
-    function isValidID($id) {
+    public function isValidID($id) {
 
         $result = true;
         $length = 11;
@@ -225,14 +231,29 @@ class Validation
         return $result;
     }
 
-    public function isValidQuantity($quantity)  {
+    public function isValidBoolean($bool, $field)  {
+        $result = true;
+
+        if (empty($bool)) {
+            $this->setValidationErrorMessage("The field " . $field . " can't be empty.");
+            $result = false;
+        } elseif ( !$bool == 0) {
+            $this->setValidationErrorMessage("The Field " . $field . " can only contain 0 or 1.");
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    public function isValidQuantity($quantity) {
+
         $result = true;
 
         if (empty($quantity)) {
             $this->setValidationErrorMessage("The field Quantity can't be empty.");
             $result = false;
-        } elseif ( !$quantity == 0) {
-            $this->setValidationErrorMessage("Field Quantity can only contain 0 or 1.");
+        } elseif (!preg_match('/^[0-9\s]+$/', $quantity)) {
+            $this->setValidationErrorMessage("Field Quantity can only contain numbers.");
             $result = false;
         }
 
@@ -241,5 +262,24 @@ class Validation
 
 
 
+
 }
+
+
+/*
+
+// test section
+$teste = new Validation();
+$value = "15k";
+
+if($teste->isValidQuantity($value))
+    echo "TRUE";
+
+else
+    echo "FALSE";
+*/
+
+
+
+
 
