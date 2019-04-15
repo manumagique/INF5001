@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         include('admin.php');
     }
 
+// CONDITIONS FOR POST
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -394,9 +395,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 
 
-// CONDITIONS FOR PUT
+// CONDITIONS FOR DELETE
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+
 
     $_GET['idSupplier'] = $url[2];
     $_GET['about'] = $url[3];
