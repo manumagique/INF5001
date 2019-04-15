@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             $res->deleteAllProduct();
         } else {
-            $res->deleteProduct();
+            $res->deleteProduct($idAbout);
         }
 
     } else if($about == "user") {
@@ -234,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             $res->deleteAllUser();
         } else {
-            $res->deleteUser();
+            $res->deleteUser($idAbout);
         }
 
     }else if($about == "order") {
@@ -242,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             $res->deleteAllOrder();
         } else {
-            $res->deleteOrder();
+            $res->deleteOrder($idAbout);
         }
     }
 }
