@@ -3,7 +3,6 @@
 /**Jade**/
 
 require_once '../core/init.php';
-header('Content-Type: application/json');
 
 /**L'URL est de type http....com/API/Fournisseur/1
  * 1 est l'idSupplier

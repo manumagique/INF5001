@@ -5,8 +5,8 @@
  * Date: 2019-02-12
  * Time: 11:36 PM
  */
-header('Access-Control-Allow-Origin: *');
-session_start();
+//header('Access-Control-Allow-Origin: *');
+//session_start();
 $GLOBALS['config'] = array(
     'mysql' => array(
         'host' => '69.28.199.20',

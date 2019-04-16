@@ -5,14 +5,14 @@
  * Date: 2019-03-17
  * Time: 8:53 PM
  */
-
+header('Access-Control-Allow-Origin: *');
 include ("../Classes/Validation.php");
 
 #echo '<hr/>';
 #echo $_GET['url'] . "<br>";
 //use OAuth2\Request;
 
-header('Access-Control-Allow-Origin: *');
+
 
 
 #validation du token sile token n'est pas valide l'application stop tout
