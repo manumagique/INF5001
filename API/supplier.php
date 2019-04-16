@@ -91,9 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Ajouter**/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $idSupplier = $_POST['idSupplier'];
-    $about = $_POST['about'];
-    $idAbout = $_POST['idAbout'];
+    $idSupplier = $_GET['idSupplier'];
+    $about = $_GET['about'];
+    $idAbout = $_GET['idAbout'];
     $res = new Supplier($idSupplier);
 
     $data = json_decode(file_get_contents("php://input"));
@@ -132,9 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Fonction update de la database **/
 } else  if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 
-    $idSupplier = $_PUT['idSupplier'];
-    $about = $_PUT['about'];
-    $idAbout = $_PUT['idAbout'];
+    $idSupplier = $_GET['idSupplier'];
+    $about = $_GET['about'];
+    $idAbout = $_GET['idAbout'];
     $res = new Supplier($idSupplier);
 
     $data = json_decode(file_get_contents("php://input"));
@@ -202,9 +202,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /**Fonction 'delete' de la database**/
 }else  if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
 
-    $idSupplier = $_DELETE['idSupplier'];
-    $about = $_DELETE['about'];
-    $idAbout = $_DELETE['idAbout'];
+    $idSupplier = $_GET['idSupplier'];
+    $about = $_GET['about'];
+    $idAbout = $_GET['idAbout'];
     $res = new Supplier($idSupplier);
 
     if($about == "client") {
