@@ -24,6 +24,7 @@ class Supplier
     {
         $db = Database::getInstance();
         $db->query("SELECT * FROM Client WHERE fkidSupplier = ?", array($this->_id));
+
         return $db->resultsToJson();
 
     }
