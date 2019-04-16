@@ -9,7 +9,7 @@ require_once '../core/init.php';
  *
  */
 
-echo "Teste_supplier";
+
 
 /**GET pour aller chercher sur la base de données**/
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -53,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
              */
         } else {
             echo $res->getProduct($idAbout);
-//            echo $res->loadFromDB($idAbout);
         }
 
     } else if($about == "user") {

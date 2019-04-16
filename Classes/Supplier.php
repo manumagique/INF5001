@@ -128,7 +128,7 @@ class Supplier
             'logo' => $data ->logo,
             'prix' => $data->price,
             'description' => $data->description,
-            'orgine' => $data->origine,
+            'origine' => $data->origine,
             'code' => $data->code,
             'format' => $data->format,
             'fkidSupplier' => $this->_id
@@ -236,7 +236,7 @@ class Supplier
             'logo' => $data ->logo,
             'prix' => $data->price,
             'description' => $data->description,
-            'orgine' => $data->origine,
+            'origine' => $data->origine,
             'code' => $data->code,
             'format' => $data->format,
             'fkidSupplier' => $this->_id
