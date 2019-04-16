@@ -10,18 +10,18 @@ include ("../Classes/Validation.php");
 
 #echo '<hr/>';
 #echo $_GET['url'] . "<br>";
-use OAuth2\Request;
+//use OAuth2\Request;
 
 header('Access-Control-Allow-Origin: *');
-require_once '../oauth/server.php';
 
+
+#validation du token sile token n'est pas valide l'application stop tout
+require_once '../oauth/server.php';
 // Handle a request to a resource and authenticate the access token
 if (!$server->verifyResourceRequest(OAuth2\Request::createFromGlobals())) {
     $server->getResponse()->send();
     die;
 }
-
-echo "prout prout";
 
 $url = explode('/', $_GET['url']);
 $sizeUrl = sizeof($url);
