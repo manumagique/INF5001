@@ -6,7 +6,6 @@
  * Time: 01:30
  */
 require_once '../core/init.php';
-header('Content-Type: application/json');
 
 /**
  * Author: Valentina

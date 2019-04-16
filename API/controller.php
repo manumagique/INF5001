@@ -131,12 +131,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username   = $validation->isValidUsername($data->username);
         $psw        = $validation->isValidPsw($data->password);
         $fkidClient = $validation->isValidID($data->fkidClient);
-        $firstName  = $validation->isValidName($data->first_name);
-        $lastName   = $validation->isValidName($data->last_name);
-        $email      = $validation->isValidEmail($data->email);
+//        $firstName  = $validation->isValidName($data->first_name);
+//        $lastName   = $validation->isValidName($data->last_name);
+//        $email      = $validation->isValidEmail($data->email);
 
-
-        if ( $username && $psw && $fkidClient && $firstName && $lastName && $email )  {
+//        && $firstName && $lastName && $email
+        if ( $username && $psw && $fkidClient  )  {
 
 
             $_GET['idClient'] = $url[2];

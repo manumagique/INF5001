@@ -96,17 +96,19 @@ class Client
 
         $db = Database::getInstance();
 
+        $hashpwd = hashPassword($data->password);
+
         $fields = array(
             'username' => $data->username,
-            'password' => $data ->password,
-            'salt' => Hash::unique(),
+            'password' => $hashpwd,
+//            'salt' => Hash::unique(),
             'userCat' => "Client",
             'fkidClient' => $data->fkidClient,
-            'first_name' => $data->first_name,
-            'last_name' => $data->last_name,
-            'email' => $data->email,
-            'email_verified' => $data->email_verified,
-            'scope' => $data->scope
+//            'first_name' => $data->first_name,
+//            'last_name' => $data->last_name,
+//            'email' => $data->email,
+//            'email_verified' => $data->email_verified,
+//            'scope' => $data->scope
         );
 
         $db->insert('oauth_users', $fields);
