@@ -5,6 +5,7 @@
  * Date: 2019-04-01
  * Time: 11:54
  */
+header('Access-Control-Allow-Origin: *');
 
 // include our OAuth2 Server object
 require_once __DIR__.'/server.php';
