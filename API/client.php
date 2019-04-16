@@ -12,7 +12,7 @@ header('Content-Type: application/json');
  * Author: Valentina
  * Date: Winter 2019
  */
-
+echo "Client_teste";
 
 /* GET : obtenir info de la BD */
 

@@ -10,7 +10,7 @@ header('Content-Type: application/json');
  *
  */
 
-
+echo "Teste_supplier";
 
 /**GET pour aller chercher sur la base de données**/
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {

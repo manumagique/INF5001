@@ -1,8 +1,8 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: emmanuelboyer
- * Date: 2019-02-13
+ * User: andre langoni
+ * Date: 2019-04-11
  * Time: 2:47 AM
  */
 
@@ -172,7 +172,7 @@ class Validation
 
         $result = true;
 
-        if(!(date('Y-m-d H:i:s', strtotime($date)) == $date)) {
+        if(!(date('Y-m-d', strtotime($date)) == $date)) {
             $this->setValidationErrorMessage("The field Date isn't valid.");
             $result = false;
         }
@@ -189,11 +189,11 @@ class Validation
         if (empty($id)) {
             $this->setValidationErrorMessage("The field User can't be empty.");
             $result = false;
-        } elseif (!preg_match('/^[0-9.\s]+$/', $id)) {
-            $this->setValidationErrorMessage("Field User can only contain numbers and '.' .");
+        } elseif (!preg_match('/^[0-9\s]+$/', $id)) {
+            $this->setValidationErrorMessage("Field ID can only contain numbers.");
             $result = false;
         } elseif (strlen($id) > $length) {
-            $this->setValidationErrorMessage("The field User can't be longer than " . $length . " characters.");
+            $this->setValidationErrorMessage("The field ID can't be longer than " . $length . " characters.");
             $result = false;
         }
 
@@ -207,9 +207,6 @@ class Validation
 
         if (empty($comment)) {
             $this->setValidationErrorMessage("The field Comment can't be empty.");
-            $result = false;
-        } elseif (!preg_match('/^[a-zA-Z\s]+$/', $comment)) {
-            $this->setValidationErrorMessage("Field Comment can only contain letters and white spaces.");
             $result = false;
         } elseif (strlen($comment) > $length) {
             $this->setValidationErrorMessage("The field Comment can't be longer than " . $length . " characters.");
@@ -261,25 +258,109 @@ class Validation
     }
 
 
+    public function isValidUsername($username) {
+
+        $result = true;
+        $length = 100;
+
+        if (empty($username)) {
+            $this->setValidationErrorMessage("The field Username can't be empty.");
+            $result = false;
+        } elseif (strlen($username) > $length) {
+            $this->setValidationErrorMessage("Username or Password invalid.");
+            $result = false;
+        }
+
+        return $result;
+    }
+
+
+    public function isValidPsw($psw) {
+
+        $result = true;
+        $length = 64;
+
+        if (empty($psw)) {
+            $this->setValidationErrorMessage("The field Password can't be empty.");
+            $result = false;
+        } elseif (strlen($psw) > $length) {
+            $this->setValidationErrorMessage("Username or Password invalid.");
+            $result = false;
+        }
+
+        return $result;
+    }
+
+
 
 
 }
 
 
+
+
+
+
+
 /*
 
+$json = '{
+    "name":"test modif",
+    "compagny":"test company",
+    "email":"testmail@gmail.com",
+    "buy_condition":"test",
+    "rec_adress":"test adresse",
+    "ship_adress":"test ship adress",
+    "logo": "https://recipes.timesofindia.com/photo/53110049.cms"
+}';
+
+
+if($data=json_decode($json)) {
+
+
+    $validation = new Validation();
+
+
+
+    $name = $validation->isValidName($data->name);
+    $company = $validation->isValidTextField($data->compagny, "Company");
+    $email = $validation->isValidEmail($data->email);
+    $buyCond = $validation->isValidBuyCondition($data->buy_condition);
+    $recAdress = $validation->isValidRecipientAddress($data->rec_adress);
+    $shipAdress = $validation->isValidRecipientAddress($data->ship_adress);
+    $logo = $validation->isValidURL($data->logo);
+
+
+    if ($name && $company && $email && $buyCond && $recAdress && $shipAdress && $logo) {
+
+        echo  " FUNCIONA";
+
+    } else {
+
+        header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
+        echo $validation->getValidationErrorMessage();
+    }
+
+} else {
+    echo  "NAO FUNCIONA 2";
+}
+
+*/
+
+
+/*
 // test section
 $teste = new Validation();
-$value = 3;
+$value = "Texte";
 
-if($teste->isValidStatus($value))
+if($teste->isValidUsername($value))
     echo "TRUE";
 
 else
-    echo "FALSE";
-
-
+    echo "FALSE - " . $teste->getValidationErrorMessage();
 
 */
+
+
 
 
