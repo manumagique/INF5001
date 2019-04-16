@@ -399,7 +399,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }  elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "user") == 0) {
 
         $username   = $validation->isValidName($data->username);
-        $psw        = $validation->isValidURL($data->password);
+        $psw        = $validation->isValidPsw($data->password);
 
         if ( $username && $psw  )  {
 

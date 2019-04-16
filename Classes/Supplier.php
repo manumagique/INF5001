@@ -145,15 +145,15 @@ class Supplier
     {
 
         $db = Database::getInstance();
-        //$hash =
+        $hashpwd = hashPassword($data->password);
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
             'username' => $data->username,
-            'password' => $data ->password,
+            'password' => $hashpwd,
             'userCat' => "Fournisseur",
             'fkidSupplier' => $this->_id
         );
-        $db->insert(User, $fields);
+        $db->insert("oauth_users", $fields);
     }
 
     /**
@@ -247,15 +247,23 @@ class Supplier
     //TODO: Vérifier userCat et salt => Emmanuel
     public function editUser($data, $idUser)
     {
+        if (isset($data->password))
+        {
+            $hashpwd = hashPassword($data->password);
+        }
+        else
+        {
+            $hashpwd = $data->password;
+        }
         $db = Database::getInstance();
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
             'username' => $data->username,
-            'password' => $data ->password,
+            'password' =>$hashpwd,
             'userCat' => "Fournisseur",
             'fkidSupplier' => $this->_id
         );
-        $db->query("UPDATE oauth_users SET $fields WHERE id = ?", array($idUser));
+        $db->update("oauth_users", $idUser, $fields);
     }
 
     //TODO: id=numero_commade ? oui user=client? oui
