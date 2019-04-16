@@ -30,3 +30,4 @@ spl_autoload_register(function($class)
 });
 
 require_once '../Functions/sanitize.php';
+//require_once '../oauth/newUsr.php';
