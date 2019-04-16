@@ -6,7 +6,7 @@
  * Time: 8:53 PM
  */
 
-
+include ("../Classes/Validation.php");
 
 #echo '<hr/>';
 #echo $_GET['url'] . "<br>";
@@ -37,6 +37,7 @@ $_GET['idAbout']        = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
+
     if (strcasecmp($url[1], "supplier") == 0) {
         $_GET['idSupplier'] = $url[2];
         $_GET['about'] = $url[3];
@@ -61,7 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // CONDITIONS FOR POST
 
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $json = file_get_contents('php://input');
     $data = json_decode($json);
@@ -69,7 +72,85 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $validation = new Validation();
 
 
-    if (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "client") == 0) {
+    if (strcasecmp($url[1], "client") == 0 && strcasecmp($url[3], "order") == 0) {
+
+        $date               = $validation->isValidDate($data->date);
+        $user               = $validation->isValidID($data->user);
+        $commentaire        = $validation->isValidComment($data->commentaire);
+        $fkidClient         = $validation->isValidID($data->fkidClient);
+        $fkidSupplier       = $validation->isValidID($data->fkidSupplier);
+        $products           = $validation->isValidComment($data->produits);
+
+
+        $isValid = true;
+        $errorMessage = "";
+
+
+        if ( $user && $commentaire && $fkidClient && $fkidSupplier )  {
+
+                foreach ($encoded as $key => $value) {
+
+                    foreach ($value as $pKey => $pValue) {
+
+                        if($pKey == "fkidProduct") {
+
+                            $isValid = $validation->isValidID($pValue);
+                            $errorMessage = $validation->getValidationErrorMessage();
+
+                        } elseif ($pKey == "Qty") {
+
+                            $isValid = $validation->isValidQuantity($pValue);
+                            $errorMessage = $validation->getValidationErrorMessage();
+
+                        }
+                    }
+                }
+
+                if($isValid) {
+
+                    $_GET['idClient'] = $url[2];
+                    $_GET['about'] = $url[3];
+                    $_GET['idAbout'] = $url[4];
+                    include('client.php');
+
+                } else {
+
+                    header(trim("HTTP/1.0 400 " . $errorMessage));
+                }
+
+
+        } else {
+
+            header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
+        }
+
+
+    } elseif (strcasecmp($url[1], "client") == 0 && strcasecmp($url[3], "user") == 0) {
+
+
+        $username   = $validation->isValidUsername($data->username);
+        $psw        = $validation->isValidPsw($data->password);
+        $fkidClient = $validation->isValidID($data->fkidClient);
+        $firstName  = $validation->isValidName($data->first_name);
+        $lastName   = $validation->isValidName($data->last_name);
+        $email      = $validation->isValidEmail($data->email);
+
+
+        if ( $username && $psw && $fkidClient && $firstName && $lastName && $email )  {
+
+
+            $_GET['idClient'] = $url[2];
+            $_GET['about'] = $url[3];
+            $_GET['idAbout'] = $url[4];
+            include('client.php');
+
+        } else {
+
+            header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
+        }
+
+
+    } elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "client") == 0) {
 
         $name       = $validation->isValidName($data->name);
         $company    = $validation->isValidTextField($data->compagny, "Company");
@@ -103,6 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $code           = $validation->isValidTextField($data->code, "Code");
         $format         = $validation->isValidTextField($data->format, "Format");
 
+
         if ( $name && $logo && $price && $description && $origin && $code && $format )  {
 
             $_GET['idSupplier'] = $url[2];
@@ -118,8 +200,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     }  elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "user") == 0) {
 
-        $username   = $validation->isValidName($data->username);
-        $psw        = $validation->isValidURL($data->password);
+        $username   = $validation->isValidUsername($data->username);
+        $psw        = $validation->isValidPsw($data->password);
 
         if ( $username && $psw  )  {
 
@@ -134,44 +216,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
 
-    }  elseif (strcasecmp($url[1], "client") == 0 && strcasecmp($url[3], "user") == 0) {
+    }  elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "order") == 0) {
 
-        $username   = $validation->isValidName($data->username);
-        $psw        = $validation->isValidURL($data->password);
-
-        if ( $username && $psw  )  {
-
-            $_GET['idClient'] = $url[2];
-            $_GET['about'] = $url[3];
-            $_GET['idAbout'] = $url[4];
-            include('client.php');
-
-        } else {
-
-            header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
-        }
-
-
-    }  elseif (strcasecmp($url[1], "client") == 0 && strcasecmp($url[3], "order") == 0) {
-
-        $date               = $validation->isValidDate($data->date);
-        $fkidClient         = $validation->isValidID($data->fkidClient);
-        $fkidSupplier       = $validation->isValidID($data->fkidSupplier);
-        $fkidProduct        = $validation->isValidID($data->fkidProduct);
-        $qty                = $validation->isValidQuantity($data->Qty);
-        $fkid_ClientOrder   = $validation->isValidQuantity($data->fkid_ClientOrder);
         $commentaire        = $validation->isValidComment($data->commentaire);
-        $client             = $validation->isValidID($data->fkidClient);
-        $products           = $validation->isValidComment($data->produits);
+        $fkidClient         = $validation->isValidID($data->fkidClient);
 
-        $isValid = true;
+        $isValid = false;
         $errorMessage = "";
 
-        if ( $client && $commentaire )  {
+        if ( $fkidClient && $commentaire )  {
 
-            if ($encoded = json_decode( $data->produits, true )) {
-
-                foreach ($encoded as $key => $value) {
+                foreach ($data->Produits as $key => $value) {
 
                     foreach ($value as $pKey => $pValue) {
 
@@ -191,56 +246,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                 if($isValid) {
 
-                    $_GET['idClient'] = $url[2];
-                    $_GET['about'] = $url[3];
-                    $_GET['idAbout'] = $url[4];
-                    include('client.php');
-
-                } else {
-
-                    header(trim("HTTP/1.0 400 " . $errorMessage));
-                }
-            }
-
-        } else {
-
-            header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
-        }
-
-
-    }  elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "order") == 0) {
-
-        $commentaire        = $validation->isValidComment($data->commentaire);
-        $client             = $validation->isValidID($data->fkidClient);
-        $products           = $validation->isValidComment($data->Produits);
-
-        $isValid = true;
-        $errorMessage = "";
-
-        if ( $client && $commentaire )  {
-
-            if ($encoded = json_decode( $data->Produits, true )) {
-
-                foreach ($encoded as $key => $value) {
-
-                    foreach ($value as $pKey => $pValue) {
-
-                        if($pKey == "fkidProduct") {
-
-                            $isValid = $validation->isValidID($pValue);
-                            $errorMessage = $validation->getValidationErrorMessage();
-
-                        } elseif ($pKey == "Qty") {
-
-                            $isValid = $validation->isValidQuantity($pValue);
-                            $errorMessage = $validation->getValidationErrorMessage();
-
-                        }
-                    }
-                }
-
-                if($isValid) {
-
                     $_GET['idSupplier'] = $url[2];
                     $_GET['about'] = $url[3];
                     $_GET['idAbout'] = $url[4];
@@ -250,7 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                     header(trim("HTTP/1.0 400 " . $errorMessage));
                 }
-            }
+
 
         } else {
 
@@ -258,10 +263,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
 
+
     } elseif (strcasecmp($url[1], "oauth") == 0 && strcasecmp($url[2], "login") == 0) {
 
-        $username   = $validation->isValidName($data->username);
-        $psw        = $validation->isValidURL($data->password);
+        $username   = $validation->isValidUsername($data->username);
+        $psw        = $validation->isValidPsw($data->password);
 
         if( $username && $psw  )  {
 
@@ -272,10 +278,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
         }
 
+
     } elseif (strcasecmp($url[1], "login") == 0) {
 
         include('login.php');
     }
+
+
+
+
 
 // CONDITIONS POUR PUT
 
@@ -289,13 +300,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     if (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "client") == 0) {
 
-        $name = $validation->isValidName($data->name);
-        $company = $validation->isValidTextField($data->compagny, "Company");
-        $email = $validation->isValidEmail($data->email);
-        $buyCond = $validation->isValidBuyCondition($data->buy_condition);
-        $recAdress = $validation->isValidRecipientAddress($data->rec_adress);
+        $name       = $validation->isValidName($data->name);
+        $company    = $validation->isValidTextField($data->compagny, "Company");
+        $email      = $validation->isValidEmail($data->email);
+        $buyCond    = $validation->isValidBuyCondition($data->buy_condition);
+        $recAdress  = $validation->isValidRecipientAddress($data->rec_adress);
         $shipAdress = $validation->isValidRecipientAddress($data->ship_adress);
-        $logo = $validation->isValidURL($data->logo);
+        $logo       = $validation->isValidURL($data->logo);
 
 
         if ($name && $company && $email && $buyCond && $recAdress && $shipAdress && $logo) {
@@ -308,10 +319,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         } else {
 
             header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
+
         }
 
 
-    } elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "product") == 0) {
+    } elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "produit") == 0) {
 
         $name           = $validation->isValidName($data->name);
         $logo           = $validation->isValidURL($data->logo);
@@ -320,6 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $origin         = $validation->isValidTextField($data->origine, "Origin");
         $code           = $validation->isValidTextField($data->code, "Code");
         $format         = $validation->isValidTextField($data->format, "Format");
+
 
         if ( $name && $logo && $price && $description && $origin && $code && $format )  {
 
@@ -337,54 +350,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "order") == 0) {
 
         $commentaire        = $validation->isValidComment($data->commentaire);
-        $client             = $validation->isValidID($data->fkidClient);
-        $products           = $validation->isValidComment($data->Produits);
-        $status             = $validation->isValidStatus($data->done);
+        $fkidClient         = $validation->isValidID($data->fkidClient);
+        $done               = $validation->isValidStatus($data->done);
 
-
-
-        $isValid = true;
+        $isValid = false;
         $errorMessage = "";
 
-        if ( $client && $commentaire && $status)  {
+        if ( $fkidClient && $commentaire && $done )  {
 
-            if ($encoded = json_decode( $data->Produits, true )) {
+            foreach ($data->Produits as $key => $value) {
 
-                foreach ($encoded as $key => $value) {
+                foreach ($value as $pKey => $pValue) {
 
-                    foreach ($value as $pKey => $pValue) {
+                    if($pKey == "fkidProduct") {
 
-                        if($pKey == "fkidProduct") {
+                        $isValid = $validation->isValidID($pValue);
+                        $errorMessage = $validation->getValidationErrorMessage();
 
-                            $isValid = $validation->isValidID($pValue);
-                            $errorMessage = $validation->getValidationErrorMessage();
+                    } elseif ($pKey == "quantite") {
 
-                        } elseif ($pKey == "quantite") {
+                        $isValid = $validation->isValidQuantity($pValue);
+                        $errorMessage = $validation->getValidationErrorMessage();
 
-                            $isValid = $validation->isValidQuantity($pValue);
-                            $errorMessage = $validation->getValidationErrorMessage();
-
-                        }
                     }
                 }
-
-                if($isValid) {
-
-                    $_GET['idSupplier'] = $url[2];
-                    $_GET['about'] = $url[3];
-                    $_GET['idAbout'] = $url[4];
-                    include('supplier.php');
-
-                } else {
-
-                    header(trim("HTTP/1.0 400 " . $errorMessage));
-                }
             }
+
+            if($isValid) {
+
+                $_GET['idSupplier'] = $url[2];
+                $_GET['about'] = $url[3];
+                $_GET['idAbout'] = $url[4];
+                include('supplier.php');
+
+            } else {
+
+                header(trim("HTTP/1.0 400 " . $errorMessage));
+            }
+
 
         } else {
 
             header(trim("HTTP/1.0 400 " . $validation->getValidationErrorMessage()));
         }
+
 
 
     }  elseif (strcasecmp($url[1], "supplier") == 0 && strcasecmp($url[3], "user") == 0) {
