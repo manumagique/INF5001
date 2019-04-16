@@ -6,6 +6,7 @@
  * Time: 11:02
  */
 
+use OAuth2\GrantType\AuthorizationCode;
 use OAuth2\GrantType\UserCredentials;
 
 $dsn      = 'mysql:dbname=lango721_gestiondecommandes;host=69.28.199.20';
@@ -34,3 +35,8 @@ $server->addGrantType(new OAuth2\GrantType\AuthorizationCode($storage));
 
 // create the grant type
 $server->addGrantType(new OAuth2\GrantType\UserCredentials($storage));
+
+// Add the "Refresh Token" grant type (this is where the oauth magic happens)
+$server->addGrantType(new OAuth2\GrantType\RefreshToken($storage, array(
+    'always_issue_new_refresh_token' => true
+)));
