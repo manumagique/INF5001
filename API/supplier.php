@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }else if($about == "order") {
 
         if(empty($idAbout)) {
-            echo $res->getOrderList();
+            echo $res->getOrdersItems();
         } else {
             echo $res->getOrder($idAbout);
         }
