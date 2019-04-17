@@ -67,11 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } elseif (strcasecmp($url[1], "admin") == 0) {
         $_GET['idAdmin'] = $url[2];
         $_GET['about'] = $url[3];
-        if (isset($url[4]))
-        {
+        if (isset($url[4])) {
             $_GET['idAbout'] = $url[4];
         }
         include('admin.php');
+//    }
+    }elseif (strcasecmp($url[1], "user") == 0) {
+        $token = $server->getAccessTokenData(OAuth2\Request::createFromGlobals());
+        include_once '../Classes/PlatformUser.php';
+        $usr = new platformUser();
+        $usr->getUserInfo($token['user_id']);
+
     }
 
 // CONDITIONS FOR POST
@@ -88,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (strcasecmp($url[1], "client") == 0 && strcasecmp($url[3], "order") == 0) {
 
-        $date               = $validation->isValidDate($data->date);
+//        $date               = $validation->isValidDate($data->date);
         $user               = $validation->isValidID($data->user);
         $commentaire        = $validation->isValidComment($data->commentaire);
         $fkidClient         = $validation->isValidID($data->fkidClient);
@@ -102,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ( $user && $commentaire && $fkidClient && $fkidSupplier )  {
 
-                foreach ($encoded as $key => $value) {
+                foreach ($products as $key => $value) {
 
                     foreach ($value as $pKey => $pValue) {
 

@@ -78,17 +78,25 @@ class Supplier
     public function getOrderList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT ClientOrder.id, ClientOrder.orderDate, ClientOrder.user, ClientOrder.commentaire, 
-                  ClientOrder.status, ClientOrder.fkidClient, ClientOrder.fkidSupplier, Client.nom  
+        $db->query("SELECT ClientOrder.id, ClientOrder.orderDate, ClientOrder.user, ClientOrder.commentaire, ClientOrder.status, ClientOrder.fkidClient, ClientOrder.fkidSupplier, Client.nom  
                   FROM ClientOrder LEFT JOIN Client ON ClientOrder.id=Client.idClient WHERE ClientOrder.fkidSupplier = ? ", array($this->_id));
         return $db->resultsToJson();
 
     }
+
+    #obtien la liste des items d'une commande pour une commande et le retour dans un objet JSON
+    public function getOrderItems($idOrder){
+        $db = Database::getInstance();
+        $db->query("SELECT t.fkidProduct, Product.nom, t.Qty FROM clientOrderDetail as t LEFT JOIN Product on Product.idProduct = t.fkidProduct WHERE t.fkid_ClientOrder = ?", array($idOrder));
+        $res = $db->resultsToJson();
+        $res2 = json_decode($res);
+        return $res2;
+    }
+
     #ajoute un objet contenant la liste des produits pour chaque commande
     public function getOrdersAndItems ()
     {
-        $ordersList = $this->getOrderList();
-        $orders = json_decode( $ordersList );
+        $orders = json_decode( $this->getOrderList() );
         $res = array();
         foreach ($orders as $order => $obj)
         {
@@ -97,14 +105,6 @@ class Supplier
             array_push($res,$obj);
         }
         return json_encode($res);
-    }
-    #obtien la liste des items d'une commande pour une commande et le retour dans un objet JSON
-    public function getOrderItems($idOrder){
-        $db = Database::getInstance();
-        $db->query("SELECT t.fkidProduct, Product.nom, t.Qty FROM clientOrderDetail as t LEFT JOIN Product on Product.idProduct = t.fkidProduct WHERE t.fkid_ClientOrder = ?", array($idOrder));
-        $res = $db->resultsToJson();
-        $res2 = json_decode($res);
-        return $res2;
     }
 
     /**Retourne une commande du fournisseur**/
