@@ -11,7 +11,6 @@ require_once '../core/init.php';
  * Author: Valentina
  * Date: Winter 2019
  */
-echo "Client_teste";
 
 /* GET : obtenir info de la BD */
 
