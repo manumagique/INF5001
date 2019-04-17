@@ -8,6 +8,15 @@
 
 include_once '../Functions/cors.php';
 cors();
+$url = explode('/', $_GET['url']);
+$sizeUrl = sizeof($url);
+$_GET['idSupplier']     = "";
+$_GET['idClient']       = "";
+$_GET['idProduit']      = "";
+$_GET['idAdmin']        = "";
+$_GET['about']          = "";
+$_GET['idAbout']        = "";
+
 
 include ("../Classes/Validation.php");
 
@@ -23,16 +32,9 @@ if (!$server->verifyResourceRequest(OAuth2\Request::createFromGlobals())) {
     die;
 }
 
-$url = explode('/', $_GET['url']);
-$sizeUrl = sizeof($url);
 
 
-$_GET['idSupplier']     = "";
-$_GET['idClient']       = "";
-$_GET['idProduit']      = "";
-$_GET['idAdmin']        = "";
-$_GET['about']          = "";
-$_GET['idAbout']        = "";
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -41,22 +43,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (strcasecmp($url[1], "supplier") == 0) {
         $_GET['idSupplier'] = $url[2];
         $_GET['about'] = $url[3];
-        $_GET['idAbout'] = $url[4];
+        if (isset($url[4]))
+        {
+            $_GET['idAbout'] = $url[4];
+        }
         include('supplier.php');
     } elseif (strcasecmp($url[1], "client") == 0) {
         $_GET['idClient'] = $url[2];
         $_GET['about'] = $url[3];
-        $_GET['idAbout'] = $url[4];
+        if (isset($url[4]))
+        {
+            $_GET['idAbout'] = $url[4];
+        }
         include('client.php');
     } elseif (strcasecmp($url[1], "order") == 0) {
         $_GET['idOrder'] = $url[2];
         $_GET['about'] = $url[3];
-        $_GET['idAbout'] = $url[4];
+        if (isset($url[4]))
+        {
+            $_GET['idAbout'] = $url[4];
+        }
         include('order.php');
     } elseif (strcasecmp($url[1], "admin") == 0) {
         $_GET['idAdmin'] = $url[2];
         $_GET['about'] = $url[3];
-        $_GET['idAbout'] = $url[4];
+        if (isset($url[4]))
+        {
+            $_GET['idAbout'] = $url[4];
+        }
         include('admin.php');
     }
 
@@ -110,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $_GET['idClient'] = $url[2];
                     $_GET['about'] = $url[3];
-                    $_GET['idAbout'] = $url[4];
+//                    $_GET['idAbout'] = $url[4];
                     include('client.php');
 
                 } else {
@@ -141,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $_GET['idClient'] = $url[2];
             $_GET['about'] = $url[3];
-            $_GET['idAbout'] = $url[4];
+//            $_GET['idAbout'] = $url[4];
             include('client.php');
 
         } else {
@@ -165,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $_GET['idSupplier'] = $url[2];
             $_GET['about'] = $url[3];
-            $_GET['idAbout'] = $url[4];
+//            $_GET['idAbout'] = $url[4];
             include('supplier.php');
 
         } else {
@@ -189,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $_GET['idSupplier'] = $url[2];
             $_GET['about'] = $url[3];
-            $_GET['idAbout'] = $url[4];
+//            $_GET['idAbout'] = $url[4];
             include('supplier.php');
 
         } else {
@@ -207,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $_GET['idSupplier'] = $url[2];
             $_GET['about'] = $url[3];
-            $_GET['idAbout'] = $url[4];
+//            $_GET['idAbout'] = $url[4];
             include('supplier.php');
 
         } else {
@@ -248,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $_GET['idSupplier'] = $url[2];
                     $_GET['about'] = $url[3];
-                    $_GET['idAbout'] = $url[4];
+//                    $_GET['idAbout'] = $url[4];
                     include('supplier.php');
 
                 } else {

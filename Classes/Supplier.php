@@ -78,9 +78,9 @@ class Supplier
     public function getOrderList()
     {
         $db = Database::getInstance();
-        $db->query("SELECT id.ClientOrder, date.ClientOrder, user.ClientOrder, commentaire.ClientOrder, 
-                  status.ClientOrder, fkidClient.ClientOrder, fkidSupplier.ClientOrder, nom.Client  
-                  FROM ClientOrder INNER JOIN Client ON id.ClientOrder=idClient.Client WHERE fkidSupplier.ClientOrder = ? ", array($this->_id));
+        $db->query("SELECT ClientOrder.id, ClientOrder.orderDate, ClientOrder.user, ClientOrder.commentaire, 
+                  ClientOrder.status, ClientOrder.fkidClient, ClientOrder.fkidSupplier, Client.nom  
+                  FROM ClientOrder INNER JOIN Client ON ClientOrder.id=Client.idClient WHERE ClientOrder.fkidSupplier = ? ", array($this->_id));
         return $db->resultsToJson();
 
     }
