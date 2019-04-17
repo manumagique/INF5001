@@ -68,9 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $res = new Client($idClient);
     $data = json_decode(file_get_contents("php://input"));
 
+        /* ajouter les details d'un utilisateur */
     if($about == "user") {
         $res->addUser($data);
 
+        /* ajouter les details d'une commande */
     } else if($about == "order") {
         $res->addOrder($data);
     }
@@ -92,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "Erreur";
 
+            /* modifier les details d'un utilisateur */
         } else {
             $res->updateUser($data, $idAbout);
         }
@@ -102,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(empty($idAbout)) {
             echo "Erreur";
 
+            /* modifier les details d'une commande */
         } else {
             $res->updateOrder($data, $idAbout);
         }
@@ -116,21 +120,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $idAbout = $_GET['idAbout'];
     $res = new Client($idClient);
 
-    if($about == "product") {
+    if($about == "user") {
 
-        if(empty($idAbout)) {
-            $res->deleteAllProducts();
-
-        } else {
-            $res->deleteProduct($idAbout);
-
-        }
-
-    } else if($about == "user") {
-
+            /* effacer les utilisateurs */
         if(empty($idAbout)) {
             $res->deleteAllUsers();
 
+            /* effacer les details d'un utilisateur */
         } else {
             $res->deleteUser($idAbout);
 
@@ -138,9 +134,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     }else if($about == "order") {
 
+            /* effacer les commandes */
         if(empty($idAbout)) {
             $res->deleteAllOrders();
 
+            /* effacer les details d'une commande */
         } else {
             $res->deleteOrder($idAbout);
 
