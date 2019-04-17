@@ -137,7 +137,7 @@ class Supplier
             'fkidSupplier' => $this->_id
         );
 
-        $db->insert(Client, $fields);
+        $db->insert('Client', $fields);
 
     }
 
@@ -147,7 +147,7 @@ class Supplier
         $fields = array(
             // en premier nom ds la table et a la fin nom de olivier
             'nom' => $data->name,
-            'logo' => $data ->logo,
+//            'logo' => $data ->logo,
             'prix' => $data->price,
             'description' => $data->description,
             'origine' => $data->origine,
@@ -156,7 +156,7 @@ class Supplier
             'fkidSupplier' => $this->_id
         );
 
-        $db->insert(Product, $fields);
+        $db->insert('Product', $fields);
     }
 
     /**Ici je fais comme s'il n'y avait pas de fkidClient puisque
