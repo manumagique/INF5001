@@ -5,15 +5,15 @@
  * Date: 2019-03-17
  * Time: 8:53 PM
  */
-header('Access-Control-Allow-Origin: *');
+
+include_once '../Functions/cors.php';
+cors();
+
 include ("../Classes/Validation.php");
 
 #echo '<hr/>';
 #echo $_GET['url'] . "<br>";
 //use OAuth2\Request;
-
-
-
 
 #validation du token sile token n'est pas valide l'application stop tout
 require_once '../oauth/server.php';
