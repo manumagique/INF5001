@@ -85,7 +85,7 @@ class Supplier
 
     }
     #ajoute un objet contenant la liste des produits pour chaque commande
-    public function getOrdersItems ()
+    public function getOrdersAndItems ()
     {
         $ordersList = $this->getOrderList();
         $orders = json_decode( $ordersList );
@@ -105,14 +105,6 @@ class Supplier
         $res = $db->resultsToJson();
         $res2 = json_decode($res);
         return $res2;
-    }
-
-    public function getOrdersAndProducts ()
-    {
-        $orders = $this->getOrderList();
-        $mmm = json_decode( $orders );
-        $res = $this->getOrdersItems($mmm);
-        return json_encode($res);
     }
 
     /**Retourne une commande du fournisseur**/
